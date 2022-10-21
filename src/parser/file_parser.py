@@ -75,6 +75,8 @@ class FileParser:
 
                 raise InvalidConfigFileException(f"Invalid value type on file '{path}'.\n{line}")
 
+            return "webhook-test"
+
     def parse_database(self, path: str):
         print("Parse Database!" + path)
 
