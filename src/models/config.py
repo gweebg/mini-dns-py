@@ -1,17 +1,23 @@
+from ipaddress import IPv4Address
 from pydantic import BaseModel
-from enum import Enum
+from pathlib import Path
+
+from parser.mode import ValueType
 
 
-class ConfigValueType(Enum):
-    DB = 1
-    SP = 2
-    SS = 3
-    DD = 4
-    ST = 5
-    LG = 6
+class ConfigElement(BaseModel):
+    mode: ValueType
+    value: str  # IPv4Address | Path
 
 
 class Config(BaseModel):
-    parameter: str
-    value_type: str
-    value: str
+    """
+    {
+        'example.com' : [("SS", IPv4Address('193.123.5.189')),
+                         ("SP", IPv4Address('193.123.5.189:8888')],
+        'all' : [...],
+        'root' : [...]
+    }
+    """
+
+    config: dict[str, list[ConfigElement]] = {}
