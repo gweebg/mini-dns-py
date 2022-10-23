@@ -1,8 +1,6 @@
-from ipaddress import IPv4Address
 from pydantic import BaseModel
-from pathlib import Path
 
-from parser.mode import ValueType
+from models.mode import ValueType
 
 
 class ConfigElement(BaseModel):
