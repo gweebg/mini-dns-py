@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8fb73730-5d4d-4194-858b-416c8aec73ad" name="Changes" comment="Start of Database file parser.&#10;&#10;Created method clean_up() on FileParser to remove clutter.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/exceptions/exceptions.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/exceptions/exceptions.py" afterDir="false" />
-    </list>
+    <list default="true" id="8fb73730-5d4d-4194-858b-416c8aec73ad" name="Changes" comment="Using dict of methods to make parsing easier and faster.&#10;&#10;Only two parsing function implemented for database, missing 7 more :)" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -116,7 +113,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666536082226</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Using dict of methods to make parsing easier and faster.&#10;&#10;Only two parsing function implemented for database, missing 7 more :)">
+      <created>1666558588833</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1666558588833</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -139,6 +143,7 @@
     <MESSAGE value="Webhook testing." />
     <MESSAGE value="Factory Pattern Design&#10;&#10;FileParser has gone abstract and has a Factory.&#10;Introduced Config file object.&#10;Missing 4 more parsers to continue." />
     <MESSAGE value="Start of Database file parser.&#10;&#10;Created method clean_up() on FileParser to remove clutter." />
-    <option name="LAST_COMMIT_MESSAGE" value="Start of Database file parser.&#10;&#10;Created method clean_up() on FileParser to remove clutter." />
+    <MESSAGE value="Using dict of methods to make parsing easier and faster.&#10;&#10;Only two parsing function implemented for database, missing 7 more :)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Using dict of methods to make parsing easier and faster.&#10;&#10;Only two parsing function implemented for database, missing 7 more :)" />
   </component>
 </project>
