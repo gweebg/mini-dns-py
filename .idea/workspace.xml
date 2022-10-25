@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8fb73730-5d4d-4194-858b-416c8aec73ad" name="Changes" comment="Using dict of methods to make parsing easier and faster.&#10;&#10;Only two parsing function implemented for database, missing 7 more :)" />
+    <list default="true" id="927eff29-955a-4a80-bb91-02b988460bcb" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/tests/db.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/mini-dns-py.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/mini-dns-py.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parser/database_parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/database_parser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/config.conf" beforeDir="false" afterPath="$PROJECT_DIR$/tests/config.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/db.conf" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,7 +33,7 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectId" id="2GRLb8rm7JtfMtqhwji5kzLL1iE" />
+  <component name="ProjectId" id="2GZxVklanVhH0t2Ve5hCooQAEEf" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -30,18 +43,12 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last.edited.regexp&quot;: &quot;Sample Text&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Guilherme/Documents/PyCharm/shifter&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;Errors&quot;
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;
   }
 }</component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Guilherme\Documents\PyCharm\mini-dns-py\src\models" />
-      <recent name="C:\Users\Guilherme\Documents\PyCharm\mini-dns-py" />
-    </key>
-  </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.Main">
     <configuration name="Main" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="mini-dns-py" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -54,6 +61,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -63,65 +71,45 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="Python tests for test_re_domain.test_domain_names" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="mini-dns-py" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_re_domain.test_domain_names&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Python.Main" />
+        <item itemvalue="Python tests.Python tests for test_re_domain.test_domain_names" />
       </list>
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="8fb73730-5d4d-4194-858b-416c8aec73ad" name="Changes" comment="" />
-      <created>1666346517905</created>
+      <changelist id="927eff29-955a-4a80-bb91-02b988460bcb" name="Changes" comment="" />
+      <created>1666609932934</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1666346517905</updated>
+      <updated>1666609932934</updated>
+      <workItem from="1666609935297" duration="869000" />
+      <workItem from="1666639207326" duration="4469000" />
+      <workItem from="1666685181353" duration="4425000" />
+      <workItem from="1666710215372" duration="2757000" />
     </task>
-    <task id="LOCAL-00001" summary="Parsing structure set-up.">
-      <created>1666349088142</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1666349088142</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Configuration parsing almost finished.&#10;&#10;Missing conversion to Config object.">
-      <created>1666373293649</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1666373293649</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Webhook testing.">
-      <created>1666373631731</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1666373631731</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Factory Pattern Design&#10;&#10;FileParser has gone abstract and has a Factory.&#10;Introduced Config file object.&#10;Missing 4 more parsers to continue.">
-      <created>1666473135287</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1666473135287</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Start of Database file parser.&#10;&#10;Created method clean_up() on FileParser to remove clutter.">
-      <created>1666536082226</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1666536082226</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Using dict of methods to make parsing easier and faster.&#10;&#10;Only two parsing function implemented for database, missing 7 more :)">
-      <created>1666558588833</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1666558588833</updated>
-    </task>
-    <option name="localTasksCounter" value="7" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.conf" />
@@ -137,13 +125,9 @@
       </map>
     </option>
   </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="Parsing structure set-up." />
-    <MESSAGE value="Configuration parsing almost finished.&#10;&#10;Missing conversion to Config object." />
-    <MESSAGE value="Webhook testing." />
-    <MESSAGE value="Factory Pattern Design&#10;&#10;FileParser has gone abstract and has a Factory.&#10;Introduced Config file object.&#10;Missing 4 more parsers to continue." />
-    <MESSAGE value="Start of Database file parser.&#10;&#10;Created method clean_up() on FileParser to remove clutter." />
-    <MESSAGE value="Using dict of methods to make parsing easier and faster.&#10;&#10;Only two parsing function implemented for database, missing 7 more :)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Using dict of methods to make parsing easier and faster.&#10;&#10;Only two parsing function implemented for database, missing 7 more :)" />
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/mini_dns_py$.coverage" NAME=" Coverage Results" MODIFIED="1666711877164" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/mini_dns_py$Main.coverage" NAME="Main Coverage Results" MODIFIED="1666712970533" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/mini_dns_py$main.coverage" NAME="Main Coverage Results" MODIFIED="1666610138886" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
   </component>
 </project>

@@ -1,10 +1,9 @@
-from typing import List
-
 from models.mode import Mode
 from parser.abstract_parser import FileParser
 from exceptions.exceptions import InvalidDatabaseFileException
 
 import re
+from typing import Callable
 
 
 class DatabaseFileParser(FileParser):
@@ -12,8 +11,14 @@ class DatabaseFileParser(FileParser):
     def __init__(self, file_path_str: str, mode: Mode):
         super(DatabaseFileParser, self).__init__(file_path_str, mode)
 
-        self.re_domain_dot = re.compile(r'^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}[.]$')
-        self.re_ipv4 = re.compile(r"\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(?::[0-9]{1,4})?\b")
+        self.re_domain_dot = re.compile(
+            "^((?!-)[A-Za-z0-9-]" + "{1,63}(?<!-)\\.)" + "+[A-Za-z]{2,6}.")
+        self.re_ipv4 = re.compile(
+            r"\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(?::[0-9]{1,4})?\b")
+        self.re_hostname = re.compile(
+            r"^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$")
+        self.re_email = re.compile(
+            r"^[a-z0-9]+[._]?[a-z0-9]+@\w+[.]\w{2,3}$")
 
         self.operations = {
             'DEFAULT': self._parse_default,
@@ -33,36 +38,143 @@ class DatabaseFileParser(FileParser):
         self.macros = {}
 
     def _parse_default(self, line: list[str]):
-        print("MACRO")
-        # if len(line) != 3:
-        #     raise InvalidDatabaseFileException(f"Macro setting must have an assigned value:\n\t{line}")
-        #
-        # if not (line[0] == '@' and re.fullmatch(self.re_domain_dot, line[2])):
-        #     raise InvalidDatabaseFileException(f"Restricted macro '@' must have a valid domain name as value:\n\t{line[2]}")
-        #
-        # self.macros[line[0]] = line[2]
+        """
+        DEFAULT value type defines a name as a macro that must be replaced by it's literal associated value.
+        The parameter '@' is reserved and used to identify a prefix by default that is added every time a domain name
+        doesn't appear on a full completer form.
+
+        Parameter must be an alphanumeric string.
+        Value must be valid domain name if parameter is '@'.
+
+        This field does not accept priority values.
+
+        :param line: Inputted line to be checked and parsed.
+        :return:
+        """
+
+        if len(line) != 3:
+            raise InvalidDatabaseFileException(f"Macro setting must have an assigned value:\n\t{line}")
+
+        if line[0] == '@' and not re.fullmatch(self.re_domain_dot, line[2]):
+            raise InvalidDatabaseFileException(
+                f"Restricted macro '@' must have a valid domain name as value: {line[2]}")
+
+        self.macros[line[0]] = line[2]
 
     def _parse_soasp(self, line: list[str]):
-        print("SOASP")
+        """
+        Value indicates the full name of the domain primary server (or zone) given on the parameter.
 
-        # if len(line) != 3:
-        #     raise InvalidDatabaseFileException(f"SOASP: Not enough arguments.\n\t{line}")
-        #
-        # # Replace macros for their actual values.
-        # for part in line:
-        #     if part in self.macros:
-        #         part = self.macros[part]
-        #
-        # if not (re.fullmatch(self.re_domain_dot, line[2]) and line[3].isnumeric()):
-        #     raise InvalidDatabaseFileException(f"SOASP: Invalid domain name or TTL value.\n\t{line}")
-        #
-        # return line[0], line[2], line[3]
+        Parameter must be a valid macro or domain name.
+        Time to live must be a valid macro of integer.
+
+        Example: '@ SOASP ns1.example.com. TTL'
+
+        This field does not accept priority values.
+
+        :param line: Inputted line to be checked and parsed.
+        :return:
+        """
+
+        has_at_symbol = False
+
+        if len(line) != 4:
+            raise InvalidDatabaseFileException(f"SOASP: Not enough values were provided: {line}")
+
+        for macro in self.macros:
+            for idx, line_slice in enumerate(line):
+                if macro in line_slice and idx != 2:
+
+                    if macro == '@':
+                        has_at_symbol = True
+
+                    line[idx] = line[idx].replace(macro, self.macros[macro])
+
+        if not re.fullmatch(self.re_domain_dot, line[0]) and not has_at_symbol:
+            raise InvalidDatabaseFileException(f"SOASP: Invalid domain name: {line[0]}")
+
+        if not re.fullmatch(self.re_domain_dot, line[2]):
+            raise InvalidDatabaseFileException(f"SOASP: Invalid domain name: {line[2]}")
+
+        if not line[3].isnumeric():
+            raise InvalidDatabaseFileException(f"SOASP: Time-to-Live must be a number: {line[3]}")
 
     def _parse_soaadmin(self, line: list[str]):
-        print("SOADMIN")
+        """
+        Value indicates e-mail address of domain administrator (or zone).
+        The symbol '@' must be replaced by a dot, '.' and dots before the '@' must be preceded by a '\'.
+
+        Parameter must be a valid macro or domain name.
+        Time to live must be a valid macro or integer.
+
+        This field does not accept priority values.
+
+        :param line: Inputted line to be checked and parsed.
+        :return:
+        """
+
+        if len(line) != 4:
+            raise InvalidDatabaseFileException(f"SOAADMIN: Not enough values were provided.\n\t{line}")
+
+        for macro in self.macros:
+            for idx, line_slice in enumerate(line):
+                if macro in line_slice and idx != 2:
+                    line[idx] = line[idx].replace(macro, self.macros[macro])
+
+        if not re.fullmatch(self.re_domain_dot, line[0]):
+            raise InvalidDatabaseFileException(f"SOAADMIN: Invalid domain name: {line[0]}")
+
+        if re.fullmatch(self.re_email, line[2]):
+            at_index = line[2].rfind('@')
+
+            new_email_value = line[2][:at_index].replace('.', '\\.')
+            new_email_value = f"{new_email_value}{line[2][at_index:].replace('@', '.')}"
+
+        else:
+            raise InvalidDatabaseFileException(f"SOAADMIN: Invalid e-mail address.\n\t{line[2]}")
+
+        if not line[3].isnumeric():
+            raise InvalidDatabaseFileException(f"SOAADMIN: Time-to-Live must be a number.\n\t{line[3]}")
+
+        # print(f'{line[0], line[1], new_email_value, line[3]}')
+        # return new_email_value
 
     def _parse_soa_srl_rfr_rtr_exp(self, line: list[str]):
-        print("SRL,RFR,RTR,EXP")
+        """
+        SOASERIAL: Value indicates serial number of database of the primary server (SP) given on parameter.
+                   Everytime time that the database is changed this value has to increment.
+
+        SOAREFRESH: Value indicates a time interval in seconds for an secondary server (SS) to ask a primary server
+                    (SP) what is the SOASERIAL value.
+
+        SOARETRY: Value defines a time interval for the SS to re-ask SP what the SOASERIAL value is (after a timeout).
+
+        SOAEXPIRE: Value defines a time interval to let a SS to stop giving a fuck about it's database replica.
+
+        Examples:
+            @ SOASERIAL 0117102022 TTL
+            @ SOAREFRESH 14400 TTL
+            @ SOARETRY 3600 TTL
+            @ SOAEXPIRE 604800 TTL
+
+        :param line: Inputted line to be checked and parsed.
+        :return:
+        """
+
+        if len(line) != 4:
+            raise InvalidDatabaseFileException(f"{line[0]}: Not enough values were provided.\n\t{line}")
+
+        for macro in self.macros:
+            for idx, line_slice in enumerate(line):
+                if macro in line_slice and idx != 2:
+                    line[idx] = line[idx].replace(macro, self.macros[macro])
+
+        if not re.fullmatch(self.re_domain_dot, line[0]):
+            raise InvalidDatabaseFileException(f"{line[0]}: Invalid domain name: {line[0]}")
+
+        if not line[3].isnumeric() or not line[2].isnumeric():
+            raise InvalidDatabaseFileException(f"{line[0]}: Time-to-Live/Value must be a number: {line[3], line[2]}")
+
 
     def _parse_ns(self, line: list[str]):
         print("NS")
@@ -87,21 +199,11 @@ class DatabaseFileParser(FileParser):
         """
 
         content_lines = self.clean_up(self.path)
-        macros_values = {}
 
         line: list[str]
         for line in content_lines:
             if line[1]:
-                operation = self.operations.get(line[1], lambda: "Not Implemented")
-                # noinspection PyArgumentList
+                operation: Callable[[list[str]], None] = self.operations.get(line[1], lambda: "Not Implemented")
                 operation(line)
 
-            # try:
-            #
-            #     if line[1] == 'DEFAULT':
-            #         if line[0] == '@' and :
-            #
-            #
-            #
-            # except Exception as err:
-            #     print(err)
+        print(f'Macros: {self.macros}')
