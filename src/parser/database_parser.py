@@ -175,9 +175,47 @@ class DatabaseFileParser(FileParser):
         if not line[3].isnumeric() or not line[2].isnumeric():
             raise InvalidDatabaseFileException(f"{line[0]}: Time-to-Live/Value must be a number: {line[3], line[2]}")
 
-
     def _parse_ns(self, line: list[str]):
-        print("NS")
+        """
+        Value represents the name of an authoritative server for the domain indicated on the parameter.
+        NS value type supports priority argument.
+
+        Examples:
+            @ NS ns1.example.com. TTL
+            @ NS ns2.example.com. TTL
+            @ NS ns3.example.com. TTL
+
+        # Has to assume TTL value of sp (aka. ns1).
+
+        :param line: Inputted line to be checked and parsed.
+        :return:
+        """
+
+        for macro in self.macros:
+            for idx, line_slice in enumerate(line):
+                if macro in line_slice:
+                    line[idx] = line[idx].replace(macro, self.macros[macro])
+
+        line_args_len: int = len(line)
+
+        if line_args_len in range(4, 6):
+
+            if line_args_len == 5 and not line[4].isnumeric():
+                raise InvalidDatabaseFileException(f"{line[1]}: Priority must be an integer value: {line[4]}")
+            elif line_args_len == 5:
+                priority: int = int(line[4])
+
+            if not re.fullmatch(self.re_domain_dot, line[0]):
+                raise InvalidDatabaseFileException(f"{line[1]}: Invalid domain name: {line[0]}")
+
+            if not re.fullmatch(self.re_domain_dot, line[2]):
+                raise InvalidDatabaseFileException(f"{line[1]}: Invalid domain name: {line[2]}")
+
+            if not line[3].isnumeric():
+                raise InvalidDatabaseFileException(f"{line[1]}: Time-to-Live/Value must be a valid integer: {line[2]}")
+
+        else:
+            raise InvalidDatabaseFileException(f"{line[1]}: Not enough values were provided: {line}")
 
     def _parse_mx(self, line: list[str]):
         print("MX")
