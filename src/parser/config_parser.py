@@ -1,12 +1,10 @@
-from models.mode import Mode, ValueType
+from models.mode import Mode
 from exceptions.exceptions import InvalidConfigFileException
-from models.config import Config, ConfigElement
+from dns.config_entry import ConfigEntry
 from parser.abstract_parser import FileParser
 from parser.regex_compiles import RE_DOMAIN, RE_IVP4
 
 import os
-import re
-
 
 class ConfigFileParser(FileParser):
     """
@@ -28,14 +26,14 @@ class ConfigFileParser(FileParser):
     def __init__(self, file_path_str: str, mode: Mode):
         super(ConfigFileParser, self).__init__(file_path_str, mode)
 
-    def parse(self):
+    def parse(self) -> list[ConfigEntry]:
         """
         Function that parses a given configuration file for either an SP, SS or SR server.
 
         :return: Configuration object containing the file information.
         """
 
-        result: Config = Config()
+        result: list[ConfigEntry] = []
 
         content_lines = self.clean_up(self.path)
 
@@ -49,39 +47,37 @@ class ConfigFileParser(FileParser):
             if value_type == "DB":
 
                 if RE_DOMAIN.fullmatch(parameter) is None:
-                    raise InvalidConfigFileException(f"Value '{parameter}' is not a domain name:\n\n{line}")
+                    raise InvalidConfigFileException(f"DB: Value '{parameter}' is not a domain name: {line}")
 
                 if not os.path.isfile(value):
-                    raise InvalidConfigFileException(f"File '{value}' does not exits:\n\t{line}")
+                    raise InvalidConfigFileException(f"File '{value}' does not exits: {line}")
 
             elif value_type == "LG":
 
                 if RE_DOMAIN.fullmatch(parameter) is None and (parameter != "all"):
                     raise InvalidConfigFileException(
-                        f"Value '{parameter}' is not a domain name or keyword 'all':\n\t{line}")
+                        f"Value '{parameter}' is not a domain name or keyword 'all': {line}")
 
             elif value_type == "ST":
 
                 if parameter != "root":
-                    raise InvalidConfigFileException(f"Parameter for 'ST' has to be 'root':\n\t{line}")
+                    raise InvalidConfigFileException(f"Parameter '{parameter}' has to be 'root': {line}")
 
             elif value_type in ["SP", "SS", "DD"]:
 
                 if RE_DOMAIN.fullmatch(parameter) is None:
-                    raise InvalidConfigFileException(f"Value '{parameter}' is not a domain name:\n\t{line}")
+                    raise InvalidConfigFileException(f"Value '{parameter}' is not a domain name: {line}")
 
                 if RE_IVP4.fullmatch(value) is None:
-                    raise InvalidConfigFileException(f"Address '{value}' is not a valid IP address:\n\t{line}")
+                    raise InvalidConfigFileException(f"Address '{value}' is not a valid IP address: {line}")
 
             else:
+                raise InvalidConfigFileException(f"Invalid value type on file '{self.path}': {line}")
 
-                raise InvalidConfigFileException(f"Invalid value type on file '{self.path}'.\n{line}")
+            element: ConfigEntry = ConfigEntry(line)
+            result.append(element)
 
-            element: ConfigElement = ConfigElement(mode=ValueType[value_type], value=value)
-
-            if parameter not in result.config:
-                result.config[parameter] = []
-
-            result.config[parameter].append(element)
+        for entry in result:
+            print(entry)
 
         return result

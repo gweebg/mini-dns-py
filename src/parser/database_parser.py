@@ -31,6 +31,14 @@ class DatabaseFileParser(FileParser):
         self.macros = {}
         self.alias = {}
 
+    @staticmethod
+    def _check_ttl_value(value_string: str) -> bool:
+
+        if value_string.isnumeric() and int(value_string) in range(0, 255):
+            return True
+
+        return False
+
     def _replace_macros(self, line: list[str], ignore_index: int | None = None) -> list[str]:
 
         for macro in self.macros:
@@ -47,7 +55,7 @@ class DatabaseFileParser(FileParser):
 
     def _parse_default(self, line: list[str]) -> None:
         """
-        DEFAULT value type defines a name as a macro that must be replaced by it's literal associated value.
+        DEFAULT value type defines a name as a macro that must be replaced by its literal associated value.
         The parameter '@' is reserved and used to identify a prefix by default that is added every time a domain name
         doesn't appear on a full completer form.
 
@@ -83,8 +91,6 @@ class DatabaseFileParser(FileParser):
         :param line: Inputted line to be checked and parsed.
         :return:
         """
-
-        has_at_symbol = False
 
         if len(line) != 4:
             raise InvalidDatabaseFileException(f"SOASP: Not enough values were provided: {line}")
@@ -146,12 +152,12 @@ class DatabaseFileParser(FileParser):
         SOASERIAL: Value indicates serial number of database of the primary server (SP) given on parameter.
                    Everytime time that the database is changed this value has to increment.
 
-        SOAREFRESH: Value indicates a time interval in seconds for an secondary server (SS) to ask a primary server
+        SOAREFRESH: Value indicates a time interval in seconds for a secondary server (SS) to ask a primary server
                     (SP) what is the SOASERIAL value.
 
         SOARETRY: Value defines a time interval for the SS to re-ask SP what the SOASERIAL value is (after a timeout).
 
-        SOAEXPIRE: Value defines a time interval to let a SS to stop giving a fuck about it's database replica.
+        SOAEXPIRE: Value defines a time interval to let a SS to stop giving a fuck about its database replica.
 
         Examples:
             @ SOASERIAL 0117102022 TTL
@@ -205,10 +211,8 @@ class DatabaseFileParser(FileParser):
 
         if line_args_len in range(4, 6):
 
-            if line_args_len == 5 and not line[4].isnumeric():
-                raise InvalidDatabaseFileException(f"{line[1]}: Priority must be an integer value: {line[4]}")
-            elif line_args_len == 5:
-                priority: int = int(line[4])
+            if line_args_len == 5 and not line[4].isnumeric() or (line_args_len == 5 and not self._check_ttl_value(line[4])):
+                raise InvalidDatabaseFileException(f"{line[1]}: Priority must be an integer value bellow 255: {line[4]}")
 
             if not re.fullmatch(RE_DOMAIN_DOT, line[0]):
                 raise InvalidDatabaseFileException(f"{line[1]}: Invalid domain name: {line[0]}")
@@ -232,10 +236,8 @@ class DatabaseFileParser(FileParser):
         line_args_len: int = len(line)
         if line_args_len in range(4, 6):
 
-            if line_args_len == 5 and not line[4].isnumeric():
-                raise InvalidDatabaseFileException(f"{line[1]}: Priority must be an integer value: {line[4]}")
-            elif line_args_len == 5:
-                priority: int = int(line[4])
+            if line_args_len == 5 and not line[4].isnumeric() or (line_args_len == 5 and not self._check_ttl_value(line[4])):
+                raise InvalidDatabaseFileException(f"{line[1]}: Priority must be an integer value bellow 255: {line[4]}")
 
             if not re.fullmatch(RE_IVP4, line[2]):
                 raise InvalidDatabaseFileException(f"{line[1]}: Invalid domain name: {line[2]}")
@@ -267,14 +269,14 @@ class DatabaseFileParser(FileParser):
 
         line: list[str]
         for line in content_lines:
-            if line[1]:
-                operation: Callable[[list[str]], ...] = self.operations.get(line[1], lambda: "Not Implemented")
-                dns_resource = operation(line)
 
-                if dns_resource is not None:
-                    dns_entries.append(dns_resource)
+            operation: Callable[[list[str]], ...] = self.operations.get(line[1])
+            dns_resource = operation(line)
 
-        print(f'Macros: {self.macros}')
-        print(dns_entries)
+            if dns_resource is not None:
+                dns_entries.append(dns_resource)
+
+        for entry in dns_entries:
+            print(entry)
 
         return dns_entries

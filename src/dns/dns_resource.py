@@ -25,11 +25,7 @@ class DNSResource:
         self.type = DNSValueType[line[1]]
         self.value = line[2]
         self.ttl = line[3]
-
-        if has_priority:
-            self.priority = line[4]
-        else:
-            self.priority = None
+        self.priority = line[4] if has_priority else None
 
     def as_log_string(self) -> str:
         ...
