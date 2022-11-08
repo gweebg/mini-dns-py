@@ -1,4 +1,4 @@
-from parser.gen_config_parser import ConfigFileParser
+from parser.config_parser import ConfigFileParser
 from parser.database_parser import DatabaseFileParser
 from parser.abstract_parser import FileParser
 from models.mode import Mode
@@ -33,6 +33,6 @@ class FileParserFactory:
         Provides the correct parser for the given operation mode (mode.Mode).
         :return: Correct parser object.
         """
-        return self.call[self.mode](self.path, self.mode)
+        return self.call.get(self.mode)(self.path, self.mode)
 
 

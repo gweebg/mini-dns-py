@@ -2,6 +2,7 @@ from models.mode import Mode, ValueType
 from exceptions.exceptions import InvalidConfigFileException
 from models.config import Config, ConfigElement
 from parser.abstract_parser import FileParser
+from parser.regex_compiles import RE_DOMAIN, RE_IVP4
 
 import os
 import re
@@ -27,10 +28,6 @@ class ConfigFileParser(FileParser):
     def __init__(self, file_path_str: str, mode: Mode):
         super(ConfigFileParser, self).__init__(file_path_str, mode)
 
-        self._re_domain = re.compile("^((?!-)[A-Za-z0-9-]{1,63}(?<!-)\\.)+[A-Za-z]{2,6}")
-        self._re_ipv4 = re.compile(
-            r"\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(?::[0-9]{1,4})?\b")
-
     def parse(self):
         """
         Function that parses a given configuration file for either an SP, SS or SR server.
@@ -51,7 +48,7 @@ class ConfigFileParser(FileParser):
 
             if value_type == "DB":
 
-                if self._re_domain.fullmatch(parameter) is None:
+                if RE_DOMAIN.fullmatch(parameter) is None:
                     raise InvalidConfigFileException(f"Value '{parameter}' is not a domain name:\n\n{line}")
 
                 if not os.path.isfile(value):
@@ -59,7 +56,7 @@ class ConfigFileParser(FileParser):
 
             elif value_type == "LG":
 
-                if self._re_domain.fullmatch(parameter) is None and (parameter != "all"):
+                if RE_DOMAIN.fullmatch(parameter) is None and (parameter != "all"):
                     raise InvalidConfigFileException(
                         f"Value '{parameter}' is not a domain name or keyword 'all':\n\t{line}")
 
@@ -70,10 +67,10 @@ class ConfigFileParser(FileParser):
 
             elif value_type in ["SP", "SS", "DD"]:
 
-                if self._re_domain.fullmatch(parameter) is None:
+                if RE_DOMAIN.fullmatch(parameter) is None:
                     raise InvalidConfigFileException(f"Value '{parameter}' is not a domain name:\n\t{line}")
 
-                if self._re_ipv4.fullmatch(value) is None:
+                if RE_IVP4.fullmatch(value) is None:
                     raise InvalidConfigFileException(f"Address '{value}' is not a valid IP address:\n\t{line}")
 
             else:

@@ -1,6 +1,8 @@
 from models.mode import Mode
 from parser.abstract_parser import FileParser
 from exceptions.exceptions import InvalidDatabaseFileException
+from parser.regex_compiles import *
+from dns.dns_resource import DNSResource
 
 import re
 from typing import Callable
@@ -10,15 +12,6 @@ class DatabaseFileParser(FileParser):
 
     def __init__(self, file_path_str: str, mode: Mode):
         super(DatabaseFileParser, self).__init__(file_path_str, mode)
-
-        self.re_domain_dot = re.compile(
-            "^((?!-)[A-Za-z0-9-]" + "{1,63}(?<!-)\\.)" + "+[A-Za-z]{2,6}.")
-        self.re_ipv4 = re.compile(
-            r"\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(?::[0-9]{1,4})?\b")
-        self.re_hostname = re.compile(
-            r"^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$")
-        self.re_email = re.compile(
-            r"^[a-z0-9]+[._]?[a-z0-9]+@\w+[.]\w{2,3}$")
 
         self.operations = {
             'DEFAULT': self._parse_default,
@@ -36,8 +29,9 @@ class DatabaseFileParser(FileParser):
         }
 
         self.macros = {}
+        self.alias = {}
 
-    def _parse_default(self, line: list[str]):
+    def _parse_default(self, line: list[str]) -> None:
         """
         DEFAULT value type defines a name as a macro that must be replaced by it's literal associated value.
         The parameter '@' is reserved and used to identify a prefix by default that is added every time a domain name
@@ -55,13 +49,13 @@ class DatabaseFileParser(FileParser):
         if len(line) != 3:
             raise InvalidDatabaseFileException(f"Macro setting must have an assigned value:\n\t{line}")
 
-        if line[0] == '@' and not re.fullmatch(self.re_domain_dot, line[2]):
+        if line[0] == '@' and not re.fullmatch(RE_DOMAIN_DOT, line[2]):
             raise InvalidDatabaseFileException(
                 f"Restricted macro '@' must have a valid domain name as value: {line[2]}")
 
         self.macros[line[0]] = line[2]
 
-    def _parse_soasp(self, line: list[str]):
+    def _parse_soasp(self, line: list[str]) -> DNSResource:
         """
         Value indicates the full name of the domain primary server (or zone) given on the parameter.
 
@@ -90,16 +84,18 @@ class DatabaseFileParser(FileParser):
 
                     line[idx] = line[idx].replace(macro, self.macros[macro])
 
-        if not re.fullmatch(self.re_domain_dot, line[0]) and not has_at_symbol:
+        if not re.fullmatch(RE_DOMAIN_DOT, line[0]) and not has_at_symbol:
             raise InvalidDatabaseFileException(f"SOASP: Invalid domain name: {line[0]}")
 
-        if not re.fullmatch(self.re_domain_dot, line[2]):
+        if not re.fullmatch(RE_DOMAIN_DOT, line[2]):
             raise InvalidDatabaseFileException(f"SOASP: Invalid domain name: {line[2]}")
 
         if not line[3].isnumeric():
             raise InvalidDatabaseFileException(f"SOASP: Time-to-Live must be a number: {line[3]}")
 
-    def _parse_soaadmin(self, line: list[str]):
+        return DNSResource(line)
+
+    def _parse_soaadmin(self, line: list[str]) -> DNSResource:
         """
         Value indicates e-mail address of domain administrator (or zone).
         The symbol '@' must be replaced by a dot, '.' and dots before the '@' must be preceded by a '\'.
@@ -121,10 +117,10 @@ class DatabaseFileParser(FileParser):
                 if macro in line_slice and idx != 2:
                     line[idx] = line[idx].replace(macro, self.macros[macro])
 
-        if not re.fullmatch(self.re_domain_dot, line[0]):
+        if not re.fullmatch(RE_DOMAIN_DOT, line[0]):
             raise InvalidDatabaseFileException(f"SOAADMIN: Invalid domain name: {line[0]}")
 
-        if re.fullmatch(self.re_email, line[2]):
+        if re.fullmatch(RE_EMAIL, line[2]):
             at_index = line[2].rfind('@')
 
             new_email_value = line[2][:at_index].replace('.', '\\.')
@@ -136,10 +132,9 @@ class DatabaseFileParser(FileParser):
         if not line[3].isnumeric():
             raise InvalidDatabaseFileException(f"SOAADMIN: Time-to-Live must be a number.\n\t{line[3]}")
 
-        # print(f'{line[0], line[1], new_email_value, line[3]}')
-        # return new_email_value
+        return DNSResource(line)
 
-    def _parse_soa_srl_rfr_rtr_exp(self, line: list[str]):
+    def _parse_soa_srl_rfr_rtr_exp(self, line: list[str]) -> DNSResource:
         """
         SOASERIAL: Value indicates serial number of database of the primary server (SP) given on parameter.
                    Everytime time that the database is changed this value has to increment.
@@ -169,13 +164,15 @@ class DatabaseFileParser(FileParser):
                 if macro in line_slice and idx != 2:
                     line[idx] = line[idx].replace(macro, self.macros[macro])
 
-        if not re.fullmatch(self.re_domain_dot, line[0]):
+        if not re.fullmatch(RE_DOMAIN_DOT, line[0]):
             raise InvalidDatabaseFileException(f"{line[0]}: Invalid domain name: {line[0]}")
 
         if not line[3].isnumeric() or not line[2].isnumeric():
             raise InvalidDatabaseFileException(f"{line[0]}: Time-to-Live/Value must be a number: {line[3], line[2]}")
 
-    def _parse_ns(self, line: list[str]):
+        return DNSResource(line)
+
+    def _parse_ns(self, line: list[str]) -> DNSResource:
         """
         Value represents the name of an authoritative server for the domain indicated on the parameter.
         NS value type supports priority argument.
@@ -205,10 +202,10 @@ class DatabaseFileParser(FileParser):
             elif line_args_len == 5:
                 priority: int = int(line[4])
 
-            if not re.fullmatch(self.re_domain_dot, line[0]):
+            if not re.fullmatch(RE_DOMAIN_DOT, line[0]):
                 raise InvalidDatabaseFileException(f"{line[1]}: Invalid domain name: {line[0]}")
 
-            if not re.fullmatch(self.re_domain_dot, line[2]):
+            if not re.fullmatch(RE_DOMAIN_DOT, line[2]):
                 raise InvalidDatabaseFileException(f"{line[1]}: Invalid domain name: {line[2]}")
 
             if not line[3].isnumeric():
@@ -216,6 +213,8 @@ class DatabaseFileParser(FileParser):
 
         else:
             raise InvalidDatabaseFileException(f"{line[1]}: Not enough values were provided: {line}")
+
+        return DNSResource(line, True)
 
     def _parse_mx(self, line: list[str]):
         print("MX")
@@ -237,11 +236,16 @@ class DatabaseFileParser(FileParser):
         """
 
         content_lines = self.clean_up(self.path)
+        dns_entries: list[DNSResource] = []
 
         line: list[str]
         for line in content_lines:
             if line[1]:
-                operation: Callable[[list[str]], None] = self.operations.get(line[1], lambda: "Not Implemented")
-                operation(line)
+                operation: Callable[[list[str]], _] = self.operations.get(line[1], lambda: "Not Implemented")
+                dns_resource = operation(line)
+
+                if dns_resource is not None:
+                    dns_entries.append(dns_resource)
 
         print(f'Macros: {self.macros}')
+        print(dns_entries)

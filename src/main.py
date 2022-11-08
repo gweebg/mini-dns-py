@@ -7,7 +7,7 @@ def main():
     # config = file_parser.get_parser().parse()
     # print(config)
 
-    database_parser = FileParserFactory("../tests/db.conf", Mode.DB)
+    database_parser = FileParserFactory("../tests/database.conf", Mode.DB)
     database = database_parser.get_parser().parse()
 
 
