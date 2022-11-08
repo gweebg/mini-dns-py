@@ -16,16 +16,20 @@ class DNSValueType(Enum):
     PTR = 13
 
 
-class DNSResource():
+class DNSResource:
 
     def __init__(self, line: list[str], has_priority: bool = False):
         # {parâmetro} {tipo do valor} {valor} {tempo de validade} {prioridade} #
 
-        self.type = DNSValueType[line[1]]
         self.parameter = line[0]
+        self.type = DNSValueType[line[1]]
         self.value = line[2]
         self.ttl = line[3]
-        self.priority = line[4] if has_priority else None
+
+        if has_priority:
+            self.priority = line[4]
+        else:
+            self.priority = None
 
     def as_log_string(self) -> str:
         ...

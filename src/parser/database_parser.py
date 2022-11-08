@@ -21,8 +21,8 @@ class DatabaseFileParser(FileParser):
             'SOAREFRESH': self._parse_soa_srl_rfr_rtr_exp,
             'SOARETRY': self._parse_soa_srl_rfr_rtr_exp,
             'SOAEXPIRE': self._parse_soa_srl_rfr_rtr_exp,
-            'NS': self._parse_ns,
-            'MX': self._parse_mx,
+            'NS': self._parse_ns_mx,
+            'MX': self._parse_ns_mx,
             'A': self._parse_a,
             'CNAME': self._parse_cname,
             'PTR': self._parse_ptr
@@ -30,6 +30,20 @@ class DatabaseFileParser(FileParser):
 
         self.macros = {}
         self.alias = {}
+
+    def _replace_macros(self, line: list[str], ignore_index: int | None = None) -> list[str]:
+
+        for macro in self.macros:
+            if ignore_index is not None:
+                for idx, line_slice in enumerate(line):
+                    if macro in line_slice and ignore_index != idx:
+                        line[idx] = line[idx].replace(macro, self.macros[macro])
+            else:
+                for idx, line_slice in enumerate(line):
+                    if macro in line_slice:
+                        line[idx] = line[idx].replace(macro, self.macros[macro])
+
+        return line
 
     def _parse_default(self, line: list[str]) -> None:
         """
@@ -75,16 +89,10 @@ class DatabaseFileParser(FileParser):
         if len(line) != 4:
             raise InvalidDatabaseFileException(f"SOASP: Not enough values were provided: {line}")
 
-        for macro in self.macros:
-            for idx, line_slice in enumerate(line):
-                if macro in line_slice and idx != 2:
+        # Macro replacement.
+        line = self._replace_macros(line)
 
-                    if macro == '@':
-                        has_at_symbol = True
-
-                    line[idx] = line[idx].replace(macro, self.macros[macro])
-
-        if not re.fullmatch(RE_DOMAIN_DOT, line[0]) and not has_at_symbol:
+        if not re.fullmatch(RE_DOMAIN_DOT, line[0]):
             raise InvalidDatabaseFileException(f"SOASP: Invalid domain name: {line[0]}")
 
         if not re.fullmatch(RE_DOMAIN_DOT, line[2]):
@@ -112,19 +120,18 @@ class DatabaseFileParser(FileParser):
         if len(line) != 4:
             raise InvalidDatabaseFileException(f"SOAADMIN: Not enough values were provided.\n\t{line}")
 
-        for macro in self.macros:
-            for idx, line_slice in enumerate(line):
-                if macro in line_slice and idx != 2:
-                    line[idx] = line[idx].replace(macro, self.macros[macro])
+        # Macro replacement.
+        line = self._replace_macros(line, 2)
 
         if not re.fullmatch(RE_DOMAIN_DOT, line[0]):
             raise InvalidDatabaseFileException(f"SOAADMIN: Invalid domain name: {line[0]}")
 
         if re.fullmatch(RE_EMAIL, line[2]):
-            at_index = line[2].rfind('@')
 
+            at_index = line[2].rfind('@')
             new_email_value = line[2][:at_index].replace('.', '\\.')
             new_email_value = f"{new_email_value}{line[2][at_index:].replace('@', '.')}"
+            line[2] = new_email_value
 
         else:
             raise InvalidDatabaseFileException(f"SOAADMIN: Invalid e-mail address.\n\t{line[2]}")
@@ -159,10 +166,7 @@ class DatabaseFileParser(FileParser):
         if len(line) != 4:
             raise InvalidDatabaseFileException(f"{line[0]}: Not enough values were provided.\n\t{line}")
 
-        for macro in self.macros:
-            for idx, line_slice in enumerate(line):
-                if macro in line_slice and idx != 2:
-                    line[idx] = line[idx].replace(macro, self.macros[macro])
+        line = self._replace_macros(line)
 
         if not re.fullmatch(RE_DOMAIN_DOT, line[0]):
             raise InvalidDatabaseFileException(f"{line[0]}: Invalid domain name: {line[0]}")
@@ -172,9 +176,9 @@ class DatabaseFileParser(FileParser):
 
         return DNSResource(line)
 
-    def _parse_ns(self, line: list[str]) -> DNSResource:
+    def _parse_ns_mx(self, line: list[str]) -> DNSResource:
         """
-        Value represents the name of an authoritative server for the domain indicated on the parameter.
+        NS Value represents the name of an authoritative server for the domain indicated on the parameter.
         NS value type supports priority argument.
 
         Examples:
@@ -184,14 +188,18 @@ class DatabaseFileParser(FileParser):
 
         # Has to assume TTL value of sp (aka. ns1).
 
+        As for MX, value indicates an e-mail server name for the domain given on the parameter.
+        This type supports a priority value.
+
+        Examples:
+            @ MX mx1.example.com TTL 10
+            @ MX mx2.example.com TTL 20
+
         :param line: Inputted line to be checked and parsed.
         :return:
         """
 
-        for macro in self.macros:
-            for idx, line_slice in enumerate(line):
-                if macro in line_slice:
-                    line[idx] = line[idx].replace(macro, self.macros[macro])
+        line = self._replace_macros(line)
 
         line_args_len: int = len(line)
 
@@ -214,21 +222,40 @@ class DatabaseFileParser(FileParser):
         else:
             raise InvalidDatabaseFileException(f"{line[1]}: Not enough values were provided: {line}")
 
-        return DNSResource(line, True)
+        has_priority = True if len(line) == 5 else False
+        return DNSResource(line, has_priority)
 
-    def _parse_mx(self, line: list[str]):
-        print("MX")
+    def _parse_a(self, line: list[str]) -> DNSResource:
 
-    def _parse_a(self, line: list[str]):
-        print("A")
+        line = self._replace_macros(line)
+
+        line_args_len: int = len(line)
+        if line_args_len in range(4, 6):
+
+            if line_args_len == 5 and not line[4].isnumeric():
+                raise InvalidDatabaseFileException(f"{line[1]}: Priority must be an integer value: {line[4]}")
+            elif line_args_len == 5:
+                priority: int = int(line[4])
+
+            if not re.fullmatch(RE_IVP4, line[2]):
+                raise InvalidDatabaseFileException(f"{line[1]}: Invalid domain name: {line[2]}")
+
+            if not line[3].isnumeric():
+                raise InvalidDatabaseFileException(f"{line[1]}: Time-to-Live/Value must be a valid integer: {line[2]}")
+
+        else:
+            raise InvalidDatabaseFileException(f"{line[1]}: Not enough values were provided: {line}")
+
+        has_priority = True if len(line) == 5 else False
+        return DNSResource(line, has_priority)
 
     def _parse_cname(self, line: list[str]):
-        print("CNAME")
+        ...
 
-    def _parse_ptr(self, line: list[str]):
-        print("PTR")
+    def _parse_ptr(self, line: list[str]) -> DNSResource:
+        ...
 
-    def parse(self):
+    def parse(self) -> list[DNSResource]:
         """
         Function that parses a given configuration file for an SP database file.
 
@@ -241,7 +268,7 @@ class DatabaseFileParser(FileParser):
         line: list[str]
         for line in content_lines:
             if line[1]:
-                operation: Callable[[list[str]], _] = self.operations.get(line[1], lambda: "Not Implemented")
+                operation: Callable[[list[str]], ...] = self.operations.get(line[1], lambda: "Not Implemented")
                 dns_resource = operation(line)
 
                 if dns_resource is not None:
@@ -249,3 +276,5 @@ class DatabaseFileParser(FileParser):
 
         print(f'Macros: {self.macros}')
         print(dns_entries)
+
+        return dns_entries
