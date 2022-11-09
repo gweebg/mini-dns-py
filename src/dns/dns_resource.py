@@ -30,6 +30,12 @@ class DNSResource:
     def as_log_string(self) -> str:
         ...
 
+    @classmethod
+    def __get_validators__(cls):
+        yield cls.validate
+
+
+
     def __repr__(self):
         return f"[{self.type}] : {self.parameter}, {self.value}, {self.ttl}, {self.priority}"
 

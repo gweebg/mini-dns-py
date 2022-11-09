@@ -16,10 +16,10 @@ class InvalidDatabaseFileException(Exception):
         super(InvalidDatabaseFileException, self).__init__(message)
 
 
-class InvalidDNSHeaderFormat(Exception):
+class InvalidDNSPacket(Exception):
     """
     Custom exception for invalid parameters.
     """
 
     def __init__(self, message='Bad dns header.'):
-        super(InvalidDNSHeaderFormat, self).__init__(message)
+        super(InvalidDNSPacket, self).__init__(message)

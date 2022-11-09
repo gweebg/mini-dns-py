@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="927eff29-955a-4a80-bb91-02b988460bcb" name="Changes" comment="Small improvements.">
-      <change afterPath="$PROJECT_DIR$/src/dns/dns_packet.py" afterDir="false" />
+    <list default="true" id="927eff29-955a-4a80-bb91-02b988460bcb" name="Changes" comment="Started implementing DNS Packet. DNS Header is done and working.&#10;&#10;Missing DNS Query Info and Data.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dns/dns_packet.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/dns_packet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dns/dns_resource.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/dns_resource.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/exceptions/exceptions.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/exceptions/exceptions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/parser/regex_compiles.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/regex_compiles.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,7 +44,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;
   }
 }</component>
-  <component name="RunManager" selected="Python.Main">
+  <component name="RunManager" selected="Python.dns_packet">
     <configuration name="Main" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="mini-dns-py" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -59,6 +59,28 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="dns_packet" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="mini-dns-py" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/dns" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/dns/dns_packet.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -84,6 +106,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.dns_packet" />
         <item itemvalue="Python.Main" />
         <item itemvalue="Python tests.Python tests for test_re_domain.test_domain_names" />
       </list>
@@ -110,7 +133,11 @@
       <workItem from="1667918804485" duration="3194000" />
       <workItem from="1667923934484" duration="3870000" />
       <workItem from="1667936091569" duration="510000" />
-      <workItem from="1667992045154" duration="4723000" />
+      <workItem from="1667992045154" duration="4917000" />
+      <workItem from="1668009656248" duration="143000" />
+      <workItem from="1668010300908" duration="22000" />
+      <workItem from="1668011317907" duration="1816000" />
+      <workItem from="1668024404570" duration="5299000" />
     </task>
     <task id="LOCAL-00001" summary="Continuation of database parsing.&#10;&#10;Missing NS, MX, A, CNAME and PTR parsers.">
       <created>1666713019519</created>
@@ -147,7 +174,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667927061199</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Started implementing DNS Packet. DNS Header is done and working.&#10;&#10;Missing DNS Query Info and Data.">
+      <created>1667996814757</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1667996814757</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -173,10 +207,12 @@
     <MESSAGE value="Introduced DNSResource class.&#10;&#10;Missing MX, A, CNAME and PTR parsers." />
     <MESSAGE value="Missing CNAME and PTR parsers.&#10;&#10;Q: Smaller.@ NS sp.smaller.example.com. with no TTL ?" />
     <MESSAGE value="Small improvements." />
-    <option name="LAST_COMMIT_MESSAGE" value="Small improvements." />
+    <MESSAGE value="Started implementing DNS Packet. DNS Header is done and working.&#10;&#10;Missing DNS Query Info and Data." />
+    <option name="LAST_COMMIT_MESSAGE" value="Started implementing DNS Packet. DNS Header is done and working.&#10;&#10;Missing DNS Query Info and Data." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/mini_dns_py$.coverage" NAME=" Coverage Results" MODIFIED="1666711877164" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/mini_dns_py$dns_packet.coverage" NAME="dns_packet Coverage Results" MODIFIED="1668029518677" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns" />
     <SUITE FILE_PATH="coverage/mini_dns_py$Main.coverage" NAME="Main Coverage Results" MODIFIED="1667927009726" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/mini_dns_py$main.coverage" NAME="Main Coverage Results" MODIFIED="1666610138886" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
   </component>
