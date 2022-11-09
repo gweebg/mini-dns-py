@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="927eff29-955a-4a80-bb91-02b988460bcb" name="Changes" comment="Missing CNAME and PTR parsers.&#10;&#10;Q: Smaller.@ NS sp.smaller.example.com. with no TTL ?">
-      <change afterPath="$PROJECT_DIR$/src/dns/config_entry.py" afterDir="false" />
+    <list default="true" id="927eff29-955a-4a80-bb91-02b988460bcb" name="Changes" comment="Small improvements.">
+      <change afterPath="$PROJECT_DIR$/src/dns/dns_packet.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dns/dns_resource.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/dns_resource.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/config.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/mode.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/mode.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/parser/config_parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/config_parser.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/parser/database_parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/database_parser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/exceptions/exceptions.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/exceptions/exceptions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parser/regex_compiles.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/regex_compiles.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,7 +108,9 @@
       <workItem from="1667831673196" duration="44000" />
       <workItem from="1667899560868" duration="4248000" />
       <workItem from="1667918804485" duration="3194000" />
-      <workItem from="1667923934484" duration="3098000" />
+      <workItem from="1667923934484" duration="3870000" />
+      <workItem from="1667936091569" duration="510000" />
+      <workItem from="1667992045154" duration="4723000" />
     </task>
     <task id="LOCAL-00001" summary="Continuation of database parsing.&#10;&#10;Missing NS, MX, A, CNAME and PTR parsers.">
       <created>1666713019519</created>
@@ -142,7 +140,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667921932862</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Small improvements.">
+      <created>1667927061199</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1667927061199</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -167,7 +172,8 @@
     <MESSAGE value="Continuation of database parsing.&#10;&#10;Missing MX, A, CNAME and PTR parsers." />
     <MESSAGE value="Introduced DNSResource class.&#10;&#10;Missing MX, A, CNAME and PTR parsers." />
     <MESSAGE value="Missing CNAME and PTR parsers.&#10;&#10;Q: Smaller.@ NS sp.smaller.example.com. with no TTL ?" />
-    <option name="LAST_COMMIT_MESSAGE" value="Missing CNAME and PTR parsers.&#10;&#10;Q: Smaller.@ NS sp.smaller.example.com. with no TTL ?" />
+    <MESSAGE value="Small improvements." />
+    <option name="LAST_COMMIT_MESSAGE" value="Small improvements." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/mini_dns_py$.coverage" NAME=" Coverage Results" MODIFIED="1666711877164" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
