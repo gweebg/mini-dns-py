@@ -1,0 +1,9 @@
+InetAddress serverAddress = InetAddress.getByName("127.0.0.1")
+int serverPort = 5555
+
+String pdu = new MyAppProto(msg_id, flag, numbers).toString()
+
+DatagramPacket req = new DatagramPacket(pdu.getBytes(), pdu.getBytes.length, serverAddress, serverPort)
+
+DatagramSocket s = new DatagramSocket();
+s.send(req)

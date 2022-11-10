@@ -1,0 +1,192 @@
+
+client                                          server
+|----|---------|UDP|MyAppProtocol|------------> |-----|
+|    |                                          |     |
+|    |<-----------|UDP|MyAppProtocol|---------- |     |
+|____|                                          |_____|
+
+
+                    Sockets
+                    /      \
+         Stream Socket      Datagram Sockets
+               |                    |
+              TCP                  UDP
+
+Client requirements:
+
+-> 1 timerun
+-> Read elements from memory (stack):
+    - numbers
+    - op_math
+    - ip_server
+    - port_server
+-> Handles MyAppProtocol (!)
+-> Client port is random
+-> Communication via UDP (!)
+
+Server requirements:
+
+-> Runs 24/7
+-> Knows how to do multiplications or sums (!)
+-> Processes a client at a time
+-> Uses port 5555
+-> Handles MyAppProtocol (!)
+-> Communication via UDP (!)
+
+(!) Actual code (!)
+
+System Architecture:
+
+
+    Client
+|----------------|
+| |--------|     |
+| | commUDP|-----|--Random_Port
+| |--------|     |
+|                |
+| |------------| |
+| | ProtoHandle| |
+| |------------| |
+|----------------|
+
+    Server
+|----------------|
+| |--------|     |
+| | commUDP|-----|--Port_5555
+| |--------|     |
+|                |
+| |------------| |
+| | ProtoHandle| |
+| |------------| |
+|                |
+| |------------| |
+| | Operations | |
+| |------------| |
+|----------------|
+
+MyAppProtocol:
+
+      1             S                        5 [space] 5
+|----------------------------------------------------------------------|
+|           |                |                                         |
+|    MSD    |     FLAGS      |                   INFO                  |
+|     ID    |                |                                         |
+|           |                |                                         |
+|----------------------------------------------------------------------|
+   string       S - sum              Number Separated By Whitespace
+   0-9999       M - mult
+                A - answer
+
+Communications Model :
+
+                  Client                      Server
+                ___________                 __________
+                     |         1;S;5 5           |
+        Random Port  |-------------------------->| Port 5555
+                     |                           |
+                     |                           |
+                     |                           |
+                     |       2;A;10              |
+        Random Port  |<--------------------------| Random Port
+                     |                           |
+                     |                           |
+
+
+Client Behaviour:
+
+|----------------------------|
+| Read Elements from Memory  |
+|                            |
+| firstNum <- "5"            |                 |-------------------------|
+| sndNum <- "5"              |---------------->| Build MyAppProtocol PDU |
+| mathOp <- "S"              |                 |-------------------------|
+| ServerIP <- "127.0.0.1"    |                              |
+| ServerPort <- 5555         |                              |
+|----------------------------|                              |
+                                               |--------------------------|
+                                               |      DatagramPacket      |<---- ServerIP, ServerPort, MyAppProtocol: byte[]
+                                               |--------------------------|
+                                                            |
+                                                            |
+                                                            |
+                                               |--------------------------|
+                                               |     Open UDP Socket      |       |------|
+                                               |     Datagram Socket      |------>| Send |-----|
+                                               |--------------------------|       |------|     |
+                                                                                               | waits
+                                                                                               |
+                                                                                          |------------------|
+                                                         |--------------------|  close    |  Receives a      |
+                                                         | Parse MyAppProtocol|-----------|  Datagram Packet |<---- UDP Payload, UDP Src Port, UDP Dest Port, From IP, To IP
+                                                         |--------------------|   Socket  |------------------|
+                                                                    |
+                                                                    |
+                                                                    |
+                                                            |------------------|
+                                                            |  Send to STDOUT  |------ Die
+                                                            |------------------|
+
+
+Server Behaviour:
+
+
+
+|-----------------------|                 |------------|              |---------------------------|
+| Open UDP Sockets 5555 |---------------> | While True |------------->| Reserve byte[] buffer 256 |
+|-----------------------|                 |------------|              |---------------------------|
+                                                                                    |
+                                                                                    |
+                                                                                    |
+                                                                          |----------------------|
+                                                                          | DatagramPacket Empty |
+                                                                          |----------------------|
+                                                                                    |
+                                                                                    |
+                                                                                    |
+                                                                          |-------------------------|
+                                    Extract IpSrc, PortSrc, Payload<------| Receive DataPacket from |
+                                                                          |      socket 5555        |
+                                                                          |-------------------------|
+                                                                                     |
+                                                                                     |
+                                                                                     |
+                                                                          |-----------------------------|
+                                                                          |    Parse MyAppProtocol      |
+                                                                          |-----------------------------|
+                                                                                     |
+                                                                                     |
+                                                                                     |
+                                                                          |-----------------------------|
+                                                                          |       Math Block            |
+                                                                          |-----------------------------|
+                                                                                     |
+                                                                                     |
+                                                                                     |
+                                    |------------------------|            |-----------------------------|
+                                    | Build DatagramPacket() |<-----------| Build MyAppProtocol Object  |
+                                    |------------------------|            |-----------------------------|
+                                               |
+                                               |
+                                               |
+                                  |-----------------------------|         |------|
+                                  |    Open new random Socket   |-------->| Send |
+                                  |-----------------------------|         |------|
+
+
+
+
+MyAppProtocol Object:
+
+|--------------------------------|
+| MyAppProtocol                  |
+|- - - - - - - - - - - - - - - --|
+| -str msgId                     |
+| -str mathOp                    |
+| -str number                    |
+|-- - -  - - - - - - - - - - - --|
+| +init(msgId, mathOp, number)   |
+| +init(byte[])                  |
+| +gets()                        |
+| +sets()                        |
+| +to_string()                   |
+|--------------------------------|
