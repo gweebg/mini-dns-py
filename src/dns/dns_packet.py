@@ -5,7 +5,20 @@ from dns.dns_resource import DNSValueType
 from exceptions.exceptions import InvalidDNSPacket
 
 
+"""
+This module is responsible for the DNS Packet Data Unit implementation.
+This includes packet decoding and packet encoding.
+"""
+
+
 class DNSPacketHeaderFlag(Enum):
+    """
+    Enumeration that represents a DNS Packet Header Flag.
+    Q: Query
+    R: Response
+    A: Response is authoritative
+    """
+
     Q = 1
     R = 2
     A = 3
@@ -13,7 +26,20 @@ class DNSPacketHeaderFlag(Enum):
 
 class DNSPacketHeader(BaseModel):
     """
-    3874,Q+R,0,0,0,0
+    BaseModel derived class that represents a DNS Packet Header.
+
+    message_id: DNS Message identification used to link responses to the original query.
+    flags: Query flags.
+    response_code: Shows the error code in a query response.
+        0: Success
+        1,2,3: Error
+    number_values: Number of actual query values.
+    number_authorities: Number of entries values within the AUTHORITY VALUES data field.
+    number_extra: Number of extra values on the response.
+
+    Example:
+        DNSPacketHeader.from_string("3874,Q+R,0,0,0,0")
+        DNSPacketHeader(...)
     """
 
     message_id: int = Field(gt=0, lt=65536)
@@ -28,14 +54,31 @@ class DNSPacketHeader(BaseModel):
 
     @staticmethod
     def __unpack_flags__(flag_string: str) -> [DNSPacketHeaderFlag]:
+        """
+        Given a string with flags formatted like 'f+f+f', where is a flag string, convert the string into a list
+        of DNSPacketHeaderFlag.
+
+        :param flag_string: String to be parsed.
+        :return: [DNSPacketHeaderFlag] - List containing query flags.
+        """
         return [DNSPacketHeaderFlag[flag] for flag in flag_string.split('+')]
 
     @classmethod
     def from_string(cls, header_string: str) -> 'DNSPacketHeader':
+        """
+        Convert a string into a DNSPacketHeader object.
+
+        String must be formatted like: "message_id,flags,response_code,number_values,number_authorities,number_values".
+
+        :param header_string: String to be converted.
+        :return: DNSPacketHeader - Result header object.
+        """
 
         separated_values = header_string.split(',')
 
         if len(separated_values) == 6:
+
+            # Unpacking the split up string.
             message_id = int(separated_values[0])
             flags = cls.__unpack_flags__(separated_values[1])
             response_code = int(separated_values[2])
@@ -54,6 +97,10 @@ class DNSPacketHeader(BaseModel):
             f"The number of header parameters must be equal to 6, but received {len(separated_values)}")
 
     def __str__(self) -> str:
+        """
+        String representation of a DNS Header.
+        :return: Result string.
+        """
 
         formatted_flags = ""
         for flag in self.flags:
@@ -65,7 +112,14 @@ class DNSPacketHeader(BaseModel):
 
 class DNSPacketQueryInfo(BaseModel):
     """
-    example.com.,MX
+        BaseModel derived class that represents a DNS Packet Query Info section.
+
+        name: Domain name.
+        type_of_value: Query type of value, it is a DNSValueType.
+
+        Example:
+            DNSPacketQueryInfo.from_string("example.com.,MX")
+            DNSPacketQueryInfo(name=..., type_of_value=...)
     """
 
     name: str
@@ -76,6 +130,15 @@ class DNSPacketQueryInfo(BaseModel):
 
     @classmethod
     def from_string(cls, query_info_string: str) -> 'DNSPacketQueryInfo':
+        """
+        Convert a string into a DNSPacketQueryInfo object.
+
+        String must be formatted like: "name,type_of_value".
+
+        :param query_info_string: String to be parsed.
+        :return: DNSPacketQueryInfo - Result query info object.
+        """
+
         separated_values = query_info_string.split(',')
 
         if len(separated_values) == 2:
@@ -85,16 +148,31 @@ class DNSPacketQueryInfo(BaseModel):
             f"The number of query info values must be equal to 2, but received {len(separated_values)}.")
 
     def __str__(self) -> str:
+        """
+        String representation of a DNS Query Info section.
+        :return: Result string.
+        """
+
         return f"{self.name},{self.type_of_value.name};"
 
 
 class DNSPacketQueryData(BaseModel):
+
     """
-    example.com. MX mx1.example.com 86400 10,
-    example.com. MX mx2.example.com 86400 20;
-    example.com. NS ns1.example.com. 86400,
-    example.com. NS ns2.example.com. 86400,
-    example.com. NS ns3.example.com. 86400;
+    Class that represents a DNS Packet Query Data field.
+
+    response_values: List of values returned on a query response.
+    authorities_values: List of authorities values returned on a query response.
+    extra_values: List of extra values returned on a query response.
+
+    Values must be formatted like a DNS database record string.
+
+    Example:
+        example.com. MX mx1.example.com 86400 10,
+        example.com. MX mx2.example.com 86400 20;
+        example.com. NS ns1.example.com. 86400,
+        example.com. NS ns2.example.com. 86400,
+        example.com. NS ns3.example.com. 86400;
     """
 
     response_values: list[str]
@@ -110,7 +188,18 @@ class DNSPacketQueryData(BaseModel):
     @classmethod
     def from_string(cls, query_values_string: str, header: DNSPacketHeader) -> 'DNSPacketQueryData':
 
-        # TODO: Needs more validation.
+        """
+        Convert a string into a DNSPacketQueryData object.
+
+        String must be formatted like: "list_of_values;list_of_values;list_of_values".
+
+        :param query_values_string: Input string to be parsed.
+        :param header: DNSPacketHeader object used to confirm that the number of values match with the
+                       actual number of values provided.
+        :return: DNSPacketQueryData - Generated result object.
+
+        TODO: Needs more validation.
+        """
 
         response_values = []
         authorities_values = []
@@ -135,6 +224,11 @@ class DNSPacketQueryData(BaseModel):
         return cls(response_values=response_values, authorities_values=authorities_values, extra_values=extra_values)
 
     def __str__(self) -> str:
+        """
+        String representation of a DNS Query Data field.
+        :return: Result string.
+        """
+
         formatted_string = ''
         for value in self.response_values:
             formatted_string = formatted_string + value + ","
@@ -154,12 +248,43 @@ class DNSPacketQueryData(BaseModel):
 
 class DNSPacket(BaseModel):
 
+    """
+    Class that represents a DNS Packet.
+    As for now this class only allows the user to send queries based on strings. In the future it will be able to
+    convert a query into binary.
+
+    header: DNS Packet Header of type DNSPacketHeader.
+    query_info: DNS Packet query information of type DNSPacketQueryInfo.
+    query_data: DNS Packet query data of type DNSPacketQueryData.
+
+    Example:
+        3874,R+A,0,2,3,5;example.com.,MX;
+        example.com. MX mx1.example.com 86400 10,
+        example.com. MX mx2.example.com 86400 20;
+        example.com. NS ns1.example.com. 86400,
+        example.com. NS ns2.example.com. 86400,
+        example.com. NS ns3.example.com. 86400;
+        mx1.example.com. A 193.136.130.200 86400,
+        mx2.example.com. A 193.136.130.201 86400,
+        ns1.example.com. A 193.136.130.250 86400,
+        ns2.example.com. A 193.137.100.250 86400,
+        ns3.example.com. A 193.136.130.251 86400;
+    """
+
     header: DNSPacketHeader
     query_info: DNSPacketQueryInfo
     query_data: DNSPacketQueryData
 
     @classmethod
     def from_string(cls, query_string: str) -> 'DNSPacket':
+        """
+        Convert a string into a DNSPacket object.
+
+        String must be formatted like: "header;query_info;query_data".
+
+        :param query_string: Inputted string to be parsed.
+        :return: Result DNSPacket object.
+        """
 
         sections = query_string.replace('\n', '').split(";", 2)
 
@@ -172,14 +297,13 @@ class DNSPacket(BaseModel):
 
         return cls(header=query_header, query_info=query_info, query_data=query_data)
 
+    def __str__(self):
+        """
+        String representation of the DNSPacket class.
+        :return: Result string.
+        """
+        ...
 
-# q_data = \
-#     "example.com. MX mx1.example.com 86400 10;example.com. MX mx1.example.com 86400 10,example.com. MX mx1.example.com 86400 10;example.com. MX mx1.example.com 86400 10,example.com. MX mx1.example.com 86400 10;"
-#
-# header = DNSPacketHeader.from_string("3874,Q+R,0,1,2,2")
-# info = DNSPacketQueryInfo.from_string("example.com.,MX")
-# data = DNSPacketQueryData.from_string(q_data, header)
-#
 # query = """3874,R+A,0,2,3,5;example.com.,MX;
 # example.com. MX mx1.example.com 86400 10,
 # example.com. MX mx2.example.com 86400 20;
@@ -193,5 +317,5 @@ class DNSPacket(BaseModel):
 # ns3.example.com. A 193.136.130.251 86400;"""
 #
 # packet = DNSPacket.from_string(query)
-# print(packet.query_data.authorities_values)
+# print(packet.header)
 
