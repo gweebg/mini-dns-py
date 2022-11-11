@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="927eff29-955a-4a80-bb91-02b988460bcb" name="Changes" comment="Upload of example code for socket interactions.&#10;&#10;Missing multithreading implementation.">
-      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+    <list default="true" id="8fb73730-5d4d-4194-858b-416c8aec73ad" name="Changes" comment="&quot;Ammend&quot;">
+      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/example/example-client.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/example/example-client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/example/example-server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/example/example-server.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,8 +49,8 @@
       <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.dns_packet">
-    <configuration name="Main" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.client">
+    <configuration name="client" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="mini-dns-py" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -55,12 +58,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/example" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/main.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/example/client.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -159,18 +161,18 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.dns_packet" />
         <item itemvalue="Python.example-client" />
+        <item itemvalue="Python.client" />
         <item itemvalue="Python.example-server" />
+        <item itemvalue="Python.dns_packet" />
         <item itemvalue="Python.example_protocol" />
-        <item itemvalue="Python.Main" />
       </list>
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="927eff29-955a-4a80-bb91-02b988460bcb" name="Changes" comment="" />
+      <changelist id="8fb73730-5d4d-4194-858b-416c8aec73ad" name="Changes" comment="&quot;Ammend&quot;" />
       <created>1666609932934</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -290,14 +292,5 @@
     <MESSAGE value="DNS Packet Data Unit implementation finished and tested.&#10;&#10;Although some validations still need to be implemented." />
     <MESSAGE value="Upload of example code for socket interactions.&#10;&#10;Missing multithreading implementation." />
     <option name="LAST_COMMIT_MESSAGE" value="Upload of example code for socket interactions.&#10;&#10;Missing multithreading implementation." />
-  </component>
-  <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/mini_dns_py$.coverage" NAME=" Coverage Results" MODIFIED="1666711877164" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
-    <SUITE FILE_PATH="coverage/mini_dns_py$example_server.coverage" NAME="example-server Coverage Results" MODIFIED="1668085125873" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/example" />
-    <SUITE FILE_PATH="coverage/mini_dns_py$example_protocol.coverage" NAME="example_protocol Coverage Results" MODIFIED="1668084367885" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/example" />
-    <SUITE FILE_PATH="coverage/mini_dns_py$dns_packet.coverage" NAME="dns_packet Coverage Results" MODIFIED="1668096911569" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns" />
-    <SUITE FILE_PATH="coverage/mini_dns_py$example_client.coverage" NAME="example-client Coverage Results" MODIFIED="1668085144198" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/example" />
-    <SUITE FILE_PATH="coverage/mini_dns_py$Main.coverage" NAME="Main Coverage Results" MODIFIED="1667927009726" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/mini_dns_py$main.coverage" NAME="Main Coverage Results" MODIFIED="1666610138886" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
   </component>
 </project>

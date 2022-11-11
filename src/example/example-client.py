@@ -1,15 +1,40 @@
 import socket
 from example.example_protocol import MathProtocol
 
-example_query: MathProtocol = MathProtocol.from_string("1;M;10 20 30 40")
-example_query_bytes = bytes(str(example_query), 'ascii')
 
-ip_address = "127.0.0.1"
-udp_port = 5555
+class MathClient:
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-# sock.bind(("127.0.0.1", 0))
+    def __init__(self, ip, port, query: MathProtocol):
+        self.query = query
+        self.query_bytes = str(self.query).encode('utf-8')
+        self.ip = ip
+        self.port = port
+        self.addr = (ip, port)
 
-sock.sendto(example_query_bytes, (ip_address, udp_port))
-sock.close()
+        try:
+            self.udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            self.udp_socket.bind((self.ip, 0))
+        except Exception as error:
+            print("[UNEXPECTED ERROR] ", error)
+
+    def send_query(self):
+
+        self.udp_socket.sendto(self.query_bytes, self.addr)
+
+        result = self.udp_socket.recv(1024).decode('utf-8')
+        print(f"[RESULT] {result}")
+
+        self.udp_socket.close()
+
+
+def main():
+
+    query: MathProtocol = MathProtocol.from_string("1;S;2 2 2")
+    client: MathClient = MathClient("127.0.0.1", 20001, query)
+    client.send_query()
+
+
+if __name__ == "__main__":
+    SystemExit(main())
+
 
