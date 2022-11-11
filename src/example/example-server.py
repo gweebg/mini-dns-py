@@ -73,10 +73,12 @@ class MathServer:
         while True:
             data, addr = self.udp_socket.recvfrom(1024)
             print(f"[NEW CONNECTION] {self.addr} connected.")
+            self.handle_client(data, addr)
 
-            thread = threading.Thread(target=self.handle_client, args=(data, addr))
-            thread.start()
-            print(f"[ACTIVE CONNECTIONS] {threading.active_count() - 1}")
+            # thread = threading.Thread(target=self.handle_client, args=(data, addr))
+            # thread.start()
+            
+            # print(f"[ACTIVE CONNECTIONS] {threading.active_count() - 1}")
 
 
 def main():

@@ -1,6 +1,6 @@
 from models.mode import Mode
 from exceptions.exceptions import InvalidConfigFileException
-from dns.config_entry import ConfigEntry
+from models.config_entry import ConfigEntry
 from parser.abstract_parser import FileParser
 from parser.regex_compiles import RE_DOMAIN, RE_IVP4
 

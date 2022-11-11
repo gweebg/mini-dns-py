@@ -1,6 +1,10 @@
 from abc import ABC, abstractmethod
+from enum import Enum
 
-from models.mode import Mode
+
+class Mode(Enum):
+    CONFIG = 1
+    DB = 2
 
 
 class FileParser(ABC):

@@ -2,7 +2,7 @@ from models.mode import Mode
 from parser.abstract_parser import FileParser
 from exceptions.exceptions import InvalidDatabaseFileException
 from parser.regex_compiles import *
-from dns.dns_resource import DNSResource
+from models.dns_resource import DNSResource
 
 import re
 from typing import Callable

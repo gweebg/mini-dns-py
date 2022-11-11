@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8fb73730-5d4d-4194-858b-416c8aec73ad" name="Changes" comment="&quot;Ammend&quot;">
-      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
+    <list default="true" id="8fb73730-5d4d-4194-858b-416c8aec73ad" name="Changes" comment="Made example/* multithreaded to support multiple clients.">
+      <change afterPath="$PROJECT_DIR$/src/dns/base_server.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/dns/client.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/example/example-client.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/example/example-client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dns/config_entry.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/config_entry.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dns/dns_packet.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/dns_packet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dns/dns_resource.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/dns_resource.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/example/example-server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/example/example-server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/exceptions/exceptions.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/exceptions/exceptions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/mode.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parser/abstract_parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/abstract_parser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parser/config_parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/config_parser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parser/database_parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/database_parser.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,7 +32,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/src/dns/dns_resource.py" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/models/dns_resource.py" root0="SKIP_INSPECTION" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -46,10 +55,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Guilherme\Documents\PyCharm\mini-dns-py\src\models" />
       <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.client">
+  <component name="RunManager" selected="Python.test">
     <configuration name="client" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="mini-dns-py" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -137,7 +147,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="example_protocol" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="mini-dns-py" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -149,8 +159,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/example/example_protocol.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/example/test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -161,11 +170,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.test" />
         <item itemvalue="Python.example-client" />
-        <item itemvalue="Python.client" />
         <item itemvalue="Python.example-server" />
+        <item itemvalue="Python.client" />
         <item itemvalue="Python.dns_packet" />
-        <item itemvalue="Python.example_protocol" />
       </list>
     </recent_temporary>
   </component>
@@ -261,7 +270,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668099700778</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Made example/* multithreaded to support multiple clients.">
+      <created>1668170711395</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1668170711395</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -291,6 +307,7 @@
     <MESSAGE value="Base DNS Packet implemented: dns_packet.py .&#10;&#10;Need to finish database parser and start creating abstract server class." />
     <MESSAGE value="DNS Packet Data Unit implementation finished and tested.&#10;&#10;Although some validations still need to be implemented." />
     <MESSAGE value="Upload of example code for socket interactions.&#10;&#10;Missing multithreading implementation." />
-    <option name="LAST_COMMIT_MESSAGE" value="Upload of example code for socket interactions.&#10;&#10;Missing multithreading implementation." />
+    <MESSAGE value="Made example/* multithreaded to support multiple clients." />
+    <option name="LAST_COMMIT_MESSAGE" value="Made example/* multithreaded to support multiple clients." />
   </component>
 </project>

@@ -23,3 +23,12 @@ class InvalidDNSPacket(Exception):
 
     def __init__(self, message='Bad dns header.'):
         super(InvalidDNSPacket, self).__init__(message)
+
+
+class InvalidQueryValue(Exception):
+    """
+    Custom exception for invalid parameters.
+    """
+
+    def __init__(self, message='Bad dns header.'):
+        super(InvalidQueryValue, self).__init__(message)

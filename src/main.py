@@ -1,5 +1,5 @@
 from parser.parser_factory import FileParserFactory
-from models.mode import Mode
+from parser.abstract_parser import Mode
 
 
 def main():

@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field, conlist
 from enum import Enum
 
-from dns.dns_resource import DNSValueType
+from models.dns_resource import DNSValueType
 from exceptions.exceptions import InvalidDNSPacket
 
 
@@ -274,6 +274,9 @@ class DNSPacket(BaseModel):
     header: DNSPacketHeader
     query_info: DNSPacketQueryInfo
     query_data: DNSPacketQueryData
+
+    def as_byte_string(self) -> bytes:
+        return str(self).encode("utf-8")
 
     @classmethod
     def from_string(cls, query_string: str) -> 'DNSPacket':
