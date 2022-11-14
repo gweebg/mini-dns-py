@@ -1,10 +1,11 @@
-from models.mode import Mode
+from parser.abstract_parser import Mode
 from exceptions.exceptions import InvalidConfigFileException
 from models.config_entry import ConfigEntry
 from parser.abstract_parser import FileParser
 from parser.regex_compiles import RE_DOMAIN, RE_IVP4
 
 import os
+
 
 class ConfigFileParser(FileParser):
     """

@@ -29,7 +29,7 @@ class MathClient:
 
 def main():
 
-    query: MathProtocol = MathProtocol.from_string("1;S;2 2 2")
+    query: MathProtocol = MathProtocol.from_string("1;M;2 2 2")
     client: MathClient = MathClient("127.0.0.1", 20001, query)
     client.send_query()
 

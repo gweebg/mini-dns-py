@@ -1,4 +1,4 @@
-from models.mode import Mode
+from parser.abstract_parser import Mode
 from parser.abstract_parser import FileParser
 from exceptions.exceptions import InvalidDatabaseFileException
 from parser.regex_compiles import *
@@ -30,6 +30,7 @@ class DatabaseFileParser(FileParser):
 
         self.macros = {}
         self.alias = {}
+        self.dns_entries = None
 
     @staticmethod
     def _check_ttl_value(value_string: str) -> bool:
@@ -50,6 +51,9 @@ class DatabaseFileParser(FileParser):
                 for idx, line_slice in enumerate(line):
                     if macro in line_slice:
                         line[idx] = line[idx].replace(macro, self.macros[macro])
+
+        if not line[0].endswith('.'):
+            line[0] = line[0] + f".{self.macros.get('@')}"
 
         return line
 
@@ -251,7 +255,11 @@ class DatabaseFileParser(FileParser):
         has_priority = True if len(line) == 5 else False
         return DNSResource(line, has_priority)
 
-    def _parse_cname(self, line: list[str]):
+    def _parse_cname(self, line: list[str]) -> None:
+
+        line = self._replace_macros(line)
+        line_length: int = len(line)
+
         ...
 
     def _parse_ptr(self, line: list[str]) -> DNSResource:
@@ -262,10 +270,12 @@ class DatabaseFileParser(FileParser):
         Function that parses a given configuration file for an SP database file.
 
         :return: Database object containing the file information.
+
+        TODO: Default TTL to 0 when parameter is non existent.
         """
 
         content_lines = self.clean_up(self.path)
-        dns_entries: list[DNSResource] = []
+        self.dns_entries: list[DNSResource] = []
 
         line: list[str]
         for line in content_lines:
@@ -274,9 +284,9 @@ class DatabaseFileParser(FileParser):
             dns_resource = operation(line)
 
             if dns_resource is not None:
-                dns_entries.append(dns_resource)
+                self.dns_entries.append(dns_resource)
 
-        for entry in dns_entries:
+        for entry in self.dns_entries:
             print(entry)
 
-        return dns_entries
+        return self.dns_entries

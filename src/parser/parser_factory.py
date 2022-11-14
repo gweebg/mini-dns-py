@@ -1,7 +1,7 @@
 from parser.config_parser import ConfigFileParser
 from parser.database_parser import DatabaseFileParser
 from parser.abstract_parser import FileParser
-from models.mode import Mode
+from parser.abstract_parser import Mode
 
 from abc import abstractmethod
 import errno
