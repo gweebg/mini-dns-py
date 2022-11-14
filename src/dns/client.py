@@ -1,7 +1,9 @@
 import socket
+import argparse
 
 from dns.dns_packet import DNSPacket
 from exceptions.exceptions import InvalidQueryValue
+from dns.utils import __ipv4_type_validator__, __load_latest_id__
 
 
 class Client:
@@ -43,22 +45,41 @@ class Client:
 
 def main():
 
-    query = """3874,R+A,0,2,3,5;example.com.,MX;
-    example.com. MX mx1.example.com 86400 10,
-    example.com. MX mx2.example.com 86400 20;
-    example.com. NS ns1.example.com. 86400,
-    example.com. NS ns2.example.com. 86400,
-    example.com. NS ns3.example.com. 86400;
-    mx1.example.com. A 193.136.130.200 86400,
-    mx2.example.com. A 193.136.130.201 86400,
-    ns1.example.com. A 193.136.130.250 86400,
-    ns2.example.com. A 193.137.100.250 86400,
-    ns3.example.com. A 193.136.130.251 86400;"""
+    current_message_id: int = __load_latest_id__()
 
-    query_packet: DNSPacket = DNSPacket.from_string(query)
-    client: Client = Client("127.0.0.1", 20001)
-    client.set_query(query_packet)
-    client.send()
+    parser = argparse.ArgumentParser(prog="mini-dns-cl",
+                                     description="mini-dns-py client application",
+                                     epilog="project made by gweebg")
+
+    parser.add_argument('destination',
+                        help='IP[:PORT] address of the DNS server to query, ex. "192.168.1.2" ',
+                        type=__ipv4_type_validator__)
+
+    parser.add_argument('-n', '--name',
+                        required=True,
+                        help='Domain name to query, ex. "example.com."')
+
+    parser.add_argument('-t', '--type',
+                        required=True,
+                        help='Type of value for the query, ex. "MX", "NS"')
+
+    parser.add_argument('-r', '--recursive',
+                        action='store_true',
+                        help='Run in recursive mode.')
+
+    parser.add_argument('-b', '--binary',
+                        action='store_true',
+                        help='Use the binary representation of the query instead of strings.')
+
+    args: argparse.Namespace = parser.parse_args()
+    flags: str = "Q+R" if args.recursive else "Q"
+
+    query_string: str = f"{current_message_id},{flags},0,0,0,0;{args.name},{args.type}"
+    query: DNSPacket = DNSPacket.from_string(query_string)
+
+    # client: Client = Client(args.destination, 20001)  # TODO: Extract port from IP or default it to 53.
+    # client.set_query(query)
+    # client.send()
 
 
 if __name__ == "__main__":
