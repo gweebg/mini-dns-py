@@ -75,10 +75,10 @@ class MathServer:
             print(f"[NEW CONNECTION] {self.addr} connected.")
             self.handle_client(data, addr)
 
-            # thread = threading.Thread(target=self.handle_client, args=(data, addr))
-            # thread.start()
+            thread = threading.Thread(target=self.handle_client, args=(data, addr))
+            thread.start()
             
-            # print(f"[ACTIVE CONNECTIONS] {threading.active_count() - 1}")
+            print(f"[ACTIVE CONNECTIONS] {threading.active_count() - 1}")
 
 
 def main():

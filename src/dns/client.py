@@ -7,8 +7,21 @@ from dns.utils import __ipv4_type_validator__, __load_latest_id__
 
 
 class Client:
+    """
+    This class represents a mini-dns client.
+    A client is able to send queries to a server by providing a query, destination ip address,
+    and destination port.
+    """
 
     def __init__(self, ip_address: str, port: int, read_size: int = 1024):
+
+        """
+        Client constructor.
+
+        :param ip_address: Destination IPv4 address.
+        :param port: Destination port.
+        :param read_size: Optional parameter that sets the number of bytes read from a socket.
+        """
 
         self.query: DNSPacket | None = None
         self.address: tuple[str, int] = (ip_address, port)
@@ -22,6 +35,12 @@ class Client:
             print("[UNEXPECTED ERROR] ", error)
 
     def set_query(self, query: DNSPacket | str):
+        """
+        Method used to set the query we're going to send.
+
+        :param query: Query we want to send.
+        :return: None
+        """
 
         if isinstance(query, DNSPacket):
             self.query = query
@@ -33,6 +52,10 @@ class Client:
             raise InvalidQueryValue("Query must be a string or a DNSPacket.")
 
     def send(self):
+        """
+        Send the query previously defined.
+        :return: None
+        """
 
         if self.query is not None:
             self.udp_socket.sendto(self.query.as_byte_string(), self.address)
@@ -41,6 +64,9 @@ class Client:
             print(encoded_answer.decode("utf-8"))
 
             self.udp_socket.close()
+
+    def receive(self):
+        ...
 
 
 def main():
@@ -74,12 +100,18 @@ def main():
     args: argparse.Namespace = parser.parse_args()
     flags: str = "Q+R" if args.recursive else "Q"
 
+    port: int = 53
+    if ":" in args.destination:
+        parts: list[str] = args.destination.split(":")
+        port = int(parts[1])
+        args.destination = parts[0]
+
     query_string: str = f"{current_message_id},{flags},0,0,0,0;{args.name},{args.type}"
     query: DNSPacket = DNSPacket.from_string(query_string)
 
-    # client: Client = Client(args.destination, 20001)  # TODO: Extract port from IP or default it to 53.
-    # client.set_query(query)
-    # client.send()
+    client: Client = Client(args.destination, port)
+    client.set_query(query)
+    client.send()
 
 
 if __name__ == "__main__":
