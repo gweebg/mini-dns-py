@@ -106,8 +106,8 @@ class DNSPacketHeader(BaseModel):
         for flag in self.flags:
             formatted_flags = formatted_flags + '+' + flag.name
 
-        return f"{self.message_id}, {formatted_flags[1:]}, {self.response_code}, {self.number_values}, " \
-               f"{self.number_authorities}, {self.number_extra};"
+        return f"{self.message_id},{formatted_flags[1:]},{self.response_code},{self.number_values}," \
+               f"{self.number_authorities},{self.number_extra};"
 
 
 class DNSPacketQueryInfo(BaseModel):
@@ -223,6 +223,10 @@ class DNSPacketQueryData(BaseModel):
 
         return cls(response_values=response_values, authorities_values=authorities_values, extra_values=extra_values)
 
+    @classmethod
+    def empty(cls) -> 'DNSPacketQueryData':
+        return cls(response_values=[], authorities_values=[], extra_values=[])
+
     def __str__(self) -> str:
         """
         String representation of a DNS Query Data field.
@@ -231,19 +235,19 @@ class DNSPacketQueryData(BaseModel):
 
         formatted_string = ''
         for value in self.response_values:
-            formatted_string = formatted_string + value + ","
+            formatted_string = formatted_string + value + ",\n"
 
-        formatted_string = formatted_string[:-1] + ";"
+        formatted_string = formatted_string[:-2] + ";\n"
 
         for value in self.authorities_values:
-            formatted_string = formatted_string + value + ","
+            formatted_string = formatted_string + value + ",\n"
 
-        formatted_string = formatted_string[:-1] + ";"
+        formatted_string = formatted_string[:-2] + ";\n"
 
         for value in self.extra_values:
-            formatted_string = formatted_string + value + ","
+            formatted_string = formatted_string + value + ",\n"
 
-        return formatted_string[:-1]
+        return formatted_string[:-2] + ";"
 
 
 class DNSPacket(BaseModel):
@@ -269,6 +273,8 @@ class DNSPacket(BaseModel):
         ns1.example.com. A 193.136.130.250 86400,
         ns2.example.com. A 193.137.100.250 86400,
         ns3.example.com. A 193.136.130.251 86400;
+
+    TODO: Check if flag is Q and values are 0.
     """
 
     header: DNSPacketHeader
@@ -291,12 +297,12 @@ class DNSPacket(BaseModel):
 
         sections = query_string.replace('\n', '').split(";", 2)
 
-        if len(sections) != 3:
-            raise InvalidDNSPacket(f"DNS Packet must have three sections but received {len(sections)}.")
-
         query_header = DNSPacketHeader.from_string(sections[0])
         query_info = DNSPacketQueryInfo.from_string(sections[1])
-        query_data = DNSPacketQueryData.from_string(sections[2], query_header)
+        query_data = DNSPacketQueryData.empty()
+
+        if len(sections) == 3 and "Q" not in sections[0]:
+            query_data = DNSPacketQueryData.from_string(sections[2], query_header)
 
         return cls(header=query_header, query_info=query_info, query_data=query_data)
 
@@ -305,7 +311,7 @@ class DNSPacket(BaseModel):
         String representation of the DNSPacket class.
         :return: Result string.
         """
-        ...
+        return f"{self.header}{self.query_info}\n{self.query_data}"
 
 # query = """3874,R+A,0,2,3,5;example.com.,MX;
 # example.com. MX mx1.example.com 86400 10,
@@ -318,7 +324,7 @@ class DNSPacket(BaseModel):
 # ns1.example.com. A 193.136.130.250 86400,
 # ns2.example.com. A 193.137.100.250 86400,
 # ns3.example.com. A 193.136.130.251 86400;"""
-#
+
 # packet = DNSPacket.from_string(query)
-# print(packet.header)
+# print(packet.header, packet.query_info)
 
