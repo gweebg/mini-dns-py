@@ -9,6 +9,10 @@ class ConfigEntryType(Enum):
     LG = 5
     DB = 6
 
+    @classmethod
+    def list(cls):
+        return list(map(lambda c: c, cls))
+
 
 class ConfigEntry:
 
@@ -26,3 +30,5 @@ class ConfigEntry:
 
     def __str__(self):
         return f"[{self.type}] : {self.parameter}, {self.value}"
+
+

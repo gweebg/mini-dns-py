@@ -1,8 +1,12 @@
-from parser.abstract_parser import Mode
 from exceptions.exceptions import InvalidConfigFileException
+
 from models.config_entry import ConfigEntry
-from parser.abstract_parser import FileParser
+
+from dns.server_config import ServerConfiguration
+
 from parser.regex_compiles import RE_DOMAIN, RE_IVP4
+from parser.abstract_parser import FileParser
+from parser.abstract_parser import Mode
 
 import os
 
@@ -27,14 +31,14 @@ class ConfigFileParser(FileParser):
     def __init__(self, file_path_str: str, mode: Mode):
         super(ConfigFileParser, self).__init__(file_path_str, mode)
 
-    def parse(self) -> list[ConfigEntry]:
+    def parse(self) -> ServerConfiguration:
         """
         Function that parses a given configuration file for either an SP, SS or SR server.
 
         :return: Configuration object containing the file information.
         """
 
-        result: list[ConfigEntry] = []
+        configuration = ServerConfiguration()
 
         content_lines = self.clean_up(self.path)
 
@@ -53,16 +57,22 @@ class ConfigFileParser(FileParser):
                 if not os.path.isfile(value):
                     raise InvalidConfigFileException(f"File '{value}' does not exits: {line}")
 
+                configuration.database_path = value
+
             elif value_type == "LG":
 
                 if RE_DOMAIN.fullmatch(parameter) is None and (parameter != "all"):
                     raise InvalidConfigFileException(
                         f"Value '{parameter}' is not a domain name or keyword 'all': {line}")
 
+                configuration.logs_path = ConfigEntry(line)
+
             elif value_type == "ST":
 
                 if parameter != "root":
                     raise InvalidConfigFileException(f"Parameter '{parameter}' has to be 'root': {line}")
+
+                configuration.root_servers_path = value
 
             elif value_type in ["SP", "SS", "DD"]:
 
@@ -72,13 +82,17 @@ class ConfigFileParser(FileParser):
                 if RE_IVP4.fullmatch(value) is None:
                     raise InvalidConfigFileException(f"Address '{value}' is not a valid IP address: {line}")
 
+                if value_type == "SP":
+                    configuration.primary_server = ConfigEntry(line)
+
+                elif value_type == "SS":
+                    configuration.secondary_servers.append(ConfigEntry(line))
+
+                else:
+                    configuration.allowed_domains.append(parameter)
+
             else:
                 raise InvalidConfigFileException(f"Invalid value type on file '{self.path}': {line}")
 
-            element: ConfigEntry = ConfigEntry(line)
-            result.append(element)
+        return configuration
 
-        for entry in result:
-            print(entry)
-
-        return result

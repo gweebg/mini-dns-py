@@ -1,7 +1,7 @@
-from parser.config_parser import ConfigFileParser
 from parser.database_parser import DatabaseFileParser
-from parser.abstract_parser import FileParser
-from parser.abstract_parser import Mode
+from parser.abstract_parser import FileParser, Mode
+from parser.config_parser import ConfigFileParser
+from parser.root_parser import RootListParser
 
 from abc import abstractmethod
 import errno
@@ -24,7 +24,8 @@ class FileParserFactory:
 
         self.call: dict = {
             Mode.CONFIG: ConfigFileParser,
-            Mode.DB: DatabaseFileParser
+            Mode.DB: DatabaseFileParser,
+            Mode.RT: RootListParser
         }
 
     @abstractmethod

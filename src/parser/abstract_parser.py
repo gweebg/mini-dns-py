@@ -5,6 +5,7 @@ from enum import Enum
 class Mode(Enum):
     CONFIG = 1
     DB = 2
+    RT = 3
 
 
 class FileParser(ABC):

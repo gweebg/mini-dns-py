@@ -286,7 +286,4 @@ class DatabaseFileParser(FileParser):
             if dns_resource is not None:
                 self.dns_entries.append(dns_resource)
 
-        for entry in self.dns_entries:
-            print(entry)
-
         return self.dns_entries
