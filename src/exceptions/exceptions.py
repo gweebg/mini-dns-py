@@ -32,3 +32,12 @@ class InvalidQueryValue(Exception):
 
     def __init__(self, message='Bad dns header.'):
         super(InvalidQueryValue, self).__init__(message)
+
+
+class InvalidRootListEntry(Exception):
+    """
+    Custom exception for invalid parameters.
+    """
+
+    def __init__(self, message='Bad dns header.'):
+        super(InvalidRootListEntry, self).__init__(message)

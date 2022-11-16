@@ -3,11 +3,13 @@ from parser.abstract_parser import Mode
 
 
 def main():
-    # file_parser = FileParserFactory("../tests/config.conf", Mode.CONFIG)
-    # config = file_parser.get_parser().parse()
+    file_parser = FileParserFactory("../tests/config.conf", Mode.CONFIG)
+    config = file_parser.get_parser().parse()
 
-    database_parser = FileParserFactory("../tests/database.conf", Mode.DB)
-    database = database_parser.get_parser().parse()
+    # database_parser = FileParserFactory("../tests/database.conf", Mode.DB)
+    # database = database_parser.get_parser().parse()
+
+    # print(FileParserFactory("../tests/root.data", Mode.RT).get_parser().parse())
 
 
 if __name__ == "__main__":

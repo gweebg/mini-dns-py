@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8fb73730-5d4d-4194-858b-416c8aec73ad" name="Changes" comment="Don't remember what changed.">
+    <list default="true" id="8fb73730-5d4d-4194-858b-416c8aec73ad" name="Changes" comment="Introduced PrimaryServer.">
+      <change afterPath="$PROJECT_DIR$/src/cache/cache.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/dns/server_config.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/parser/root_parser.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dns/base_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dns/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/example/example-server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/example/example-server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dns/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/exceptions/exceptions.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/exceptions/exceptions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/config_entry.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/config_entry.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parser/abstract_parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/abstract_parser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parser/config_parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/config_parser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parser/database_parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/database_parser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parser/parser_factory.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/parser_factory.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parser/regex_compiles.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/regex_compiles.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/config.conf" beforeDir="false" afterPath="$PROJECT_DIR$/tests/config.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/database.conf" beforeDir="false" afterPath="$PROJECT_DIR$/tests/database.conf" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +63,7 @@
       <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RunManager" selected="Python.Client (w/ args)">
     <configuration name="Client (w/ args)" type="PythonConfigurationType" factoryName="Python">
       <module name="mini-dns-py" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -65,7 +78,29 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/dns/client.py" />
-      <option name="PARAMETERS" value="127.0.0.1:20001 -n example.com. -t MX" />
+      <option name="PARAMETERS" value="--help" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="cache" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="mini-dns-py" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/cache" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/cache/cache.py" />
+      <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -109,28 +144,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/example/example-client.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="example-server" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="mini-dns-py" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/example" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/example/example-server.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -185,19 +198,19 @@
     </configuration>
     <list>
       <item itemvalue="Python.Client (w/ args)" />
+      <item itemvalue="Python.cache" />
       <item itemvalue="Python.server" />
       <item itemvalue="Python.dns_packet" />
       <item itemvalue="Python.example-client" />
-      <item itemvalue="Python.example-server" />
       <item itemvalue="Python.main" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.main" />
+        <item itemvalue="Python.cache" />
         <item itemvalue="Python.server" />
+        <item itemvalue="Python.main" />
         <item itemvalue="Python.dns_packet" />
         <item itemvalue="Python.example-client" />
-        <item itemvalue="Python.example-server" />
       </list>
     </recent_temporary>
   </component>
@@ -234,7 +247,14 @@
       <workItem from="1668416767626" duration="5952000" />
       <workItem from="1668424399640" duration="736000" />
       <workItem from="1668434888635" duration="168000" />
-      <workItem from="1668436284764" duration="1205000" />
+      <workItem from="1668436284764" duration="1484000" />
+      <workItem from="1668505740811" duration="1608000" />
+      <workItem from="1668508195527" duration="21000" />
+      <workItem from="1668512774420" duration="792000" />
+      <workItem from="1668525651106" duration="1291000" />
+      <workItem from="1668528423240" duration="2245000" />
+      <workItem from="1668591950020" duration="3195000" />
+      <workItem from="1668596937611" duration="5160000" />
     </task>
     <task id="LOCAL-00001" summary="Continuation of database parsing.&#10;&#10;Missing NS, MX, A, CNAME and PTR parsers.">
       <created>1666713019519</created>
@@ -327,7 +347,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668422662631</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Introduced PrimaryServer.">
+      <created>1668437721938</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1668437721938</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -361,7 +388,8 @@
     <MESSAGE value="Made client interface (argparse, pdu builder)." />
     <MESSAGE value="Added support to &quot;Q&quot; queries." />
     <MESSAGE value="Don't remember what changed." />
-    <option name="LAST_COMMIT_MESSAGE" value="Don't remember what changed." />
+    <MESSAGE value="Introduced PrimaryServer." />
+    <option name="LAST_COMMIT_MESSAGE" value="Introduced PrimaryServer." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/mini_dns_py$.coverage" NAME=" Coverage Results" MODIFIED="1666711877164" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
@@ -371,8 +399,9 @@
     <SUITE FILE_PATH="coverage/mini_dns_py$example_protocol.coverage" NAME="example_protocol Coverage Results" MODIFIED="1668084367885" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/example" />
     <SUITE FILE_PATH="coverage/mini_dns_py$dns_packet.coverage" NAME="dns_packet Coverage Results" MODIFIED="1668422527396" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns" />
     <SUITE FILE_PATH="coverage/mini_dns_py$example_client.coverage" NAME="example-client Coverage Results" MODIFIED="1668295250528" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/example" />
+    <SUITE FILE_PATH="coverage/mini_dns_py$cache.coverage" NAME="cache Coverage Results" MODIFIED="1668602102124" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/cache" />
     <SUITE FILE_PATH="coverage/mini_dns_py$Main.coverage" NAME="Main Coverage Results" MODIFIED="1667927009726" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/mini_dns_py$server.coverage" NAME="server Coverage Results" MODIFIED="1668424918298" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns" />
-    <SUITE FILE_PATH="coverage/mini_dns_py$main.coverage" NAME="main Coverage Results" MODIFIED="1668425116641" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/mini_dns_py$server.coverage" NAME="server Coverage Results" MODIFIED="1668597966875" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns" />
+    <SUITE FILE_PATH="coverage/mini_dns_py$main.coverage" NAME="main Coverage Results" MODIFIED="1668595086926" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
   </component>
 </project>

@@ -96,7 +96,7 @@ def main():
     parser.add_argument('-b', '--binary',
                         action='store_true',
                         help='Use the binary representation of the query instead of strings.')
-
+    
     args: argparse.Namespace = parser.parse_args()
     flags: str = "Q+R" if args.recursive else "Q"
 

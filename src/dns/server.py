@@ -1,11 +1,15 @@
+from dns.server_config import ServerConfiguration
+from dns.dns_packet import DNSPacket
+
+from models.dns_resource import DNSResource
+
+from parser.parser_factory import FileParserFactory
+from parser.abstract_parser import Mode
+
 import socket
 import threading
 import os
 import errno
-
-from dns.dns_packet import DNSPacket
-from parser.parser_factory import FileParserFactory
-from parser.abstract_parser import Mode
 
 
 class BaseDatagramServer:
@@ -29,9 +33,6 @@ class BaseDatagramServer:
         data: str = data.strip().decode("utf-8")
         received_dns_packet: DNSPacket = DNSPacket.from_string(data)
 
-        # Now do stuff with received_dns_packet. #
-        print(received_dns_packet)
-
         encoded_reply: bytes = str(received_dns_packet.header).encode("utf-8")
         self.udp_socket.sendto(encoded_reply, address)
 
@@ -50,31 +51,29 @@ class BaseDatagramServer:
 
 class PrimaryServer(BaseDatagramServer):
 
-    def __init__(self, ip_address: str, port: int, database_path: str,
-                 configuration_path: str, root_list: str, read_size: int = 1024):
+    # TODO: How to know if it is a resolution server.
 
-        super().__init__(ip_address, port, read_size)
+    def __init__(self, port: int, configuration_path: str, debug: bool = False, read_size: int = 1024):
 
         if not os.path.isfile(configuration_path):
             raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), configuration_path)
 
-        if not os.path.isfile(root_list):
-            raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), root_list)
+        self.configuration: ServerConfiguration = FileParserFactory(configuration_path, Mode.CONFIG).get_parser().parse()
 
-        if not os.path.isfile(database_path):
-            raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), database_path)
+        self.database: list[DNSResource] = FileParserFactory(self.configuration.database_path, Mode.DB).get_parser().parse()
 
-        self.configuration = FileParserFactory(configuration_path, Mode.CONFIG).get_parser().parse()
-        self.database = FileParserFactory(database_path, Mode.DB).get_parser().parse()
-        self.root_list = None  # TODO: Root file list parser.
+        self.root_servers: list[str] = FileParserFactory(self.configuration.root_servers_path, Mode.RT).get_parser().parse()
+
+
+
+        super().__init__("127.0.0.1", port, read_size)
 
     def handle(self, data: bytes, address: tuple[str, int]):
         ...
 
 
 def main():
-    server = BaseDatagramServer("127.0.0.1", 20001)
-    server.start()
+    server = PrimaryServer(20001, "../../tests/config.conf")
 
 
 if __name__ == "__main__":
