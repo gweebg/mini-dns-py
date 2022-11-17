@@ -190,3 +190,50 @@ MyAppProtocol Object:
 | +sets()                        |
 | +to_string()                   |
 |--------------------------------|
+
+
+Zone Transfer:
+
+    SS          SP
+    |           |
+    |---------->|
+    |           |
+    |           |
+    |           |
+
+SS: Query para saber SOASERIAL.
+SP: Envia SOASERIAL.
+SS: Compara os valores e se for maior que o seu, entao a versao e maior! (nao necessario)
+SS: Envia query que contem o nome do dominio que quer a db.
+SP: Ve se o dominio existe.
+SP: Ve se o IP de quem mandou a query, e realmente um SS. (super importante)
+SP: Envia numero de linhas que vai enviar.
+SS: Recebe e envia de volta o numero de linhas de modo a confirmar.
+SP: Envia as linhas numeradas e ordenadas
+        Por exemplo:
+               1;line
+               2;line
+               3;line
+               4;line
+               ......
+
+
+IMPORTANTE!
+
+Uma resposta e autoritativa quando vem da base de dados e tem de ter a flag A,
+se vier da cache ja nao leva com A.
+
+Incluir cnames nos extra values caso algum refira um dos valores de cima.
+
+Nao repetir extra values quando tipo e A.
+    Q; na1.in.g500. ; A
+    Vai ter number_of_values = 1
+            number_of_auth   = 3
+            number_of_extras = 3 ( number_of_auth e nao repetir o number_of_values )
+    Caso exista uma entrada CNAME cujo nome e igual a um dos valores guardados, devemos incluir em cname.
+
+R A Q -- flags
+1 0 1
+
+Explicar melhor zone trasnfer em termos de queries.
+
