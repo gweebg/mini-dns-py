@@ -2,7 +2,7 @@ from parser.abstract_parser import Mode
 from parser.abstract_parser import FileParser
 from exceptions.exceptions import InvalidDatabaseFileException
 from parser.regex_compiles import *
-from models.dns_resource import DNSResource
+from models.dns_resource import DNSResource, DNSValueType
 
 import re
 from typing import Callable
@@ -30,7 +30,7 @@ class DatabaseFileParser(FileParser):
 
         self.macros = {}
         self.alias = {}
-        self.dns_entries = None
+        # self.dns_entries = None
 
     @staticmethod
     def _check_ttl_value(value_string: str) -> bool:
@@ -265,7 +265,7 @@ class DatabaseFileParser(FileParser):
     def _parse_ptr(self, line: list[str]) -> DNSResource:
         ...
 
-    def parse(self) -> list[DNSResource]:
+    def parse(self) -> dict[DNSValueType, list[DNSResource]]:
         """
         Function that parses a given configuration file for an SP database file.
 
@@ -275,7 +275,9 @@ class DatabaseFileParser(FileParser):
         """
 
         content_lines = self.clean_up(self.path)
-        self.dns_entries: list[DNSResource] = []
+        # self.dns_entries: list[DNSResource] = []
+
+        result: dict[DNSValueType, list[DNSResource]] = {}
 
         line: list[str]
         for line in content_lines:
@@ -283,7 +285,16 @@ class DatabaseFileParser(FileParser):
             operation: Callable[[list[str]], ...] = self.operations.get(line[1])
             dns_resource = operation(line)
 
-            if dns_resource is not None:
-                self.dns_entries.append(dns_resource)
+            # if dns_resource is not None:
+            #     self.dns_entries.append(dns_resource)
 
-        return self.dns_entries
+            if dns_resource is not None:
+
+                if dns_resource.type not in result:
+                    result[dns_resource.type] = []
+
+                result[dns_resource.type].append(dns_resource)
+
+        # return self.dns_entries
+        # print(result)
+        return result

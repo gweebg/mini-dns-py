@@ -1,5 +1,6 @@
 import socket
 import argparse
+import time
 
 from dns.dns_packet import DNSPacket
 from exceptions.exceptions import InvalidQueryValue
@@ -58,12 +59,8 @@ class Client:
         """
 
         if self.query is not None:
-            self.udp_socket.sendto(self.query.as_byte_string(), self.address)
-
-            encoded_answer: bytes = self.udp_socket.recv(self.read_size)
-            print(encoded_answer.decode("utf-8"))
-
-            self.udp_socket.close()
+            # self.udp_socket.sendto(self.query.as_byte_string(), self.address)
+            self.udp_socket.sendto("cona;master;123".encode("utf-8"), self.address)
 
     def receive(self):
         """
@@ -71,8 +68,11 @@ class Client:
         the query response by listening on the socket address.
         :return: None
         """
-        result = self.udp_socket.recv(self.read_size).decode('utf-8')
-        print(result)
+
+        result = self.udp_socket.recv(self.read_size).decode("utf-8")
+        decoded_packet = DNSPacket.from_string(result)
+
+        print(decoded_packet.prettify())
         self.udp_socket.close()
 
 

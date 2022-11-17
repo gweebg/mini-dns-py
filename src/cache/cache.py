@@ -9,8 +9,9 @@ class Cache(dict):
         self.maxsize = maxsize
 
     def add(self, key, value, timeout=1):
-        self.__table[key] = time.time() + timeout
-        dict.update(self, {key: value})
+        if self.__len__() + 1 < self.maxsize:
+            self.__table[key] = time.time() + timeout
+            dict.update(self, {key: value})
 
     def __contains__(self, item):
         return time.time() < self.__table.get(item)
