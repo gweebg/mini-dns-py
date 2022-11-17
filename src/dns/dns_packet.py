@@ -228,7 +228,7 @@ class DNSPacketQueryData(BaseModel):
         values = query_values_string.split(";")
         values = values[:-1]
 
-        if len(values) not in range(1, 4):
+        if len(values) not in range(0, 4):
             raise InvalidDNSPacket(
                 f"Expected a maximum of 4 value groups but got {len(values)}.")
 
@@ -394,7 +394,9 @@ class DNSPacket(BaseModel):
 #
 # error = DNSPacket.generate_bad_format_response()
 #
-# print(str(packet).join("\n\n"))
-# print(packet.prettify())
+# xd = DNSPacket.from_string("80,A,3,0,0,0;bad_format,NS;")
+# print(xd.prettify())
+
+
 
 
