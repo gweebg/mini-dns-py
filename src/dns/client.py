@@ -66,7 +66,14 @@ class Client:
             self.udp_socket.close()
 
     def receive(self):
-        ...
+        """
+        Receive and print to the terminal
+        the query response by listening on the socket address.
+        :return: None
+        """
+        result = self.udp_socket.recv(self.read_size).decode('utf-8')
+        print(result)
+        self.udp_socket.close()
 
 
 def main():
@@ -111,7 +118,9 @@ def main():
 
     client: Client = Client(args.destination, port)
     client.set_query(query)
+
     client.send()
+    client.receive()
 
 
 if __name__ == "__main__":
