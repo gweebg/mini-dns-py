@@ -3,7 +3,7 @@ from enum import Enum
 
 from models.dns_resource import DNSValueType
 from exceptions.exceptions import InvalidDNSPacket
-
+from dns.utils import __get_latest_id__
 
 """
 This module is responsible for the DNS Packet Data Unit implementation.
@@ -96,17 +96,32 @@ class DNSPacketHeader(BaseModel):
         raise InvalidDNSPacket(
             f"The number of header parameters must be equal to 6, but received {len(separated_values)}")
 
+    def flags_as_string(self) -> str:
+
+        formatted_flags = ""
+        for flag in self.flags:
+            formatted_flags = formatted_flags + '+' + flag.name
+
+        return formatted_flags[1:]
+
+    def prettify(self) -> str:
+
+        formatted_flags = self.flags_as_string()
+
+        result: str = f"# Header\nMESSAGE-ID = {self.message_id}, FLAGS = {formatted_flags}, RESPONSE-CODE = {self.response_code},\n" \
+                      f"N-VALUES = {self.number_values}, N-AUTHORITIES = {self.number_authorities}, N-EXTRA-VALUES = {self.number_extra}"
+
+        return result
+
     def __str__(self) -> str:
         """
         String representation of a DNS Header.
         :return: Result string.
         """
 
-        formatted_flags = ""
-        for flag in self.flags:
-            formatted_flags = formatted_flags + '+' + flag.name
+        formatted_flags = self.flags_as_string()
 
-        return f"{self.message_id},{formatted_flags[1:]},{self.response_code},{self.number_values}," \
+        return f"{self.message_id},{formatted_flags},{self.response_code},{self.number_values}," \
                f"{self.number_authorities},{self.number_extra};"
 
 
@@ -146,6 +161,11 @@ class DNSPacketQueryInfo(BaseModel):
 
         raise InvalidDNSPacket(
             f"The number of query info values must be equal to 2, but received {len(separated_values)}.")
+
+    def prettify(self) -> str:
+
+        result: str = f"# Data : Query Info\nQUERY-INFO.NAME = {self.name}, QUERY-INFO.TYPE = {self.type_of_value.name}"
+        return result
 
     def __str__(self) -> str:
         """
@@ -227,6 +247,23 @@ class DNSPacketQueryData(BaseModel):
     def empty(cls) -> 'DNSPacketQueryData':
         return cls(response_values=[], authorities_values=[], extra_values=[])
 
+    def prettify(self) -> str:
+
+        result = "# Data: List of Response, Authorities and Extra Values\n"
+        values_loc = ['response_values', 'authorities_values', 'extra_values']
+
+        for values in values_loc:
+
+            list_of_values = getattr(self, values)
+
+            if len(list_of_values) > 0:
+                for value in list_of_values:
+                    result = result + f"{values.replace('_', '-').upper()} = {value},\n"
+
+                result = result[:-2] + ";\n"
+
+        return result
+
     def __str__(self) -> str:
         """
         String representation of a DNS Query Data field.
@@ -234,20 +271,19 @@ class DNSPacketQueryData(BaseModel):
         """
 
         formatted_string = ''
-        for value in self.response_values:
-            formatted_string = formatted_string + value + ",\n"
+        values_loc = ['response_values', 'authorities_values', 'extra_values']
 
-        formatted_string = formatted_string[:-2] + ";\n"
+        for values in values_loc:
 
-        for value in self.authorities_values:
-            formatted_string = formatted_string + value + ",\n"
+            list_of_values = getattr(self, values)
 
-        formatted_string = formatted_string[:-2] + ";\n"
+            if len(list_of_values) > 0:
+                for value in list_of_values:
+                    formatted_string = formatted_string + value + ",\n"
 
-        for value in self.extra_values:
-            formatted_string = formatted_string + value + ",\n"
+                formatted_string = formatted_string[:-2] + ";\n"
 
-        return formatted_string[:-2] + ";"
+        return formatted_string
 
 
 class DNSPacket(BaseModel):
@@ -273,8 +309,6 @@ class DNSPacket(BaseModel):
         ns1.example.com. A 193.136.130.250 86400,
         ns2.example.com. A 193.137.100.250 86400,
         ns3.example.com. A 193.136.130.251 86400;
-
-    TODO: Check if flag is Q and values are 0.
     """
 
     header: DNSPacketHeader
@@ -306,12 +340,43 @@ class DNSPacket(BaseModel):
 
         return cls(header=query_header, query_info=query_info, query_data=query_data)
 
+    @classmethod
+    def generate_bad_format_response(cls) -> 'DNSPacket':
+
+        current_message_id: str = __get_latest_id__()
+
+        query_header = DNSPacketHeader(
+            message_id=current_message_id,
+            flags=[DNSPacketHeaderFlag.A],
+            response_code=3,
+            number_values=0,
+            number_authorities=0,
+            number_extra=0
+        )
+
+        query_info = DNSPacketQueryInfo(
+            name='bad_format',
+            type_of_value=DNSValueType.NS
+        )
+
+        query_data = DNSPacketQueryData(
+            response_values=[],
+            authorities_values=[],
+            extra_values=[]
+        )
+
+        return cls(header=query_header, query_info=query_info, query_data=query_data)
+
+    def prettify(self) -> str:
+        return f"{self.header.prettify()}\n{self.query_info.prettify()}\n{self.query_data.prettify()}"
+
     def __str__(self):
         """
         String representation of the DNSPacket class.
         :return: Result string.
         """
         return f"{self.header}{self.query_info}\n{self.query_data}"
+
 
 # query = """3874,R+A,0,2,3,5;example.com.,MX;
 # example.com. MX mx1.example.com 86400 10,
@@ -324,7 +389,12 @@ class DNSPacket(BaseModel):
 # ns1.example.com. A 193.136.130.250 86400,
 # ns2.example.com. A 193.137.100.250 86400,
 # ns3.example.com. A 193.136.130.251 86400;"""
-
+#
 # packet = DNSPacket.from_string(query)
-# print(packet.header, packet.query_info)
+#
+# error = DNSPacket.generate_bad_format_response()
+#
+# print(str(packet).join("\n\n"))
+# print(packet.prettify())
+
 

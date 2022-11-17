@@ -33,3 +33,9 @@ def __load_latest_id__() -> int:
         file.write(str(incremented_id))
 
     return current_message_id
+
+
+def __get_latest_id__() -> str:
+
+    with open("../msgid.dat", "r") as file:
+        return file.read()
