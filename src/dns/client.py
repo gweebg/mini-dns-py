@@ -1,10 +1,23 @@
 import socket
 import argparse
-import time
+import logging
 
 from dns.dns_packet import DNSPacket
-from exceptions.exceptions import InvalidQueryValue
+from exceptions.exceptions import InvalidQueryValue, InvalidDNSPacket
 from dns.utils import __ipv4_type_validator__, __load_latest_id__
+
+
+# Get a custom logger & set the logging level.
+client_logger = logging.getLogger("client")
+client_logger.setLevel(logging.INFO)
+
+# Configure the handler and formatter.
+client_handler = logging.FileHandler("../logs/client.log", mode='a')
+client_formatter = logging.Formatter("%(name)s %(asctime)s %(message)s")
+
+# Add formatter to the handler and handler to the logger.
+client_handler.setFormatter(client_formatter)
+client_logger.addHandler(client_handler)
 
 
 class Client:
@@ -31,9 +44,11 @@ class Client:
         try:
             self.udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             self.udp_socket.bind((self.address[0], 0))
+            client_logger.info(f"EV 127.0.0.1 Created and bound socket to {self.address[0]}:{self.address[1]}.")
 
         except Exception as error:
-            print("[UNEXPECTED ERROR] ", error)
+            client_logger.error(f"SP 127.0.0.1 Could not create/bind socket to IP address {self.address[0]}:{self.address[1]} : {error}")
+            raise
 
     def set_query(self, query: DNSPacket | str):
         """
@@ -50,6 +65,7 @@ class Client:
             self.query = DNSPacket.from_string(query)
 
         else:
+            client_logger.error(f"SP 127.0.0.1 Invalid query value, Client::set_query().")
             raise InvalidQueryValue("Query must be a string or a DNSPacket.")
 
     def send(self):
@@ -59,9 +75,16 @@ class Client:
         """
 
         if self.query is not None:
-            # self.udp_socket.sendto(self.query.as_byte_string(), self.address)
-            # self.udp_socket.sendto("120,Q,0,0,0,0;abc.example.com.,MX".encode("utf-8"), self.address)
-            self.udp_socket.sendto("ola".encode("utf-8"), self.address)
+
+            try:
+                self.udp_socket.sendto(self.query.as_byte_string(), self.address)
+                client_logger.info(f"EV 127.0.0.1 Sent query to {self.address[0]}:{self.address[1]} .")
+                # self.udp_socket.sendto("120,Q,0,0,0,0;abc.example.com.,MX".encode("utf-8"), self.address)
+                # self.udp_socket.sendto("ola".encode("utf-8"), self.address)
+
+            except Exception as error:
+                client_logger.error(f"SP 127.0.0.1 Could not send query to {self.address[0]}:{self.address[1]} : {error}")
+                raise
 
     def receive(self):
         """
@@ -70,11 +93,22 @@ class Client:
         :return: None
         """
 
-        result = self.udp_socket.recv(self.read_size).decode("utf-8")
-        decoded_packet = DNSPacket.from_string(result)
+        try:
+            result = self.udp_socket.recv(self.read_size).decode("utf-8")
+            decoded_packet = DNSPacket.from_string(result)
+            client_logger.info(f"EV 127.0.0.1 Received and parsed query response from server:\n\t{result}")
 
-        print(decoded_packet.prettify())
-        self.udp_socket.close()
+            print(decoded_packet.prettify())
+
+        except InvalidDNSPacket as inv_dns_packet_err:
+            client_logger.error(f"SP 127.0.0.1 Received an invalid query pdu string, Client::receive().")
+            raise
+
+        except Exception as error:
+            client_logger.error(f"SP 127.0.0.1 Could not receive from server, Client::receive() : {error}")
+
+        finally:
+            self.udp_socket.close()
 
 
 def main():
