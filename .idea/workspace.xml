@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8fb73730-5d4d-4194-858b-416c8aec73ad" name="Changes" comment="Added more requirements and examples.">
+    <list default="true" id="8fb73730-5d4d-4194-858b-416c8aec73ad" name="Changes" comment="Implemented server response if query is bad.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cache/cache.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/cache/cache.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dns/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/client.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dns/dns_packet.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/dns_packet.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dns/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/parser/database_parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/database_parser.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/database.conf" beforeDir="false" afterPath="$PROJECT_DIR$/tests/database.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/dns_resource.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/dns_resource.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -251,7 +249,8 @@
       <workItem from="1668630727998" duration="109000" />
       <workItem from="1668682955463" duration="7313000" />
       <workItem from="1668702279444" duration="1088000" />
-      <workItem from="1668717600812" duration="7683000" />
+      <workItem from="1668717600812" duration="7864000" />
+      <workItem from="1668769919135" duration="4121000" />
     </task>
     <task id="LOCAL-00001" summary="Continuation of database parsing.&#10;&#10;Missing NS, MX, A, CNAME and PTR parsers.">
       <created>1666713019519</created>
@@ -414,7 +413,21 @@
       <option name="project" value="LOCAL" />
       <updated>1668723563008</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Fixed bug in DNSPacket::from_string().&#10;&#10;Where it wouldn't accept string with empty values.">
+      <created>1668725394076</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1668725394076</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Implemented server response if query is bad.">
+      <created>1668725448413</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1668725448413</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -457,19 +470,21 @@
     <MESSAGE value="Fixed DNSPacket string formatting.&#10;&#10;Added DNSPacket*::prettify to pretty print a packet." />
     <MESSAGE value="Moved BaseDatagramServer to its own file.&#10;&#10;Added BaseSegmentServer to implement zone transfer." />
     <MESSAGE value="Added more requirements and examples." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added more requirements and examples." />
+    <MESSAGE value="Fixed bug in DNSPacket::from_string().&#10;&#10;Where it wouldn't accept string with empty values." />
+    <MESSAGE value="Implemented server response if query is bad." />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented server response if query is bad." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/mini_dns_py$.coverage" NAME=" Coverage Results" MODIFIED="1666711877164" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
-    <SUITE FILE_PATH="coverage/mini_dns_py$Client__w__args_.coverage" NAME="Client (w/ args) Coverage Results" MODIFIED="1668725088642" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns" />
+    <SUITE FILE_PATH="coverage/mini_dns_py$Client__w__args_.coverage" NAME="Client (w/ args) Coverage Results" MODIFIED="1668773881356" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns" />
     <SUITE FILE_PATH="coverage/mini_dns_py$example_server.coverage" NAME="example-server Coverage Results" MODIFIED="1668295214278" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/example" />
     <SUITE FILE_PATH="coverage/mini_dns_py$client.coverage" NAME="Client (w/ args) Coverage Results" MODIFIED="1668422446726" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns" />
     <SUITE FILE_PATH="coverage/mini_dns_py$example_protocol.coverage" NAME="example_protocol Coverage Results" MODIFIED="1668084367885" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/example" />
-    <SUITE FILE_PATH="coverage/mini_dns_py$dns_packet.coverage" NAME="dns_packet Coverage Results" MODIFIED="1668725312282" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns" />
+    <SUITE FILE_PATH="coverage/mini_dns_py$dns_packet.coverage" NAME="dns_packet Coverage Results" MODIFIED="1668773092561" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns" />
     <SUITE FILE_PATH="coverage/mini_dns_py$example_client.coverage" NAME="example-client Coverage Results" MODIFIED="1668295250528" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/example" />
     <SUITE FILE_PATH="coverage/mini_dns_py$cache.coverage" NAME="cache Coverage Results" MODIFIED="1668602102124" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/cache" />
     <SUITE FILE_PATH="coverage/mini_dns_py$Main.coverage" NAME="Main Coverage Results" MODIFIED="1667927009726" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/mini_dns_py$server.coverage" NAME="server Coverage Results" MODIFIED="1668725085951" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns" />
+    <SUITE FILE_PATH="coverage/mini_dns_py$server.coverage" NAME="server Coverage Results" MODIFIED="1668773879021" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns" />
     <SUITE FILE_PATH="coverage/mini_dns_py$main.coverage" NAME="main Coverage Results" MODIFIED="1668621485096" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
   </component>
 </project>

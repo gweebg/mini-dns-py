@@ -59,8 +59,8 @@ class Client:
         """
 
         if self.query is not None:
-            # self.udp_socket.sendto(self.query.as_byte_string(), self.address)
-            self.udp_socket.sendto("cona;master;123".encode("utf-8"), self.address)
+            self.udp_socket.sendto(self.query.as_byte_string(), self.address)
+            # self.udp_socket.sendto("cona;master;123".encode("utf-8"), self.address)
 
     def receive(self):
         """

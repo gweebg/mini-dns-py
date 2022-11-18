@@ -389,13 +389,21 @@ class DNSPacket(BaseModel):
 # ns1.example.com. A 193.136.130.250 86400,
 # ns2.example.com. A 193.137.100.250 86400,
 # ns3.example.com. A 193.136.130.251 86400;"""
-#
+# #
 # packet = DNSPacket.from_string(query)
+# #
+# # error = DNSPacket.generate_bad_format_response()
+# #
+# # xd = DNSPacket.from_string("80,A,3,0,0,0;bad_format,NS;")
+# # print(xd.prettify())
 #
-# error = DNSPacket.generate_bad_format_response()
+# a = DNSPacketQueryData(response_values=[], authorities_values=[], extra_values=[])
 #
-# xd = DNSPacket.from_string("80,A,3,0,0,0;bad_format,NS;")
-# print(xd.prettify())
+# not_found = DNSPacket(
+#     header=packet.header,
+#     query_info=packet.query_info,
+#     query_data=DNSPacketQueryData.empty()
+# )
 
 
 
