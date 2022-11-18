@@ -217,8 +217,6 @@ class DNSPacketQueryData(BaseModel):
         :param header: DNSPacketHeader object used to confirm that the number of values match with the
                        actual number of values provided.
         :return: DNSPacketQueryData - Generated result object.
-
-        TODO: Needs more validation.
         """
 
         response_values = []
@@ -226,22 +224,28 @@ class DNSPacketQueryData(BaseModel):
         extra_values = []
 
         values = query_values_string.split(";")
-        values = values[:-1]
+        values.pop()  # Remove last empty element because of trailing ';'.
 
         if len(values) not in range(0, 4):
             raise InvalidDNSPacket(
                 f"Expected a maximum of 4 value groups but got {len(values)}.")
 
-        if header.number_values > 0 and len(values):
-            response_values = [value for value in values[0].split(",")]
+        i = 0
+        if header.number_values > 0:
+            response_values = [value for value in values[i].split(",")]
+            i += 1
 
         if header.number_authorities > 0:
-            authorities_values = [value for value in values[1].split(",")]
+            authorities_values = [value for value in values[i].split(",")]
+            i += 1
 
         if header.number_extra > 0:
-            extra_values = [value for value in values[2].split(",")]
+            extra_values = [value for value in values[i].split(",")]
 
-        return cls(response_values=response_values, authorities_values=authorities_values, extra_values=extra_values)
+        return cls(
+            response_values=response_values,
+            authorities_values=authorities_values,
+            extra_values=extra_values)
 
     @classmethod
     def empty(cls) -> 'DNSPacketQueryData':
@@ -389,21 +393,17 @@ class DNSPacket(BaseModel):
 # ns1.example.com. A 193.136.130.250 86400,
 # ns2.example.com. A 193.137.100.250 86400,
 # ns3.example.com. A 193.136.130.251 86400;"""
-# #
+#
+# query_2 = """120,A,1,0,3,0;abc.example.com.,MX;
+# example.com. NS ns1.example.com. 86400,
+# example.com. NS ns2.example.com. 86400,
+# example.com. NS ns3.example.com. 86400;"""
+#
 # packet = DNSPacket.from_string(query)
-# #
-# # error = DNSPacket.generate_bad_format_response()
-# #
-# # xd = DNSPacket.from_string("80,A,3,0,0,0;bad_format,NS;")
-# # print(xd.prettify())
 #
-# a = DNSPacketQueryData(response_values=[], authorities_values=[], extra_values=[])
+# packet_2 = DNSPacket.from_string(query_2)
 #
-# not_found = DNSPacket(
-#     header=packet.header,
-#     query_info=packet.query_info,
-#     query_data=DNSPacketQueryData.empty()
-# )
+# packet_2.prettify()
 
 
 

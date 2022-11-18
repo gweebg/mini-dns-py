@@ -1,5 +1,6 @@
+from dns.dns_database import Database
 from dns.server_config import ServerConfiguration
-from dns.dns_packet import DNSPacket, DNSPacketQueryData, DNSPacketHeaderFlag
+from dns.dns_packet import DNSPacket, DNSPacketQueryData, DNSPacketHeaderFlag, DNSPacketHeader
 from dns.base_datagram_server import BaseDatagramServer
 
 from exceptions.exceptions import InvalidDNSPacket
@@ -49,8 +50,8 @@ class PrimaryServer(BaseDatagramServer):
         self.configuration: ServerConfiguration = FileParserFactory(configuration_path,
                                                                     Mode.CONFIG).get_parser().parse()
 
-        self.database: dict[DNSValueType, list[DNSResource]] = FileParserFactory(self.configuration.database_path,
-                                                                                 Mode.DB).get_parser().parse()
+        self.database: Database = Database(database=FileParserFactory(self.configuration.database_path,
+                                           Mode.DB).get_parser().parse())
 
         self.root_servers: list[str] = FileParserFactory(self.configuration.root_servers_path,
                                                          Mode.RT).get_parser().parse()
@@ -86,6 +87,17 @@ class PrimaryServer(BaseDatagramServer):
         It matches the query with the database, giving as output every matched value (response values,
         authorities values and extra values).
 
+        Logic:
+            if response values found (full matches):
+                look for authorities by searching given domain name
+                get extras by getting ips
+            else:
+                look for authorities by searching for given domain's superdomain (example.com -> .com)
+                get extras by getting ips
+
+            if no authorities nor extras nor response values:
+                domain does not exist
+
         :param packet: DNSPacket object containing the received query.
         :return:
         """
@@ -93,46 +105,13 @@ class PrimaryServer(BaseDatagramServer):
         name: str = packet.query_info.name
         type_of_value: DNSValueType = packet.query_info.type_of_value
 
-        above_values = []
+        response_values: [DNSResource] = self.database.response_values(name, type_of_value)
 
-        response_values = []
-        authorities_values = []
-        extra_values = []
+        authorities_values: [DNSResource] = self.database.authorities_values(name, len(response_values) <= 0)
 
-        # Response Values : Match on NAME and TYPE OF VALUE.
-        same_type_values: list[DNSResource] = self.database.get(type_of_value)
+        extra_values: [DNSResource] = self.database.extra_values(response_values + authorities_values)
 
-        for entry in same_type_values:
-            if entry.type == type_of_value and entry.parameter == name:
-                above_values.append(entry)
-                response_values.append(entry)
-
-        # Authorities Values : Match no NAME and type NS.
-        nameservers = self.database.get(DNSValueType["NS"])
-
-        for entry in nameservers:
-            if entry.parameter == name:
-                above_values.append(entry)
-                authorities_values.append(entry)
-
-        # Extra Values : Match all of the above on type A.
-        addresses = self.database.get(DNSValueType["A"])
-
-        for old_value in above_values:
-            for address in addresses:
-
-                updated_value = old_value
-                if not old_value.value.endswith("."):
-                    updated_value = old_value.value + "."
-
-                if updated_value == address.parameter:
-                    extra_values.append(address)
-
-        response_values = list(map(lambda x: x.as_log_string(), response_values))
-        authorities_values = list(map(lambda x: x.as_log_string(), authorities_values))
-        extra_values = list(map(lambda x: x.as_log_string(), extra_values))
-
-        return response_values, authorities_values, extra_values
+        return Database.values_as_string(response_values), Database.values_as_string(authorities_values), Database.values_as_string(extra_values)
 
     def is_whitelisted(self, name: str):
         """
@@ -157,87 +136,92 @@ class PrimaryServer(BaseDatagramServer):
 
         # Check if the received data is a DNSPacket. If it isn't than reply to client with response code 3.
         try:
-            received_dns_packet: DNSPacket = DNSPacket.from_string(data)
+            packet: DNSPacket = DNSPacket.from_string(data)
 
-        except InvalidDNSPacket as error:
+        except InvalidDNSPacket:
             bad_format_packet: DNSPacket = DNSPacket.generate_bad_format_response()
             self.udp_socket.sendto(bad_format_packet.as_byte_string(), address)
             return 3
 
         # Check if the domain name received on the query is whitelisted (has a DD entry).
-        is_whitelisted = self.is_whitelisted(received_dns_packet.query_info.name)
+        is_whitelisted = self.is_whitelisted(packet.query_info.name)
 
         # Check if the current instance of server is an authority of the domain name (is a PS or SS).
-        if self.is_authority(received_dns_packet.query_info.name) and is_whitelisted:
-            database_results = self.match(received_dns_packet)  # Check the database for entries.
+        # if self.is_authority(packet.query_info.name) and is_whitelisted:
+        database_results = self.match(packet)  # Check the database for entries.
 
-            # Check if there were any actual matches on the database, if not reply to client with.
-            if len(database_results[0]) == 0:
+        # Check if there were any actual matches on the database, if not reply to client with.
+        if len(database_results[0]) == 0:
 
-                if len(database_results[1]) == 0 and len(database_results[2]) == 0:
-                    # Domain name does not exist.
+            if len(database_results[1]) == 0 and len(database_results[2]) == 0:
 
-                    new_header = received_dns_packet.header
-                    new_header.response_code = 2
-                    new_header.flags = [DNSPacketHeaderFlag.A]
+                # Domain name does not exist.
+                new_header = packet.header
+                new_header.response_code = 2
+                new_header.flags = [DNSPacketHeaderFlag.A]
 
-                    not_found = DNSPacket(
-                        header=new_header,
-                        query_info=received_dns_packet.query_info,
-                        query_data=DNSPacketQueryData.empty()
-                    )
+                not_found = DNSPacket(
+                    header=new_header,
+                    query_info=packet.query_info,
+                    query_data=DNSPacketQueryData.empty()
+                )
 
-                    self.udp_socket.sendto(not_found.as_byte_string(), address)
-                    return 2
-
-                else:
-                    # Domain does exist but not here.
-
-                    new_header = received_dns_packet.header
-                    new_header.response_code = 1
-                    new_header.flags = [DNSPacketHeaderFlag.A]
-
-                    query_data = DNSPacketQueryData(
-                        response_values=[],
-                        authorities_values=database_results[1],
-                        extra_values=database_results[2]
-                    )
-
-                    exists_response = DNSPacket(
-                        header=new_header,
-                        query_info=received_dns_packet.query_info,
-                        query_data=query_data
-                    )
-
-                    self.udp_socket.sendto(exists_response.as_byte_string(), address)
-                    return 1
+                self.udp_socket.sendto(not_found.as_byte_string(), address)
+                return 2
 
             else:
 
-                new_header = received_dns_packet.header
-
-                new_header.response_code = 0
-                new_header.flags = [DNSPacketHeaderFlag.A]
-                new_header.number_values = len(database_results[0])
-                new_header.number_authorities = len(database_results[1])
-                new_header.number_extra = len(database_results[2])
+                # Domain does exist but not here.
+                header = DNSPacketHeader(
+                    message_id=packet.header.message_id,
+                    flags=[DNSPacketHeaderFlag.A],
+                    response_code=1,
+                    number_values=0,
+                    number_authorities=len(database_results[1]),
+                    number_extra=len(database_results[2])
+                )
 
                 query_data = DNSPacketQueryData(
-                    response_values=database_results[0],
+                    response_values=[],
                     authorities_values=database_results[1],
                     extra_values=database_results[2]
                 )
 
-                found_response = DNSPacket(
-                    header=new_header,
-                    query_info=received_dns_packet.query_info,
+                exists_response = DNSPacket(
+                    header=header,
+                    query_info=packet.query_info,
                     query_data=query_data
                 )
 
-                print(found_response.prettify())
+                self.udp_socket.sendto(exists_response.as_byte_string(), address)
+                return 1
 
-                self.udp_socket.sendto(found_response.as_byte_string(), address)
-                return 0
+        else:
+
+            # Direct match on the database.
+            header = DNSPacketHeader(
+                message_id=packet.header.message_id,
+                flags=[DNSPacketHeaderFlag.A],
+                response_code=0,
+                number_values=len(database_results[0]),
+                number_authorities=len(database_results[1]),
+                number_extra=len(database_results[2])
+            )
+
+            query_data = DNSPacketQueryData(
+                response_values=database_results[0],
+                authorities_values=database_results[1],
+                extra_values=database_results[2]
+            )
+
+            found_response = DNSPacket(
+                header=header,
+                query_info=packet.query_info,
+                query_data=query_data
+            )
+
+            self.udp_socket.sendto(found_response.as_byte_string(), address)
+            return 0
 
 
 def main():
