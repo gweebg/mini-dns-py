@@ -1,9 +1,13 @@
+import logging
+import sys
+
 from dns.dns_database import Database
 from dns.server_config import ServerConfiguration
 from dns.dns_packet import DNSPacket, DNSPacketQueryData, DNSPacketHeaderFlag, DNSPacketHeader
 from dns.base_datagram_server import BaseDatagramServer
 
 from exceptions.exceptions import InvalidDNSPacket
+from models.config_entry import ConfigEntry
 
 from models.dns_resource import DNSResource, DNSValueType
 
@@ -25,6 +29,20 @@ On run, create two threads, one for UDP listening and other for TCP.
 Do not repeat variable names!
 Change BaseDatagramServer::start() to BaseDatagramServer::dstart().
 And define BaseSegmentServer::sstart().
+
+
+
+1º Iterar sobre todas as entradas LG.
+2º Por cada entrada LG criar um logger com o nome em parametro.
+    2.1. x = logging.getLogger(parameter)
+    2.2. x.setLevel(...)
+    2.3. ... handler ... file ...
+3º Verificar a flag de debug.
+    3.1. Caso esteja ativa, adicionar StreamOutput handler.
+    3.2. Caso contrario, deixar como esta.
+4º Dar log da seguinte maneira
+    4.1. logging.getLogger(domain_name)...
+
 """
 
 
@@ -50,15 +68,64 @@ class PrimaryServer(BaseDatagramServer):
         self.configuration: ServerConfiguration = FileParserFactory(configuration_path,
                                                                     Mode.CONFIG).get_parser().parse()
 
+        self.loggers: dict[str, logging.Logger] = self.create_loggers(self.configuration.logs_path, debug)
+        self.log('all', f'EV | 127.0.0.1 |Loaded configuration @ "{configuration_path}" and loggers', 'info')
+
         self.database: Database = Database(database=FileParserFactory(self.configuration.database_path,
                                            Mode.DB).get_parser().parse())
+        self.log('all', f'EV | 127.0.0.1 |Loaded database @ "{self.configuration.database_path}"', 'info')
 
         self.root_servers: list[str] = FileParserFactory(self.configuration.root_servers_path,
                                                          Mode.RT).get_parser().parse()
+        self.log('all', f'EV | 127.0.0.1 | Loaded root ip address list @ "{self.configuration.root_servers_path}"', 'info')
 
         self.cache = Cache(maxsize=1000)
 
         super().__init__("127.0.0.1", port, read_size)
+
+    @staticmethod
+    def create_loggers(logs_list: list[ConfigEntry], debug_flag: bool):
+
+        loggers: dict[str, logging.Logger] = {}
+
+        for entry in logs_list:
+
+            logger_name = entry.parameter
+            logger_loc = entry.value
+
+            # Create logger.
+            logger = logging.getLogger(logger_name)
+            logger.setLevel(logging.INFO)
+
+            # Configure the handler and formatter.
+            logger_handler = logging.FileHandler(logger_loc, mode='a')
+            logger_formatter = logging.Formatter("%(filename)s %(levelname)s | %(asctime)s | %(message)s")
+
+            # Add formatter to the handler and handler to the logger.
+            logger_handler.setFormatter(logger_formatter)
+            logger.addHandler(logger_handler)
+
+            # Enable console output if debug is active.
+            if debug_flag:
+
+                logger_console_handler = logging.StreamHandler()
+                logger_console_handler.setLevel(logging.INFO)
+                logger_console_handler.setFormatter(logger_formatter)
+                logger.addHandler(logger_console_handler)
+
+            loggers[logger_name] = logger
+
+        return loggers
+
+    def log(self, logger_name: str, content: str, mode: str):
+
+        if logger_name in self.loggers:
+            func = getattr(self.loggers.get(logger_name), mode)
+            func(content)
+
+        if 'all' in self.loggers and logger_name != 'all':
+            func = getattr(self.loggers.get('all'), mode)
+            func(content)
 
     def is_authority(self, name: str):
         """
@@ -133,13 +200,18 @@ class PrimaryServer(BaseDatagramServer):
         """
 
         data: str = data.strip().decode("utf-8")
+        self.log('all', f'QR | {address[0]}:{address[1]} | {data}', 'info')
 
         # Check if the received data is a DNSPacket. If it isn't than reply to client with response code 3.
         try:
             packet: DNSPacket = DNSPacket.from_string(data)
 
-        except InvalidDNSPacket:
+        except InvalidDNSPacket as error:
+
+            self.log('all', f'ER | {address[0]}:{address[1]} |\n{error}', 'error')
             bad_format_packet: DNSPacket = DNSPacket.generate_bad_format_response()
+
+            self.log('all', f'RP | {address[0]}:{address[1]} |\n{bad_format_packet}', 'info')
             self.udp_socket.sendto(bad_format_packet.as_byte_string(), address)
             return 3
 
@@ -147,85 +219,90 @@ class PrimaryServer(BaseDatagramServer):
         is_whitelisted = self.is_whitelisted(packet.query_info.name)
 
         # Check if the current instance of server is an authority of the domain name (is a PS or SS).
-        # if self.is_authority(packet.query_info.name) and is_whitelisted:
-        database_results = self.match(packet)  # Check the database for entries.
+        if self.is_authority(packet.query_info.name) and is_whitelisted:
 
-        # Check if there were any actual matches on the database, if not reply to client with.
-        if len(database_results[0]) == 0:
+            self.log('example.com.', f'EV | {address[0]}:{address[1]} | Searching on database for {packet.query_info.name}, {packet.query_info.type_of_value}', 'info')
+            database_results = self.match(packet)  # Check the database for entries.
 
-            if len(database_results[1]) == 0 and len(database_results[2]) == 0:
+            # Check if there were any actual matches on the database, if not reply to client with.
+            if len(database_results[0]) == 0:
 
-                # Domain name does not exist.
-                new_header = packet.header
-                new_header.response_code = 2
-                new_header.flags = [DNSPacketHeaderFlag.A]
+                if len(database_results[1]) == 0 and len(database_results[2]) == 0:
 
-                not_found = DNSPacket(
-                    header=new_header,
-                    query_info=packet.query_info,
-                    query_data=DNSPacketQueryData.empty()
-                )
+                    # Domain name does not exist.
+                    new_header = packet.header
+                    new_header.response_code = 2
+                    new_header.flags = [DNSPacketHeaderFlag.A]
 
-                self.udp_socket.sendto(not_found.as_byte_string(), address)
-                return 2
+                    not_found = DNSPacket(
+                        header=new_header,
+                        query_info=packet.query_info,
+                        query_data=DNSPacketQueryData.empty()
+                    )
+
+                    self.log('all', f'RP | {address[0]}:{address[1]} |\n\t{not_found}', 'info')
+                    self.udp_socket.sendto(not_found.as_byte_string(), address)
+                    return 2
+
+                else:
+
+                    # Domain does exist but not here.
+                    header = DNSPacketHeader(
+                        message_id=packet.header.message_id,
+                        flags=[DNSPacketHeaderFlag.A],
+                        response_code=1,
+                        number_values=0,
+                        number_authorities=len(database_results[1]),
+                        number_extra=len(database_results[2])
+                    )
+
+                    query_data = DNSPacketQueryData(
+                        response_values=[],
+                        authorities_values=database_results[1],
+                        extra_values=database_results[2]
+                    )
+
+                    exists_response = DNSPacket(
+                        header=header,
+                        query_info=packet.query_info,
+                        query_data=query_data
+                    )
+
+                    self.log('all', f'RP | {address[0]}:{address[1]} |\n\t{exists_response}', 'info')
+                    self.udp_socket.sendto(exists_response.as_byte_string(), address)
+                    return 1
 
             else:
 
-                # Domain does exist but not here.
+                # Direct match on the database.
                 header = DNSPacketHeader(
                     message_id=packet.header.message_id,
                     flags=[DNSPacketHeaderFlag.A],
-                    response_code=1,
-                    number_values=0,
+                    response_code=0,
+                    number_values=len(database_results[0]),
                     number_authorities=len(database_results[1]),
                     number_extra=len(database_results[2])
                 )
 
                 query_data = DNSPacketQueryData(
-                    response_values=[],
+                    response_values=database_results[0],
                     authorities_values=database_results[1],
                     extra_values=database_results[2]
                 )
 
-                exists_response = DNSPacket(
+                found_response = DNSPacket(
                     header=header,
                     query_info=packet.query_info,
                     query_data=query_data
                 )
 
-                self.udp_socket.sendto(exists_response.as_byte_string(), address)
-                return 1
-
-        else:
-
-            # Direct match on the database.
-            header = DNSPacketHeader(
-                message_id=packet.header.message_id,
-                flags=[DNSPacketHeaderFlag.A],
-                response_code=0,
-                number_values=len(database_results[0]),
-                number_authorities=len(database_results[1]),
-                number_extra=len(database_results[2])
-            )
-
-            query_data = DNSPacketQueryData(
-                response_values=database_results[0],
-                authorities_values=database_results[1],
-                extra_values=database_results[2]
-            )
-
-            found_response = DNSPacket(
-                header=header,
-                query_info=packet.query_info,
-                query_data=query_data
-            )
-
-            self.udp_socket.sendto(found_response.as_byte_string(), address)
-            return 0
+                self.log('all', f'RP | {address[0]}:{address[1]} |\n\t{found_response}', 'info')
+                self.udp_socket.sendto(found_response.as_byte_string(), address)
+                return 0
 
 
 def main():
-    server = PrimaryServer(20001, "../../tests/config.conf")
+    server = PrimaryServer(20001, "../../tests/config.conf", debug=True)
     server.start()
 
 

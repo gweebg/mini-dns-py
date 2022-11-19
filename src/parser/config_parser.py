@@ -65,7 +65,7 @@ class ConfigFileParser(FileParser):
                     raise InvalidConfigFileException(
                         f"Value '{parameter}' is not a domain name or keyword 'all': {line}")
 
-                configuration.logs_path = ConfigEntry(line)
+                configuration.logs_path.append(ConfigEntry(line))
 
             elif value_type == "ST":
 
