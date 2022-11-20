@@ -1,10 +1,11 @@
 import logging
-import sys
+from multiprocessing import Process
 
 from dns.dns_database import Database
-from dns.server_config import ServerConfiguration
+from dns.server.base_segment_server import BaseSegmentServer
+from dns.server.server_config import ServerConfiguration
 from dns.dns_packet import DNSPacket, DNSPacketQueryData, DNSPacketHeaderFlag, DNSPacketHeader
-from dns.base_datagram_server import BaseDatagramServer
+from dns.server.base_datagram_server import BaseDatagramServer
 
 from exceptions.exceptions import InvalidDNSPacket
 from models.config_entry import ConfigEntry
@@ -30,23 +31,11 @@ Do not repeat variable names!
 Change BaseDatagramServer::start() to BaseDatagramServer::dstart().
 And define BaseSegmentServer::sstart().
 
-
-
-1º Iterar sobre todas as entradas LG.
-2º Por cada entrada LG criar um logger com o nome em parametro.
-    2.1. x = logging.getLogger(parameter)
-    2.2. x.setLevel(...)
-    2.3. ... handler ... file ...
-3º Verificar a flag de debug.
-    3.1. Caso esteja ativa, adicionar StreamOutput handler.
-    3.2. Caso contrario, deixar como esta.
-4º Dar log da seguinte maneira
-    4.1. logging.getLogger(domain_name)...
-
+Care with duplicate entries!
 """
 
 
-class PrimaryServer(BaseDatagramServer):
+class PrimaryServer(BaseDatagramServer, BaseSegmentServer):
     """
     This class represents a DNS primary server. It answers queries based on its
     configuration file and database.
@@ -82,6 +71,7 @@ class PrimaryServer(BaseDatagramServer):
         self.cache = Cache(maxsize=1000)
 
         super().__init__("127.0.0.1", port, read_size)
+        super(BaseDatagramServer, self).__init__("127.0.0.1", port, read_size)
 
     @staticmethod
     def create_loggers(logs_list: list[ConfigEntry], debug_flag: bool):
@@ -302,8 +292,16 @@ class PrimaryServer(BaseDatagramServer):
 
 
 def main():
-    server = PrimaryServer(20001, "../../tests/config.conf", debug=True)
-    server.start()
+    server = PrimaryServer(20001, "/home/guilherme/Documents/repos/mini-dns-py/tests/config.conf", debug=True)
+
+    udp_listener = Process(target=server.start)
+    tcp_listener = Process(target=server.tcp_start)
+
+    udp_listener.start()
+    tcp_listener.start()
+
+    udp_listener.join()
+    tcp_listener.join()
 
 
 if __name__ == "__main__":
