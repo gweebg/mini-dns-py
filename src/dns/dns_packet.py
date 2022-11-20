@@ -320,7 +320,7 @@ class DNSPacket(BaseModel):
     query_data: DNSPacketQueryData
 
     def as_byte_string(self) -> bytes:
-        return str(self).encode("utf-8")
+        return str(self).encode("ascii")
 
     @classmethod
     def from_string(cls, query_string: str) -> 'DNSPacket':

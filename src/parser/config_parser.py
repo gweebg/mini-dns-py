@@ -2,7 +2,7 @@ from exceptions.exceptions import InvalidConfigFileException
 
 from models.config_entry import ConfigEntry
 
-from dns.server_config import ServerConfiguration
+from dns.server.server_config import ServerConfiguration
 
 from parser.regex_compiles import RE_DOMAIN, RE_IVP4
 from parser.abstract_parser import FileParser
