@@ -39,7 +39,7 @@ class ZoneTransferPacket(BaseModel):
 
     # Values Section
     num_value: int = Field(ge=0)
-    value: Optional[DNSResource]
+    value: Optional[DNSResource | int]
 
     @classmethod
     def from_string(cls, packet_string: str) -> 'ZoneTransferPacket':
@@ -60,28 +60,37 @@ class ZoneTransferPacket(BaseModel):
         domain: str = values[1]
         num_values = values[2]
 
-        if packet_mode.name in ['DOM', 'ENT', 'ACK']:
+        if packet_mode.name in ['DOM', 'ACK']:
             return cls(mode=packet_mode, domain=domain, num_value=num_values)
 
         if packet_mode == ZoneTransferMode.LIN and len(values) == 4:
             return cls(mode=packet_mode, domain=domain, num_values=num_values, value=DNSResource.from_string(values[3]))
 
+        if packet_mode == ZoneTransferMode.ENT and len(values) == 4:
+            return cls(mode=packet_mode, domain=domain, num_values=num_values, value=int(values[3]))
+
         raise InvalidZoneTransferPacket(f"Invalid zone transfer packet: {packet_string}")
+
+    def as_byte_string(self) -> bytes:
+        return str(self).encode("ascii")
 
     def __str__(self):
         """
         Returns the string representation for a TransferZonePacket object.
         :return: Result string.
-
         """
 
         base_string: str = f"{self.mode.name};{self.domain};{self.num_value}"
 
-        if self.mode.name in ['DOM', 'ENT', 'ACK']:
-            return base_string
+        if self.value is not None:
 
-        else:
-            return base_string.join(f";{self.value.as_log_string()}")
+            if self.mode == ZoneTransferMode.ENT:
+                base_string = base_string + f";{self.value}"
+
+            if self.mode == ZoneTransferMode.LIN:
+                base_string = base_string + f";{self.value.as_log_string()}"
+
+        return base_string
 
     class Config:
         """

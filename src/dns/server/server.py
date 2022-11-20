@@ -316,15 +316,41 @@ class PrimaryServer(BaseDatagramServer, BaseSegmentServer):
         message = conn.recv(self.tcp_read_size).decode('ascii')
 
         try:
-            zt_packet = ZoneTransferPacket.from_string(message)
-            print(zt_packet)
+            received_packet = ZoneTransferPacket.from_string(message)
 
-            # Adicionar vers�o base de dados.
+            if received_packet.mode == ZoneTransferMode.DOM:
+
+                sender_ip: str = address[0]
+                match = [address for address in map(lambda x: x.value, self.configuration.secondary_servers) if address == sender_ip]
+
+                if len(match) == 0:
+                    self.log('all', f'EZ | {sender_ip} | Received a zone transfer request but sender is not my secondary server.', 'error')
+                    return
+
+                # TODO: Check if I know the domain!
+
+                database_version: str = self.database.database[DNSValueType.SOASERIAL][0].value
+                database_entries: int = self.database.get_total_entries()
+
+                response = ZoneTransferPacket(
+                    mode=ZoneTransferMode.ENT,
+                    domain=received_packet.domain,
+                    num_value=database_entries,
+                    value=database_version
+                )
+
+                print(response)
+
+                # conn.send(response.as_byte_string())
+                #
+                # response_ack_string = conn.recv(self.tcp_read_size).decode('ascii')
+                # print(response_ack_string)
 
         except InvalidZoneTransferPacket:
             self.log('all', f'EV | {address[0]} | Received a TCP message but it was not a zone transfer request, ignoring...', 'info')
 
-        conn.close()
+        finally:
+            conn.close()
 
     def run(self):
         """
@@ -346,7 +372,7 @@ class PrimaryServer(BaseDatagramServer, BaseSegmentServer):
 
 
 def main():
-    server = PrimaryServer(20001, "/home/guilherme/Documents/repos/mini-dns-py/tests/config.conf", debug=True)
+    server = PrimaryServer(20023, "/home/guilherme/Documents/repos/mini-dns-py/tests/config.conf", debug=True)
     server.run()
 
 

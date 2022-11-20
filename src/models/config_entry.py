@@ -9,10 +9,6 @@ class ConfigEntryType(Enum):
     LG = 5
     DB = 6
 
-    # @classmethod
-    # def list(cls):
-    #     return list(map(lambda c: c, cls))
-
 
 class ConfigEntry:
 

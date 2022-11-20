@@ -79,6 +79,17 @@ class Database(BaseModel):
 
         return extra_values
 
+    def get_total_entries(self):
+        """
+        Method that return the total number of entries in the database.
+        :return: Number of entries in the database.
+        """
+        counter = 0
+        for key in self.database:
+            counter += len(self.database[key])
+
+        return counter
+
     def __str__(self) -> str:
         """
         String representation of a Database object.
