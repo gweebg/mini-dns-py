@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8fb73730-5d4d-4194-858b-416c8aec73ad" name="Changes" comment="Added logging to server.&#10;&#10;Still missing some logging on the file parsing.">
+    <list default="true" id="8fb73730-5d4d-4194-858b-416c8aec73ad" name="Changes" comment="Created BaseSegmentServer for TCP handle.&#10;&#10;And added multiprocessing to run both udp and tcp listeners at the same time.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dns/base_datagram_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/server/base_datagram_server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dns/base_segment_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/server/base_segment_server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dns/dns_packet.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/dns_packet.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dns/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/server/server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dns/server_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/server/server_config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/parser/config_parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/config_parser.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/config.conf" beforeDir="false" afterPath="$PROJECT_DIR$/tests/config.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dns/server/base_datagram_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/server/base_datagram_server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dns/server/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/server/server.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -263,7 +258,7 @@
       <workItem from="1668801881700" duration="4176000" />
       <workItem from="1668870322897" duration="2031000" />
       <workItem from="1668877172479" duration="4379000" />
-      <workItem from="1668948617357" duration="4586000" />
+      <workItem from="1668948617357" duration="5001000" />
     </task>
     <task id="LOCAL-00001" summary="Continuation of database parsing.&#10;&#10;Missing NS, MX, A, CNAME and PTR parsers.">
       <created>1666713019519</created>
@@ -468,7 +463,35 @@
       <option name="project" value="LOCAL" />
       <updated>1668880967719</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Created 'server' package.">
+      <created>1668959865762</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1668959865762</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Fixed enconding from 'utf-8' -&gt; 'ascii'.">
+      <created>1668959892865</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1668959892865</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Fixed encoding from 'utf-8' -&gt; 'ascii'.">
+      <created>1668959906932</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1668959906932</updated>
+    </task>
+    <task id="LOCAL-00033" summary="Created BaseSegmentServer for TCP handle.&#10;&#10;And added multiprocessing to run both udp and tcp listeners at the same time.">
+      <created>1668959947459</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1668959947459</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -489,10 +512,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Missing CNAME and PTR parsers.&#10;&#10;Q: Smaller.@ NS sp.smaller.example.com. with no TTL ?" />
-    <MESSAGE value="Small improvements." />
-    <MESSAGE value="Started implementing DNS Packet. DNS Header is done and working.&#10;&#10;Missing DNS Query Info and Data." />
-    <MESSAGE value="Base DNS Packet implemented: dns_packet.py .&#10;&#10;Need to finish database parser and start creating abstract server class." />
     <MESSAGE value="DNS Packet Data Unit implementation finished and tested.&#10;&#10;Although some validations still need to be implemented." />
     <MESSAGE value="Upload of example code for socket interactions.&#10;&#10;Missing multithreading implementation." />
     <MESSAGE value="Made example/* multithreaded to support multiple clients." />
@@ -514,7 +533,11 @@
     <MESSAGE value="Created Database class.&#10;&#10;Moved match logic to Database class instead of PrimaryServer." />
     <MESSAGE value="Added logging to the client.&#10;&#10;Missing logging on servers." />
     <MESSAGE value="Added logging to server.&#10;&#10;Still missing some logging on the file parsing." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added logging to server.&#10;&#10;Still missing some logging on the file parsing." />
+    <MESSAGE value="Created 'server' package." />
+    <MESSAGE value="Fixed enconding from 'utf-8' -&gt; 'ascii'." />
+    <MESSAGE value="Fixed encoding from 'utf-8' -&gt; 'ascii'." />
+    <MESSAGE value="Created BaseSegmentServer for TCP handle.&#10;&#10;And added multiprocessing to run both udp and tcp listeners at the same time." />
+    <option name="LAST_COMMIT_MESSAGE" value="Created BaseSegmentServer for TCP handle.&#10;&#10;And added multiprocessing to run both udp and tcp listeners at the same time." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/mini_dns_py$client.coverage" NAME="Client (w/ args) Coverage Results" MODIFIED="1668422446726" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns" />
@@ -525,7 +548,7 @@
     <SUITE FILE_PATH="coverage/mini_dns_py$base_segment_server.coverage" NAME="base_segment_server Coverage Results" MODIFIED="1668959258812" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns/server" />
     <SUITE FILE_PATH="coverage/mini_dns_py$example_server.coverage" NAME="example-server Coverage Results" MODIFIED="1668295214278" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/example" />
     <SUITE FILE_PATH="coverage/mini_dns_py$example_protocol.coverage" NAME="example_protocol Coverage Results" MODIFIED="1668084367885" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/example" />
-    <SUITE FILE_PATH="coverage/mini_dns_py$server__1_.coverage" NAME="server (debug) Coverage Results" MODIFIED="1668959473747" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns/server" />
+    <SUITE FILE_PATH="coverage/mini_dns_py$server__1_.coverage" NAME="server (debug) Coverage Results" MODIFIED="1668960101862" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns/server" />
     <SUITE FILE_PATH="coverage/mini_dns_py$cache.coverage" NAME="cache Coverage Results" MODIFIED="1668602102124" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/cache" />
     <SUITE FILE_PATH="coverage/mini_dns_py$Main.coverage" NAME="Main Coverage Results" MODIFIED="1667927009726" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/mini_dns_py$server.coverage" NAME="server Coverage Results" MODIFIED="1668880885650" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns" />

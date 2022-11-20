@@ -23,7 +23,7 @@ class BaseDatagramServer:
             self.logger.error(f'FL | {ip_address} |An error occurred while starting UDP server:\n{error}')
             raise
 
-    def handle(self, data: bytes, address: tuple[str, int]):
+    def udp_handle(self, data: bytes, address: tuple[str, int]):
 
         data: str = data.strip().decode("ascii")
         received_dns_packet: DNSPacket = DNSPacket.from_string(data)
@@ -31,7 +31,7 @@ class BaseDatagramServer:
         encoded_reply: bytes = str(received_dns_packet.header).encode("ascii")
         self.udp_socket.sendto(encoded_reply, address)
 
-    def start(self):
+    def udp_start(self):
 
         self.logger.info(f'EV | {self.socket_address[0]} | UDP Server is listening on {self.socket_address[0]}:{self.socket_address[1]}')
 
@@ -39,7 +39,7 @@ class BaseDatagramServer:
             encoded_data, address = self.udp_socket.recvfrom(self.read_size)
             self.logger.debug(f'EV | {self.socket_address[0]} | New UDP connection, {address} connected.')
 
-            thread = threading.Thread(target=self.handle, args=(encoded_data, address))
+            thread = threading.Thread(target=self.udp_handle, args=(encoded_data, address))
             thread.start()
 
             self.logger.debug(f'EV | {self.socket_address[0]} | Active UDP connections: {threading.active_count() - 1}')
