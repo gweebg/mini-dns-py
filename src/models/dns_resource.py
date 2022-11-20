@@ -37,8 +37,14 @@ class DNSResource:
 
         return result
 
-    def __repr__(self):
-        return f"<{self.type}> : {self.parameter}, {self.value}, {self.ttl}, {self.priority}"
+    @classmethod
+    def from_string(cls, resouce_string: str) -> 'DNSResource':
+
+        values: list[str] = resouce_string.split(' ')
+        has_priority: bool = len(values) == 5
+
+        return cls.__init__(values, has_priority)
+
 
     def __str__(self):
         return f"<{self.type}> : {self.parameter}, {self.value}, {self.ttl}, {self.priority}"

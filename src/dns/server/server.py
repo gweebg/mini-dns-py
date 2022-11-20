@@ -1,35 +1,31 @@
-import logging
 from multiprocessing import Process
+import logging
+import errno
+import os
+from socket import socket
 
-from dns.dns_database import Database
-from dns.server.base_segment_server import BaseSegmentServer
-from dns.server.server_config import ServerConfiguration
 from dns.dns_packet import DNSPacket, DNSPacketQueryData, DNSPacketHeaderFlag, DNSPacketHeader
 from dns.server.base_datagram_server import BaseDatagramServer
+from dns.server.base_segment_server import BaseSegmentServer
+from dns.server.server_config import ServerConfiguration
+from dns.dns_database import Database
 
-from exceptions.exceptions import InvalidDNSPacket
-from models.config_entry import ConfigEntry
+from exceptions.exceptions import InvalidDNSPacket, InvalidZoneTransferPacket
 
+from models.zone_transfer_packet import ZoneTransferPacket, ZoneTransferMode
 from models.dns_resource import DNSResource, DNSValueType
+from models.config_entry import ConfigEntry
 
 from parser.parser_factory import FileParserFactory
 from parser.abstract_parser import Mode
 
 from cache.cache import Cache
 
-import os
-import errno
-
 """
 TODOS: 
 Implement cache lookup.
 Check if found anything.
 If didn't find anything, contact root server.
-PrimaryServer has to inherit from BaseSegmentServer.
-On run, create two threads, one for UDP listening and other for TCP.
-Do not repeat variable names!
-Change BaseDatagramServer::start() to BaseDatagramServer::dstart().
-And define BaseSegmentServer::sstart().
 
 Care with duplicate entries!
 """
@@ -75,6 +71,14 @@ class PrimaryServer(BaseDatagramServer, BaseSegmentServer):
 
     @staticmethod
     def create_loggers(logs_list: list[ConfigEntry], debug_flag: bool):
+        """
+        Given a list of every log file that's supposed to exist, this function creates a logger for each entry
+        and stores the logger inside a dictionary using its name as a key.
+
+        :param logs_list: List of ConfigEntry of type LG.
+        :param debug_flag: If debug_flag is enabled, we should add a handler to print to stdout.
+        :return: None
+        """
 
         loggers: dict[str, logging.Logger] = {}
 
@@ -108,6 +112,15 @@ class PrimaryServer(BaseDatagramServer, BaseSegmentServer):
         return loggers
 
     def log(self, logger_name: str, content: str, mode: str):
+        """
+        We use this function to log 'content' to 'logger_name' in mode 'mode'.
+        If a 'all' logger exists, then it will always log to 'all' independently of the provided 'logger_name'.
+
+        :param logger_name: Which logger to use.
+        :param content: What content to write to the log file.
+        :param mode: In which mode we want to log (info, debug, warning, error, ...)
+        :return: None
+        """
 
         if logger_name in self.loggers:
             func = getattr(self.loggers.get(logger_name), mode)
@@ -290,7 +303,37 @@ class PrimaryServer(BaseDatagramServer, BaseSegmentServer):
                 self.udp_socket.sendto(found_response.as_byte_string(), address)
                 return 0
 
+    def tcp_handle(self, conn: socket, address: tuple[str, int]):
+        """
+        Function that handles the TCP connection, in this case, since only zone transfer requests are done using TCP,
+        it tries to convert the message into a ZoneTransferPacket object to process it and accomplish it.
+
+        :param conn: Socket connection.
+        :param address: Client connection (in this case secondary server's).
+        :return: None
+        """
+
+        message = conn.recv(self.tcp_read_size).decode('ascii')
+
+        try:
+            zt_packet = ZoneTransferPacket.from_string(message)
+            print(zt_packet)
+
+            # Adicionar vers�o base de dados.
+
+        except InvalidZoneTransferPacket:
+            self.log('all', f'EV | {address[0]} | Received a TCP message but it was not a zone transfer request, ignoring...', 'info')
+
+        conn.close()
+
     def run(self):
+        """
+        This function is responsible for running both TCP and UDP listeners by using a process for each.
+        Since the TCP process won't need any local variables but only information from a file, we don't need to worry
+        about synchronizing.
+
+        :return: None
+        """
 
         udp_listener = Process(target=self.udp_start)
         tcp_listener = Process(target=self.tcp_start)

@@ -2,20 +2,30 @@ import socket
 import threading
 import logging
 
-from dns.dns_packet import DNSPacket
-
 
 class BaseDatagramServer:
+    """
+    Class that represent a simple and basic UDP server.
+    The method BaseDatagramServer::udp_handle() must be overwritten by a subclass of BaseDatagramServer.
+    Use the method BaseDatagramServer::udp_start() to run the server.
+    """
 
     def __init__(self, ip_address: str, port: int, read_size: int = 1024):
+        """
+        BaseDatagramServer constructor.
+
+        :param ip_address: IP Address to listen to.
+        :param port: Port to listen to.
+        :param read_size: Amount of bytes read from the socket at a time.
+        """
 
         self.socket_address: tuple[str, int] = (ip_address, port)
         self.read_size = read_size
 
         self.logger = logging.getLogger('all')  # It's mandatory for this to exist according to the requirements.
 
-        self.logger.info(f'EV | {ip_address} | UDP server is starting...')
         try:
+            self.logger.info(f'EV | {ip_address} | UDP server is starting...')
             self.udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             self.udp_socket.bind(self.socket_address)
 
@@ -24,14 +34,23 @@ class BaseDatagramServer:
             raise
 
     def udp_handle(self, data: bytes, address: tuple[str, int]):
+        """
+        This function must be overwritten to actually do something. Its purpose is to handle the incoming data
+        read on the BaseDatagramServer::udp_start() method.
 
-        data: str = data.strip().decode("ascii")
-        received_dns_packet: DNSPacket = DNSPacket.from_string(data)
-
-        encoded_reply: bytes = str(received_dns_packet.header).encode("ascii")
-        self.udp_socket.sendto(encoded_reply, address)
+        :param data: Received data in bytes, needs to be decoded.
+        :param address: (IP,PORT) tuple of the sender.
+        :return: None
+        """
+        pass
 
     def udp_start(self):
+        """
+        This function starts the listening process, on an infinite loop it listens to the specified ip address and port
+        and for each message received it creates a processing thread that runs BaseDatagramServer::udp_handle().
+
+        :return: None
+        """
 
         self.logger.info(f'EV | {self.socket_address[0]} | UDP Server is listening on {self.socket_address[0]}:{self.socket_address[1]}')
 

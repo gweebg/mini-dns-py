@@ -346,6 +346,10 @@ class DNSPacket(BaseModel):
 
     @classmethod
     def generate_bad_format_response(cls) -> 'DNSPacket':
+        """
+        This function generates a bad format response, which response_code has to be 3.
+        :return: Bad Format Response DNSPacket.
+        """
 
         current_message_id: str = __get_latest_id__()
 
@@ -372,6 +376,10 @@ class DNSPacket(BaseModel):
         return cls(header=query_header, query_info=query_info, query_data=query_data)
 
     def prettify(self) -> str:
+        """
+        Produces a prettified version of a DNSPacket.
+        :return: Prettified string.
+        """
         return f"{self.header.prettify()}\n{self.query_info.prettify()}\n{self.query_data.prettify()}"
 
     def __str__(self):

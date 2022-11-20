@@ -1,6 +1,6 @@
 class InvalidConfigFileException(Exception):
     """
-    Custom exception for invalid parameters.
+    Custom exception for invalid configuration file.
     """
 
     def __init__(self, message='Bad configuration file.'):
@@ -9,7 +9,7 @@ class InvalidConfigFileException(Exception):
 
 class InvalidDatabaseFileException(Exception):
     """
-    Custom exception for invalid parameters.
+    Custom exception for invalid database file.
     """
 
     def __init__(self, message='Bad database file.'):
@@ -18,7 +18,7 @@ class InvalidDatabaseFileException(Exception):
 
 class InvalidDNSPacket(Exception):
     """
-    Custom exception for invalid parameters.
+    Custom exception for invalid dns packet.
     """
 
     def __init__(self, message='Bad dns header.'):
@@ -27,7 +27,7 @@ class InvalidDNSPacket(Exception):
 
 class InvalidQueryValue(Exception):
     """
-    Custom exception for invalid parameters.
+    Custom exception for invalid query value.
     """
 
     def __init__(self, message='Bad dns header.'):
@@ -36,8 +36,17 @@ class InvalidQueryValue(Exception):
 
 class InvalidRootListEntry(Exception):
     """
-    Custom exception for invalid parameters.
+    Custom exception for invalid root list entry.
     """
 
     def __init__(self, message='Bad dns header.'):
         super(InvalidRootListEntry, self).__init__(message)
+
+
+class InvalidZoneTransferPacket(Exception):
+    """
+    Custom exception for invalid zone transfer packet.
+    """
+
+    def __init__(self, message='Bad dns header.'):
+        super(InvalidZoneTransferPacket, self).__init__(message)
