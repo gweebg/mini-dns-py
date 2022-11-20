@@ -179,7 +179,7 @@ class PrimaryServer(BaseDatagramServer, BaseSegmentServer):
         """
         return name[:-1] in self.configuration.allowed_domains
 
-    def handle(self, data: bytes, address: tuple[str, int]) -> int:
+    def udp_handle(self, data: bytes, address: tuple[str, int]) -> int:
         """
         Handle the data received from the socket.
         In this case, it processes the query.
@@ -290,18 +290,21 @@ class PrimaryServer(BaseDatagramServer, BaseSegmentServer):
                 self.udp_socket.sendto(found_response.as_byte_string(), address)
                 return 0
 
+    def run(self):
+
+        udp_listener = Process(target=self.udp_start)
+        tcp_listener = Process(target=self.tcp_start)
+
+        udp_listener.start()
+        tcp_listener.start()
+
+        udp_listener.join()
+        tcp_listener.join()
+
 
 def main():
     server = PrimaryServer(20001, "/home/guilherme/Documents/repos/mini-dns-py/tests/config.conf", debug=True)
-
-    udp_listener = Process(target=server.start)
-    tcp_listener = Process(target=server.tcp_start)
-
-    udp_listener.start()
-    tcp_listener.start()
-
-    udp_listener.join()
-    tcp_listener.join()
+    server.run()
 
 
 if __name__ == "__main__":
