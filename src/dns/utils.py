@@ -1,4 +1,5 @@
 import os
+import struct
 from argparse import ArgumentTypeError
 
 from parser.regex_compiles import RE_IVP4
@@ -58,3 +59,36 @@ def __get_latest_id__() -> str:
 
     with open("../msgid.dat", "r") as file:
         return file.read()
+
+
+def send_msg(sock, msg):
+
+    # Prefix each message with a 4-byte length (network byte order)
+    msg = struct.pack('>I', len(msg)) + msg
+    sock.sendall(msg)
+
+
+def recv_msg(sock):
+
+    # Read message length and unpack it into an integer
+    raw_msglen = recvall(sock, 4)
+    if not raw_msglen:
+        return None
+    msglen = struct.unpack('>I', raw_msglen)[0]
+
+    # Read the message data
+    return recvall(sock, msglen)
+
+
+def recvall(sock, n):
+
+    # Helper function to recv n bytes or return None if EOF is hit
+    data = bytearray()
+    while len(data) < n:
+
+        packet = sock.recv(n - len(data))
+        if not packet:
+            return None
+        data.extend(packet)
+
+    return data
