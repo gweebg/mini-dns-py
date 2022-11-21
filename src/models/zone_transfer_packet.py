@@ -64,10 +64,10 @@ class ZoneTransferPacket(BaseModel):
             return cls(mode=packet_mode, domain=domain, num_value=num_values)
 
         if packet_mode == ZoneTransferMode.LIN and len(values) == 4:
-            return cls(mode=packet_mode, domain=domain, num_values=num_values, value=DNSResource.from_string(values[3]))
+            return cls(mode=packet_mode, domain=domain, num_value=num_values, value=DNSResource.from_string(values[3]))
 
         if packet_mode == ZoneTransferMode.ENT and len(values) == 4:
-            return cls(mode=packet_mode, domain=domain, num_values=num_values, value=int(values[3]))
+            return cls(mode=packet_mode, domain=domain, num_value=num_values, value=int(values[3]))
 
         raise InvalidZoneTransferPacket(f"Invalid zone transfer packet: {packet_string}")
 
@@ -97,3 +97,7 @@ class ZoneTransferPacket(BaseModel):
         Pydantic way of saying that we don't need validators for custom types.
         """
         arbitrary_types_allowed = True
+
+
+x = "ENT;example.com;21;117102022"
+y = ZoneTransferPacket.from_string(x)

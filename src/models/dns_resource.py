@@ -30,10 +30,10 @@ class DNSResource:
         self.aliases: list[tuple[str, int]] = []
 
     def as_log_string(self) -> str:
-        result:str = f"{self.parameter} {self.type.name} {self.value} {self.ttl}"
+        result:str = f"{self.parameter} {self.type.name} {self.value} {self.ttl} "
 
         if self.priority is not None:
-            result.join(self.priority)
+            result = result + str(self.priority)
 
         return result
 

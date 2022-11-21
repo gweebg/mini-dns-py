@@ -90,6 +90,17 @@ class Database(BaseModel):
 
         return counter
 
+    def entry_string_generator(self) -> list[DNSResource]:
+
+        values = self.database.values()
+        flat_map = []
+
+        for value_list in values:
+            for value in value_list:
+                flat_map.append(value)
+
+        return flat_map
+
     def __str__(self) -> str:
         """
         String representation of a Database object.
@@ -111,4 +122,3 @@ class Database(BaseModel):
         Pydantic way of saying that we don't need validators for custom types.
         """
         arbitrary_types_allowed = True
-

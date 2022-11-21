@@ -9,6 +9,7 @@ from dns.server.base_datagram_server import BaseDatagramServer
 from dns.server.base_segment_server import BaseSegmentServer
 from dns.server.server_config import ServerConfiguration
 from dns.dns_database import Database
+from dns.utils import send_msg
 
 from exceptions.exceptions import InvalidDNSPacket, InvalidZoneTransferPacket
 
@@ -316,15 +317,18 @@ class PrimaryServer(BaseDatagramServer, BaseSegmentServer):
         message = conn.recv(self.tcp_read_size).decode('ascii')
 
         try:
+            # Receive DOM
             received_packet = ZoneTransferPacket.from_string(message)
 
             if received_packet.mode == ZoneTransferMode.DOM:
+
+                self.log(received_packet.domain, f'EV | {address[0]} | Started a zone transfer process for {received_packet.domain} @ {address}', 'info')
 
                 sender_ip: str = address[0]
                 match = [address for address in map(lambda x: x.value, self.configuration.secondary_servers) if address == sender_ip]
 
                 if len(match) == 0:
-                    self.log('all', f'EZ | {sender_ip} | Received a zone transfer request but sender is not my secondary server.', 'error')
+                    self.log(received_packet.domain, f'EZ | {sender_ip} | Received a zone transfer request but sender is not my secondary server.', 'error')
                     return
 
                 # TODO: Check if I know the domain!
@@ -339,15 +343,31 @@ class PrimaryServer(BaseDatagramServer, BaseSegmentServer):
                     value=database_version
                 )
 
-                print(response)
+                # Send ENT
+                conn.send(response.as_byte_string())
 
-                # conn.send(response.as_byte_string())
-                #
-                # response_ack_string = conn.recv(self.tcp_read_size).decode('ascii')
-                # print(response_ack_string)
+                # Receive ACK
+                response_ack_string = conn.recv(self.tcp_read_size).decode('ascii')
+                ack_packet = ZoneTransferPacket.from_string(response_ack_string)
+
+                if ack_packet.num_value != database_entries:
+                    self.log(received_packet.domain,
+                             f'EZ | {address[0]} | {address} has an updated database, aborting...',
+                             'warning')
+                    return
+
+                # Send LIN
+                for line in self.database.entry_string_generator():
+                    send_msg(conn, line.as_log_string().encode('ascii'))
+
+                self.log(received_packet.domain,
+                         f'ZT | {address[0]} | Zone transfer process for {received_packet.domain} @ {address} concluded.',
+                         'info')
 
         except InvalidZoneTransferPacket:
-            self.log('all', f'EV | {address[0]} | Received a TCP message but it was not a zone transfer request, ignoring...', 'info')
+            self.log('all',
+                     f'ER | {address[0]} | Received a TCP message but it was not a zone transfer request, ignoring...',
+                     'warning')
 
         finally:
             conn.close()
