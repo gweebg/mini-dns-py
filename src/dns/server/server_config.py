@@ -25,6 +25,9 @@ class ServerConfiguration(BaseModel):
     primary_server: Optional[ConfigEntry]
     secondary_servers: list[ConfigEntry] = []
 
+    def get_secondary_servers_domains(self):
+        return [entry.parameter for entry in self.secondary_servers]
+
     def __str__(self):
         """
         String representation of a ServerConfiguration object.

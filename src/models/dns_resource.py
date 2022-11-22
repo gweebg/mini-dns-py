@@ -27,8 +27,6 @@ class DNSResource:
         self.ttl = line[3]
         self.priority = line[4] if has_priority else None
 
-        self.aliases: list[tuple[str, int]] = []
-
     def as_log_string(self) -> str:
         result:str = f"{self.parameter} {self.type.name} {self.value} {self.ttl} "
 
@@ -43,8 +41,12 @@ class DNSResource:
         values: list[str] = resouce_string.split(' ')
         has_priority: bool = len(values) == 5
 
-        return cls.__init__(values, has_priority)
+        return cls(values, has_priority)
 
 
     def __str__(self):
         return f"<{self.type}> : {self.parameter}, {self.value}, {self.ttl}, {self.priority}"
+
+
+x = "example.com. SOASP ns1.example.com. 86400"
+y = DNSResource.from_string(x)

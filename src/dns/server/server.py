@@ -22,12 +22,9 @@ from parser.abstract_parser import Mode
 
 from cache.cache import Cache
 
+
 """
 TODOS: 
-Implement cache lookup.
-Check if found anything.
-If didn't find anything, contact root server.
-
 Care with duplicate entries!
 """
 
@@ -331,7 +328,8 @@ class PrimaryServer(BaseDatagramServer, BaseSegmentServer):
                     self.log(received_packet.domain, f'EZ | {sender_ip} | Received a zone transfer request but sender is not my secondary server.', 'error')
                     return
 
-                # TODO: Check if I know the domain!
+                if received_packet.domain + '.' not in self.configuration.get_secondary_servers_domains():
+                    self.log(received_packet.domain, f'EZ | {sender_ip} | Received a zone transfer request for {received_packet.domain} but I dont own the domain.', 'error')
 
                 database_version: str = self.database.database[DNSValueType.SOASERIAL][0].value
                 database_entries: int = self.database.get_total_entries()
