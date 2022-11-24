@@ -97,7 +97,3 @@ class ZoneTransferPacket(BaseModel):
         Pydantic way of saying that we don't need validators for custom types.
         """
         arbitrary_types_allowed = True
-
-
-x = "ENT;example.com;21;117102022"
-y = ZoneTransferPacket.from_string(x)

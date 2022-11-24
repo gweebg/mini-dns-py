@@ -30,7 +30,7 @@ class Database(BaseModel):
 
         return response_values
 
-    def authorities_values(self, domain_name: str, prev_values: list[DNSResource]):
+    def authorities_values(self, domain_name: str, type_of_value: DNSValueType, prev_values: list[DNSResource]):
         """
         Given a domain_name, this function searches the database for matches with the given domain name and type of NS.
         If there was no result found on Database::response_values(), it looks for matches on its super-domain if it exists.
@@ -43,16 +43,19 @@ class Database(BaseModel):
         authorities_values = []
         look_for_super = len(prev_values) <= 0
 
-        # if look_for_super:
-        #     domain_name = domain_name.split(".", 1)[1]
-        #     if domain_name == '':
-        #         return authorities_values
-
         nameservers = self.database.get(DNSValueType.NS)
 
+        # entry.parameter : example.com
+        # domain_name: Smaller.example.com.
         for entry in nameservers:
-            if entry.parameter == domain_name or entry.value == domain_name and entry not in prev_values:
-                authorities_values.append(entry)
+            if entry not in prev_values and entry not in authorities_values:
+
+                if type_of_value in [DNSValueType.A, DNSValueType.CNAME]:
+                    if entry.parameter in domain_name:
+                        authorities_values.append(entry)
+
+                if domain_name in entry.parameter:
+                    authorities_values.append(entry)
 
         return authorities_values
 
@@ -87,7 +90,7 @@ class Database(BaseModel):
                 if prev.type == DNSValueType.MX:
                     compare_with = compare_with + '.'
 
-                if value.value == compare_with and value not in previous_values:
+                if value.value == compare_with and value not in previous_values and value not in extra_values:
                     extra_values.append(value)
 
         return extra_values
