@@ -29,17 +29,17 @@ def __load_latest_id__() -> int:
     :return: Latest message id.
     """
 
-    if not os.path.exists("../msgid.dat"):
+    if not os.path.exists("../../msgid.dat"):
 
-        with open("../msgid.dat", "w") as file:
+        with open("../../msgid.dat", "w") as file:
             file.write('1')
 
         return 0
 
-    with open("../msgid.dat", "r") as file:
+    with open("../../msgid.dat", "r") as file:
         current_message_id: int = int(file.read())
 
-    with open("../msgid.dat", "w") as file:
+    with open("../../msgid.dat", "w") as file:
         incremented_id = current_message_id + 1
 
         if current_message_id == 65335:
@@ -57,7 +57,7 @@ def __get_latest_id__() -> str:
     :return: Returns the id as string instead of integer.
     """
 
-    with open("../msgid.dat", "r") as file:
+    with open("../../msgid.dat", "r") as file:
         return file.read()
 
 

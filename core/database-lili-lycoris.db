@@ -1,0 +1,34 @@
+# DNS database file for domain lili.lycoris.
+
+@ DEFAULT lili.lycoris.
+TTL DEFAULT 86400
+
+@ SOASP ns1.lili.lycoris. TTL
+@ SOAADMIN dns.admin@lili.lycoris TTL
+@ SOASERIAL 1 TTL
+@ SOAREFRESH 14400 TTL
+@ SOARETRY 3600 TTL
+@ SOAEXPIRE 604800 TTL
+
+@ NS ns1.lili.lycoris. TTL
+@ NS ns2.lili.lycoris. TTL
+@ NS ns3.lili.lycoris. TTL
+
+@ MX mx1.lili.lycoris. TTL
+
+ns1 A 10.0.9.12 TTL
+ns2 A 10.0.13.11 TTL
+ns3 A 10.0.4.13 TTL
+
+mx1 A 10.0.9.14 TTL
+
+www A 10.0.13.12 TTL 200
+www A 10.0.13.13 TTL 100
+
+sp CNAME ns1 TTL
+ss1 CNAME ns2 TTL
+ss2 CNAME ns3 TTL
+mail1 CNAME mx1 TTL
+web CNAME www TTL
+
+

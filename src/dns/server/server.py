@@ -318,6 +318,21 @@ class Server(BaseDatagramServer, BaseSegmentServer):
                 self.udp_socket.sendto(found_response.as_byte_string(), address)
                 return 0
 
+        # Domain name does not exist.
+        new_header = packet.header
+        new_header.response_code = 2
+        new_header.flags = [DNSPacketHeaderFlag.A]
+
+        not_found = DNSPacket(
+            header=new_header,
+            query_info=packet.query_info,
+            query_data=DNSPacketQueryData.empty()
+        )
+
+        self.log('all', f'RP | {address[0]}:{address[1]} |\n\t{not_found}', 'info')
+        self.udp_socket.sendto(not_found.as_byte_string(), address)
+        return 2
+
     def tcp_handle(self, conn: socket, address: tuple[str, int]):
         """
         Function that handles the TCP connection, in this case, since only zone transfer requests are done using TCP,

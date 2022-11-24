@@ -7,7 +7,7 @@ def main():
     # file_parser = FileParserFactory("../tests/config.conf", Mode.CONFIG)
     # config = file_parser.get_parser().parse()
 
-    database_parser = FileParserFactory("../tests/database.conf", Mode.DB)
+    database_parser = FileParserFactory("/core/database-lili-lycoris.db", Mode.DB)
     database = database_parser.get_parser().parse()
 
     db = Database(database=database)
