@@ -43,8 +43,10 @@ class DNSResource:
 
         return cls(values, has_priority)
 
-
     def __str__(self):
+        return f"<{self.type}> : {self.parameter}, {self.value}, {self.ttl}, {self.priority}"
+
+    def __repr__(self):
         return f"<{self.type}> : {self.parameter}, {self.value}, {self.ttl}, {self.priority}"
 
 

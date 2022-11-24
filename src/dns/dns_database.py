@@ -30,27 +30,28 @@ class Database(BaseModel):
 
         return response_values
 
-    def authorities_values(self, domain_name: str, look_for_super=False):
+    def authorities_values(self, domain_name: str, prev_values: list[DNSResource]):
         """
         Given a domain_name, this function searches the database for matches with the given domain name and type of NS.
         If there was no result found on Database::response_values(), it looks for matches on its super-domain if it exists.
 
+        :param prev_values: Previous values list used to not repeat values!
         :param domain_name: Domain name we are looking for.
-        :param look_for_super: Flag that indicates wether we are looking for super-domain.
         :return: List with every NS match entry.
         """
 
         authorities_values = []
+        look_for_super = len(prev_values) <= 0
 
-        if look_for_super:
-            domain_name = domain_name.split(".", 1)[1]
-            if domain_name == '':
-                return authorities_values
+        # if look_for_super:
+        #     domain_name = domain_name.split(".", 1)[1]
+        #     if domain_name == '':
+        #         return authorities_values
 
-        nameservers = self.database.get(DNSValueType["NS"])
+        nameservers = self.database.get(DNSValueType.NS)
 
         for entry in nameservers:
-            if entry.parameter == domain_name:
+            if entry.parameter == domain_name or entry.value == domain_name and entry not in prev_values:
                 authorities_values.append(entry)
 
         return authorities_values
@@ -76,6 +77,18 @@ class Database(BaseModel):
 
                 if updated_value == address.parameter:
                     extra_values.append(address)
+
+        # ss1 CNAME ns2 TTL
+        for value in self.database.get(DNSValueType.CNAME):
+            for prev in previous_values:
+
+                compare_with = prev.value
+
+                if prev.type == DNSValueType.MX:
+                    compare_with = compare_with + '.'
+
+                if value.value == compare_with and value not in previous_values:
+                    extra_values.append(value)
 
         return extra_values
 

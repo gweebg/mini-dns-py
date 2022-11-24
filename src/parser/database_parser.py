@@ -55,6 +55,9 @@ class DatabaseFileParser(FileParser):
         if not line[0].endswith('.'):
             line[0] = line[0] + f".{self.macros.get('@')}"
 
+        if not line[2].endswith('.') and line[1] == 'CNAME':
+            line[2] = line[2] + f".{self.macros.get('@')}"
+
         return line
 
     def _parse_default(self, line: list[str]) -> None:
@@ -255,12 +258,20 @@ class DatabaseFileParser(FileParser):
         has_priority = True if len(line) == 5 else False
         return DNSResource(line, has_priority)
 
-    def _parse_cname(self, line: list[str]) -> None:
+    def _parse_cname(self, line: list[str]) -> DNSResource:
 
         line = self._replace_macros(line)
         line_length: int = len(line)
 
-        ...
+        if line_length == 4:
+            line.append('0')
+            if not line[3].isnumeric():
+                raise InvalidDatabaseFileException(f"{line[1]}: Time to live must be a numeric value: {line[3]}")
+
+        if not re.fullmatch(RE_DOMAIN_DOT, line[2]) and re.fullmatch(RE_DOMAIN_DOT, line[0]):
+            raise InvalidDatabaseFileException(f"{line[1]}: Invalid domain name: {line}")
+
+        return DNSResource(line)
 
     def _parse_ptr(self, line: list[str]) -> DNSResource:
         ...

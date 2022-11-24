@@ -25,7 +25,10 @@ from cache.cache import Cache
 
 """
 TODOS: 
-Care with duplicate entries!
+
+Add logger to secondary server, add logs.
+
+Refactor code, Logger and Handler on separate module!
 """
 
 
@@ -52,11 +55,11 @@ class PrimaryServer(BaseDatagramServer, BaseSegmentServer):
                                                                     Mode.CONFIG).get_parser().parse()
 
         self.loggers: dict[str, logging.Logger] = self.create_loggers(self.configuration.logs_path, debug)
-        self.log('all', f'EV | 127.0.0.1 |Loaded configuration @ "{configuration_path}" and loggers', 'info')
+        self.log('all', f'EV | 127.0.0.1 | Loaded configuration @ "{configuration_path}" and loggers', 'info')
 
         self.database: Database = Database(database=FileParserFactory(self.configuration.database_path,
                                            Mode.DB).get_parser().parse())
-        self.log('all', f'EV | 127.0.0.1 |Loaded database @ "{self.configuration.database_path}"', 'info')
+        self.log('all', f'EV | 127.0.0.1 | Loaded database @ "{self.configuration.database_path}"', 'info')
 
         self.root_servers: list[str] = FileParserFactory(self.configuration.root_servers_path,
                                                          Mode.RT).get_parser().parse()
@@ -137,14 +140,15 @@ class PrimaryServer(BaseDatagramServer, BaseSegmentServer):
         """
 
         name = name[:-1]
-
         p_server = self.configuration.primary_server
 
-        if p_server and name == p_server.parameter:
+        if p_server and p_server.parameter in name:
+            print("Hit PS!")
             return True
 
-        for snd_server in self.configuration.secondary_servers:
-            if name == snd_server.parameter:
+        for s_server in self.configuration.secondary_servers:
+            if s_server.parameter in name:
+                print("Hit SS!")
                 return True
 
         return False
@@ -167,7 +171,7 @@ class PrimaryServer(BaseDatagramServer, BaseSegmentServer):
                 domain does not exist
 
         :param packet: DNSPacket object containing the received query.
-        :return:
+        :return: Tuple containing the three different kind of responses.
         """
 
         name: str = packet.query_info.name
@@ -175,7 +179,7 @@ class PrimaryServer(BaseDatagramServer, BaseSegmentServer):
 
         response_values: [DNSResource] = self.database.response_values(name, type_of_value)
 
-        authorities_values: [DNSResource] = self.database.authorities_values(name, len(response_values) <= 0)
+        authorities_values: [DNSResource] = self.database.authorities_values(name, response_values)
 
         extra_values: [DNSResource] = self.database.extra_values(response_values + authorities_values)
 
@@ -217,10 +221,10 @@ class PrimaryServer(BaseDatagramServer, BaseSegmentServer):
             return 3
 
         # Check if the domain name received on the query is whitelisted (has a DD entry).
-        is_whitelisted = self.is_whitelisted(packet.query_info.name)
+        # is_whitelisted = self.is_whitelisted(packet.query_info.name)
 
         # Check if the current instance of server is an authority of the domain name (is a PS or SS).
-        if self.is_authority(packet.query_info.name) and is_whitelisted:
+        if self.is_authority(packet.query_info.name):  # and is_whitelisted:
 
             self.log('example.com.', f'EV | {address[0]}:{address[1]} | Searching on database for {packet.query_info.name}, {packet.query_info.type_of_value}', 'info')
             database_results = self.match(packet)  # Check the database for entries.
@@ -328,8 +332,9 @@ class PrimaryServer(BaseDatagramServer, BaseSegmentServer):
                     self.log(received_packet.domain, f'EZ | {sender_ip} | Received a zone transfer request but sender is not my secondary server.', 'error')
                     return
 
-                if received_packet.domain + '.' not in self.configuration.get_secondary_servers_domains():
+                if received_packet.domain not in self.configuration.get_secondary_servers_domains():
                     self.log(received_packet.domain, f'EZ | {sender_ip} | Received a zone transfer request for {received_packet.domain} but I dont own the domain.', 'error')
+                    return
 
                 database_version: str = self.database.database[DNSValueType.SOASERIAL][0].value
                 database_entries: int = self.database.get_total_entries()
