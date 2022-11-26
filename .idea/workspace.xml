@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8fb73730-5d4d-4194-858b-416c8aec73ad" name="Changes" comment="Created a BaseServer and Client classes.&#10;&#10;BaseServer will superclass the future primary servers, etc.">
-      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
+    <list default="true" id="8fb73730-5d4d-4194-858b-416c8aec73ad" name="Changes" comment="Updated expression for domain name matching.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/config-lili-lycoris-sp.conf" beforeDir="false" afterPath="$PROJECT_DIR$/core/config-lili-lycoris-sp.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/database-lili-lycoris.db" beforeDir="false" afterPath="$PROJECT_DIR$/core/database-lili-lycoris.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dns/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/config-lili-lycoris-ss-1.conf" beforeDir="false" afterPath="$PROJECT_DIR$/core/config-lili-lycoris-ss-1.conf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dns/server/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/server/server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/parser/regex_compiles.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/regex_compiles.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +57,7 @@
       <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.client (w/ args)">
+  <component name="RunManager" selected="Python.ss">
     <configuration name="client (w/ args)" type="PythonConfigurationType" factoryName="Python">
       <module name="mini-dns-py" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -75,7 +72,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/dns/client.py" />
-      <option name="PARAMETERS" value="127.0.0.1:20023 -n lili.lycoris. -t MX" />
+      <option name="PARAMETERS" value="127.0.0.1:20024 -n lili.lycoris. -t MX" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -571,7 +568,14 @@
       <option name="project" value="LOCAL" />
       <updated>1669317452453</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="Updated expression for domain name matching.">
+      <created>1669471443242</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1669471443242</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -594,7 +598,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixed DNSPacket string formatting.&#10;&#10;Added DNSPacket*::prettify to pretty print a packet." />
     <MESSAGE value="Moved BaseDatagramServer to its own file.&#10;&#10;Added BaseSegmentServer to implement zone transfer." />
     <MESSAGE value="Added more requirements and examples." />
     <MESSAGE value="Fixed bug in DNSPacket::from_string().&#10;&#10;Where it wouldn't accept string with empty values." />
@@ -619,6 +622,7 @@
     <MESSAGE value="Secondary server test configuration." />
     <MESSAGE value="Minor fixes on result matching." />
     <MESSAGE value="Secondary server and primary server the same." />
-    <option name="LAST_COMMIT_MESSAGE" value="Secondary server and primary server the same." />
+    <MESSAGE value="Updated expression for domain name matching." />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated expression for domain name matching." />
   </component>
 </project>
