@@ -22,13 +22,14 @@ ns3 A 10.0.4.13 TTL
 
 mx1 A 10.0.9.14 TTL
 
-www A 10.0.13.12 TTL 200
-www A 10.0.13.13 TTL 100
+www1 A 10.0.13.12 TTL 200
+www2 A 10.0.13.13 TTL 100
 
 sp CNAME ns1 TTL
 ss1 CNAME ns2 TTL
 ss2 CNAME ns3 TTL
-mail1 CNAME mx1 TTL
+mail1 CNAME www1 TTL
+mail2 CNAME www2 TTL
 web CNAME www TTL
 
 

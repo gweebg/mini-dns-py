@@ -54,6 +54,8 @@ class Server(BaseDatagramServer, BaseSegmentServer):
             self.database: Database = Database(database=FileParserFactory(self.configuration.database_path,
                                                                           Mode.DB).get_parser().parse())
 
+            print(self.database.database)
+
             self.log('all', f'EV | 127.0.0.1 | Loaded database at "{self.configuration.database_path}"', 'info')
 
         else:
@@ -143,12 +145,15 @@ class Server(BaseDatagramServer, BaseSegmentServer):
         p_server = self.configuration.primary_server
 
         if p_server and p_server.parameter in name:
+            print("Is auth.")
             return True
 
         for s_server in self.configuration.secondary_servers:
             if s_server.parameter in name:
+                print("Is auth.")
                 return True
 
+        print("Is not auth.")
         return False
 
     def get_primary_server_address(self):
