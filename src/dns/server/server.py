@@ -10,7 +10,7 @@ from dns.server.base_datagram_server import BaseDatagramServer
 from dns.server.base_segment_server import BaseSegmentServer
 from dns.server.server_config import ServerConfiguration
 from dns.dns_database import Database
-from dns.utils import send_msg, recv_msg
+from dns.utils import send_msg, recv_msg, get_my_ip
 
 from exceptions.exceptions import InvalidDNSPacket, InvalidZoneTransferPacket
 
@@ -70,6 +70,8 @@ class Server(BaseDatagramServer, BaseSegmentServer):
 
         super().__init__("127.0.0.1", port, 1024)
         super(BaseDatagramServer, self).__init__("127.0.0.1", port, 1024)
+        # super().__init__(get_my_ip(...), port, 1024)
+        # super(BaseDatagramServer, self).__init__(get_my_ip(...), port, 1024)
 
     @staticmethod
     def create_loggers(logs_list: list[ConfigEntry], debug_flag: bool):

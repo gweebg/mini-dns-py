@@ -1,6 +1,7 @@
 import os
 import struct
 from argparse import ArgumentTypeError
+from netifaces import ifaddresses, AF_INET
 
 from parser.regex_compiles import RE_IVP4
 
@@ -92,3 +93,8 @@ def recvall(sock, n):
         data.extend(packet)
 
     return data
+
+
+def get_my_ip(interface: str) -> str:
+    return ifaddresses(interface)[AF_INET][0]['addr']
+
