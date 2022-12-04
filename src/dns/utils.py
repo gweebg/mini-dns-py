@@ -1,7 +1,6 @@
 import os
 import struct
 from argparse import ArgumentTypeError
-from netifaces import ifaddresses, AF_INET
 
 from parser.regex_compiles import RE_IVP4
 

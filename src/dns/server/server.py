@@ -10,7 +10,7 @@ from dns.server.base_datagram_server import BaseDatagramServer
 from dns.server.base_segment_server import BaseSegmentServer
 from dns.server.server_config import ServerConfiguration
 from dns.dns_database import Database
-from dns.utils import send_msg, recv_msg, get_my_ip
+from dns.utils import send_msg, recv_msg
 
 from exceptions.exceptions import InvalidDNSPacket, InvalidZoneTransferPacket
 
@@ -363,7 +363,8 @@ class Server(BaseDatagramServer, BaseSegmentServer):
 
                 if len(match) == 0:
                     self.log(received_packet.domain,
-                             f'EZ | {sender_ip} | Received a zone transfer request but sender is not my secondary server.',
+                             f'EZ | {sender_ip} | Received a zone transfer request but sender is not my secondary '
+                             f'server.',
                              'error')
                     return
 
@@ -449,7 +450,8 @@ class Server(BaseDatagramServer, BaseSegmentServer):
                     num_value=0
                 )
                 client.send(end_connection_packet.as_byte_string())
-                self.log(domain, f'EZ | {address[0]} | My database is more recent than the PS\'s, aborting zone transfer...', 'error')
+                self.log(domain, f'EZ | {address[0]} | My database is more recent than the PS\'s, aborting zone '
+                                 f'transfer...', 'error')
 
                 return
 
@@ -533,5 +535,4 @@ def main():
 
 if __name__ == "__main__":
     SystemExit(main())
-
 
