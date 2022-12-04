@@ -1,0 +1,24 @@
+This is a to-do list containing everything that is still missing in this project:
+
+List element marks: ✅, ❌, ⌛
+
+⌛ - Make a good implementation of ttl-cache.
+    - Elements must be removed using the ttl provided.
+        - Either use threads to wait x amount of seconds before deleting the data.
+        - Or keep data in memory, just don't let them access it.
+    - Define cache entry.
+    - Implement base operations.
+    - Unit test.
+    - Must be a implementable module (ex. class Server(Cached): ...)
+
+    Be carefull with thread/process safety, the server has two main processes that will need to share the cache
+    and each process may create a thread that will also work with the cache.
+    Multiprocessing queue ? multiprocessing.Queue(.put(), .get())
+
+❌ - Overall check on the parsers.
+
+❌ - Fix the testing environment.
+
+⌛ - Figure order of events when running queries.
+
+⌛ - Make the report.

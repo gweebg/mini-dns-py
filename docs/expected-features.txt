@@ -1,0 +1,34 @@
+Tarefa/Objetivo 2ª Fase
+
+Atualização da Arquitetura do Sistema
+(correção e adição de novos aspetos na especificação da arquitetura)
+
+Atualização do Modelo de Informação
+(correção e adição de novos aspetos na especificação respetiva)
+
+Modelo de Comunicação
+(correção e adição de novos aspetos na especificação respetiva)
+
+Planeamento do Ambiente de Teste
+(correção e adição de novos aspetos da descrição e especificação
+completa do ambiente de testes)
+
+Implementação de SP, SS, ST, SDT e SR em modo debug e normal
+(implementação completa do componente que implemente um SP,
+tendo em consideração que um ST, um SDT e um SR são apenas casos
+particulares de implementações de SP ou SS configurados de forma
+adequada e incluindo um mecanismo de cache)
+
+CL em modo debug e modo normal
+(implementação completa dum componente que implemente um CL)
+
+Implementação do Ambiente de Teste
+(implementação e teste da especificação avaliada em A.4/B.4)
+
+Relatório
+(avaliação da qualidade da versão final do relatório com a informação
+necessária para ajudar a avaliar os critérios B.1 a B-7)
+
+Apresentação/Defesa
+(avaliação da qualidade da apresentação e defesa do trabalho e que
+ajuda a avaliar os critérios B.1 a B.7)
