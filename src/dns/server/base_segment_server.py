@@ -10,7 +10,7 @@ class BaseSegmentServer:
     Use the method BaseSegmentServer::tcp_start() to run the server.
     """
 
-    def __init__(self, ip_address: str, port: int, read_size: int = 1024):
+    def __init__(self, ip_address: str, port: int, timeout, read_size: int = 1024):
         """
         BaseSegmentServer constructor.
 
@@ -27,6 +27,7 @@ class BaseSegmentServer:
         try:
             self.tcp_logger.info(f'EV | {ip_address} | TCP server is starting...')
             self.tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.tcp_socket.settimeout(timeout)
             self.tcp_socket.bind(self.tcp_socket_address)
             self.tcp_socket.listen()
 

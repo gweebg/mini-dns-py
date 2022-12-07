@@ -50,3 +50,12 @@ class InvalidZoneTransferPacket(Exception):
 
     def __init__(self, message='Bad dns header.'):
         super(InvalidZoneTransferPacket, self).__init__(message)
+
+
+class InvalidCacheEntryException(Exception):
+    """
+    Custom exception for invalid cache entry.
+    """
+
+    def __init__(self, message='Invalid cache entry!'):
+        super(InvalidCacheEntryException, self).__init__(message)

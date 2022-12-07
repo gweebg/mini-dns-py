@@ -1,0 +1,31 @@
+Class 07/12/2022 - Computer Communication
+
+Example hierarchy:
+
+                      . g700. (root)
+                      |
+                      |
+          |-----------|-----------|
+          |                       |
+          |                       |
+out.g700. .                       . off.g700. (tld)
+          |                       |
+          |                       |
+          .                       .
+       in.out.g700.             on.off.g700. (auth)
+
+Resolution server must have some sort of mechanism to determine if a reponse is either a reference (when there is no
+match but the server knows where the domain is) or an answer (when we finally get the query answer). This can be
+implemented using a flag. We can encapsulate a DNSPacket, for example:
+
+    class ReferencedDNSPacket(BaseModel):
+
+        base_packet: DNSPacket
+        is_reference: bool
+
+        ...
+
+Longest prefix match on domains when asking the root, tld, etc., until finding the correct domain.
+
+
+

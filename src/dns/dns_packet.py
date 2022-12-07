@@ -14,14 +14,16 @@ This includes packet decoding and packet encoding.
 class DNSPacketHeaderFlag(Enum):
     """
     Enumeration that represents a DNS Packet Header Flag.
-    Q: Query
-    R: Response
-    A: Response is authoritative
+    Q: Query.
+    R: Response.
+    A: Response is authoritative.
+    F: Final - the response if final.
     """
 
     Q = 1
     R = 2
     A = 3
+    F = 4
 
 
 class DNSPacketHeader(BaseModel):

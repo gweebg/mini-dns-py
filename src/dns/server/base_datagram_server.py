@@ -10,7 +10,7 @@ class BaseDatagramServer:
     Use the method BaseDatagramServer::udp_start() to run the server.
     """
 
-    def __init__(self, ip_address: str, port: int, read_size: int = 1024):
+    def __init__(self, ip_address: str, port: int, timeout: int, read_size: int = 1024):
         """
         BaseDatagramServer constructor.
 
@@ -27,6 +27,7 @@ class BaseDatagramServer:
         try:
             self.logger.info(f'EV | {ip_address} | UDP server is starting...')
             self.udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            self.udp_socket.settimeout(timeout)
             self.udp_socket.bind(self.socket_address)
 
         except Exception as error:

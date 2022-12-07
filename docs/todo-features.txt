@@ -9,7 +9,7 @@ List element marks: ✅, ❌, ⌛
     - Define cache entry.
     - Implement base operations.
     - Unit test.
-    - Must be a implementable module (ex. class Server(Cached): ...)
+    - Must be an implementable module (ex. class Server(Cached): ...)
 
     Be carefull with thread/process safety, the server has two main processes that will need to share the cache
     and each process may create a thread that will also work with the cache.
@@ -18,6 +18,8 @@ List element marks: ✅, ❌, ⌛
 ❌ - Overall check on the parsers.
 
 ❌ - Fix the testing environment.
+     - Add hierachy diagram like the one in docs/dns-hierarchy.txt .
+     - Write every database file.
 
 ⌛ - Figure order of events when running queries.
 

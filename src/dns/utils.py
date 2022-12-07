@@ -2,7 +2,19 @@ import os
 import struct
 from argparse import ArgumentTypeError
 
+import netifaces
 from parser.regex_compiles import RE_IVP4
+
+
+def get_ip_from_interface(interface: str = 'eth0') -> str:
+    """
+    This helper function returns the IP address from a given interface.
+    The default interface used is 'eth0'.
+
+    :param interface: Interface to get the ip from.
+    :return: The obtained ip address.
+    """
+    return netifaces.ifaddresses(interface)[netifaces.AF_INET][0]['addr']
 
 
 def __ipv4_type_validator__(arg_value, pat=RE_IVP4):
@@ -30,7 +42,6 @@ def __load_latest_id__() -> int:
     """
 
     if not os.path.exists("../../msgid.dat"):
-
         with open("../../msgid.dat", "w") as file:
             file.write('1')
 
@@ -62,14 +73,12 @@ def __get_latest_id__() -> str:
 
 
 def send_msg(sock, msg):
-
     # Prefix each message with a 4-byte length (network byte order)
     msg = struct.pack('>I', len(msg)) + msg
     sock.sendall(msg)
 
 
 def recv_msg(sock):
-
     # Read message length and unpack it into an integer
     raw_msglen = recvall(sock, 4)
     if not raw_msglen:
@@ -81,7 +90,6 @@ def recv_msg(sock):
 
 
 def recvall(sock, n):
-
     # Helper function to recv n bytes or return None if EOF is hit
     data = bytearray()
     while len(data) < n:
@@ -96,4 +104,3 @@ def recvall(sock, n):
 
 def get_my_ip(interface: str) -> str:
     return ifaddresses(interface)[AF_INET][0]['addr']
-

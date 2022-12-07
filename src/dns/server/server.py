@@ -1,16 +1,16 @@
 import argparse
-from multiprocessing import Process
 import logging
 import errno
 import os
 import socket
+from multiprocessing import Process
 
 from dns.dns_packet import DNSPacket, DNSPacketQueryData, DNSPacketHeaderFlag, DNSPacketHeader
 from dns.server.base_datagram_server import BaseDatagramServer
 from dns.server.base_segment_server import BaseSegmentServer
 from dns.server.server_config import ServerConfiguration
 from dns.dns_database import Database
-from dns.utils import send_msg, recv_msg
+from dns.utils import send_msg, recv_msg, get_ip_from_interface
 
 from exceptions.exceptions import InvalidDNSPacket, InvalidZoneTransferPacket
 
@@ -68,10 +68,8 @@ class Server(BaseDatagramServer, BaseSegmentServer):
 
         self.log('all', f'EV | 127.0.0.1 | Loaded root list at "{self.configuration.root_servers_path}"', 'info')
 
-        super().__init__("127.0.0.1", port, 1024)
-        super(BaseDatagramServer, self).__init__("127.0.0.1", port, 1024)
-        # super().__init__(get_my_ip(...), port, 1024)
-        # super(BaseDatagramServer, self).__init__(get_my_ip(...), port, 1024)
+        super().__init__(get_ip_from_interface(), port, timeout, 1024)
+        super(BaseDatagramServer, self).__init__(get_ip_from_interface(), port, timeout, 1024)
 
     @staticmethod
     def create_loggers(logs_list: list[ConfigEntry], debug_flag: bool):

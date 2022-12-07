@@ -50,5 +50,5 @@ class DNSResource:
         return f"<{self.type}> : {self.parameter}, {self.value}, {self.ttl}, {self.priority}"
 
 
-x = "example.com. SOASP ns1.example.com. 86400"
-y = DNSResource.from_string(x)
+# x = "example.com. SOASP ns1.example.com. 86400"
+# y = DNSResource.from_string(x)
