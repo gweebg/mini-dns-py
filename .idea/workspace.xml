@@ -4,24 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8fb73730-5d4d-4194-858b-416c8aec73ad" name="Changes" comment="Setup for second phase.">
-      <change afterPath="$PROJECT_DIR$/docs/dns-hiearchy.txt" afterDir="false" />
+    <list default="true" id="8fb73730-5d4d-4194-858b-416c8aec73ad" name="Changes" comment="Can't remember what changed.&#10;&#10;But added get_it_from_interface() to retrieve the used interface ip address.&#10;&#10;Moved configuration and database files to their directories">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/config-lili-lycoris-sp.conf" beforeDir="false" afterPath="$PROJECT_DIR$/core/configuration_files/config-lili-lycoris-sp.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/config-lili-lycoris-ss-1.conf" beforeDir="false" afterPath="$PROJECT_DIR$/core/configuration_files/config-lili-lycoris-ss-1.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/config-lili-lycoris-ss-2.conf" beforeDir="false" afterPath="$PROJECT_DIR$/core/configuration_files/config-lili-lycoris-ss-2.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/database-lili-lycoris.db" beforeDir="false" afterPath="$PROJECT_DIR$/core/database_files/database-lili-lycoris.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/todo-features.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/todo-features.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cache/cache.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/cache/cache.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dns/dns_packet.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/dns_packet.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dns/server/base_datagram_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/server/base_datagram_server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dns/server/base_segment_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/server/base_segment_server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dns/server/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/server/server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dns/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/exceptions/exceptions.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/exceptions/exceptions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/dns_resource.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/dns_resource.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/parser/parser_factory.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/parser_factory.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/database_files/database-lili-lycoris.db" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,11 +23,11 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;
   }
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings">
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
@@ -63,21 +48,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/guilherme/PycharmProjects/mini-dns-py",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "run.code.analysis.last.selected.profile": "aDefault",
-    "settings.editor.selected.configurable": "settings.sync",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/guilherme/PycharmProjects/mini-dns-py&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;aDefault&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.sync&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/core" />
@@ -344,14 +329,10 @@
       <workItem from="1670177839595" duration="47000" />
       <workItem from="1670336332714" duration="4253000" />
       <workItem from="1670340657626" duration="10000" />
-      <workItem from="1670421962016" duration="4677000" />
-    </task>
-    <task id="LOCAL-00001" summary="Continuation of database parsing.&#10;&#10;Missing NS, MX, A, CNAME and PTR parsers.">
-      <created>1666713019519</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1666713019519</updated>
+      <workItem from="1670421962016" duration="5354000" />
+      <workItem from="1670534265713" duration="489000" />
+      <workItem from="1670618577286" duration="649000" />
+      <workItem from="1670624469367" duration="1542000" />
     </task>
     <task id="LOCAL-00002" summary="Continuation of database parsing.&#10;&#10;Missing MX, A, CNAME and PTR parsers.">
       <created>1667212369742</created>
@@ -689,7 +670,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670177576019</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="Can't remember what changed.&#10;&#10;But added get_it_from_interface() to retrieve the used interface ip address.&#10;&#10;Moved configuration and database files to their directories">
+      <created>1670426740649</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1670426740649</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -712,7 +700,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixed bug in DNSPacket::from_string().&#10;&#10;Where it wouldn't accept string with empty values." />
     <MESSAGE value="Implemented server response if query is bad." />
     <MESSAGE value="Added responses for each type of matches.&#10;&#10;Need lot of refactor and fix on dns.server::match()." />
     <MESSAGE value="Created Database class.&#10;&#10;Moved match logic to Database class instead of PrimaryServer." />
@@ -737,7 +724,8 @@
     <MESSAGE value="Updated expression for domain name matching." />
     <MESSAGE value="Added docs/ with to-do list and expected-features." />
     <MESSAGE value="Setup for second phase." />
-    <option name="LAST_COMMIT_MESSAGE" value="Setup for second phase." />
+    <MESSAGE value="Can't remember what changed.&#10;&#10;But added get_it_from_interface() to retrieve the used interface ip address.&#10;&#10;Moved configuration and database files to their directories" />
+    <option name="LAST_COMMIT_MESSAGE" value="Can't remember what changed.&#10;&#10;But added get_it_from_interface() to retrieve the used interface ip address.&#10;&#10;Moved configuration and database files to their directories" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/mini_dns_py$zone_transfer_packet.coverage" NAME="zone_transfer_packet Coverage Results" MODIFIED="1669032299984" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/models" />
