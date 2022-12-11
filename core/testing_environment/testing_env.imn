@@ -1,0 +1,1268 @@
+node n1 {
+    type router
+    model router
+    network-config {
+	hostname router-8
+	!
+	interface eth7
+	 ip address 10.0.15.1/24
+	 ipv6 address 2001:15::1/64
+	!
+	interface eth6
+	 ip address 10.0.14.1/24
+	 ipv6 address 2001:14::1/64
+	!
+	interface eth4
+	 ip address 10.0.12.1/24
+	 ipv6 address 2001:12::1/64
+	!
+	interface eth3
+	 ip address 10.0.11.1/24
+	 ipv6 address 2001:11::1/64
+	!
+	interface eth2
+	 ip address 10.0.10.1/24
+	 ipv6 address 2001:10::1/64
+	!
+	interface eth0
+	 ip address 10.0.8.1/24
+	 ipv6 address 2001:8::1/64
+	!
+    }
+    canvas c1
+    iconcoords {998.3333333333334 535.3333333333334}
+    labelcoords {998.3333333333334 567.3333333333334}
+    interface-peer {eth0 n8}
+    interface-peer {eth2 n9}
+    interface-peer {eth3 n4}
+    interface-peer {eth4 n6}
+    interface-peer {eth6 n7}
+    interface-peer {eth7 n3}
+}
+
+node n3 {
+    type router
+    model router
+    network-config {
+	hostname router-5
+	!
+	interface eth3
+	 ip address 10.0.16.1/24
+	 ipv6 address 2001:16::1/64
+	!
+	interface eth2
+	 ip address 10.0.15.2/24
+	 ipv6 address 2001:15::2/64
+	!
+	interface eth1
+	 ip address 10.0.7.1/24
+	 ipv6 address 2001:7::1/64
+	!
+	interface eth0
+	 ip address 10.0.6.2/24
+	 ipv6 address 2001:6::2/64
+	!
+    }
+    canvas c1
+    iconcoords {637.3333333333334 535.3333333333334}
+    labelcoords {637.3333333333334 567.3333333333334}
+    interface-peer {eth0 n7}
+    interface-peer {eth1 n8}
+    interface-peer {eth2 n1}
+    interface-peer {eth3 n32}
+}
+
+node n4 {
+    type router
+    model router
+    network-config {
+	hostname router-2
+	!
+	interface eth3
+	 ip address 10.0.17.1/24
+	 ipv6 address 2001:17::1/64
+	!
+	interface eth2
+	 ip address 10.0.11.2/24
+	 ipv6 address 2001:11::2/64
+	!
+	interface eth1
+	 ip address 10.0.3.1/24
+	 ipv6 address 2001:3::1/64
+	!
+	interface eth0
+	 ip address 10.0.2.2/24
+	 ipv6 address 2001:2::2/64
+	!
+    }
+    canvas c1
+    iconcoords {1360.3333333333333 535.3333333333334}
+    labelcoords {1360.3333333333333 567.3333333333334}
+    interface-peer {eth0 n9}
+    interface-peer {eth1 n6}
+    interface-peer {eth2 n1}
+    interface-peer {eth3 n41}
+}
+
+node n6 {
+    type router
+    model router
+    network-config {
+	hostname router-3
+	!
+	interface eth3
+	 ip address 10.0.13.1/24
+	 ipv6 address 2001:13::1/64
+	!
+	interface eth1
+	 ip address 10.0.1.2/24
+	 ipv6 address 2001:1::2/64
+	!
+	interface eth2
+	 ip address 10.0.12.2/24
+	 ipv6 address 2001:12::2/64
+	!
+	interface eth0
+	 ip address 10.0.3.2/24
+	 ipv6 address 2001:3::2/64
+	!
+    }
+    canvas c1
+    iconcoords {1216.3333333333333 727.3333333333334}
+    labelcoords {1216.3333333333333 759.3333333333334}
+    interface-peer {eth0 n4}
+    interface-peer {eth2 n1}
+    interface-peer {eth1 n7}
+    interface-peer {eth3 n10}
+}
+
+node n7 {
+    type router
+    model router
+    network-config {
+	hostname router-4
+	!
+	interface eth3
+	 ip address 10.0.5.1/24
+	 ipv6 address 2001:5::1/64
+	!
+	interface eth0
+	 ip address 10.0.1.1/24
+	 ipv6 address 2001:1::1/64
+	!
+	interface eth2
+	 ip address 10.0.14.2/24
+	 ipv6 address 2001:14::2/64
+	!
+	interface eth1
+	 ip address 10.0.6.1/24
+	 ipv6 address 2001:6::1/64
+	!
+    }
+    canvas c1
+    iconcoords {783.3333333333334 726.3333333333334}
+    labelcoords {783.3333333333334 758.3333333333334}
+    interface-peer {eth1 n3}
+    interface-peer {eth2 n1}
+    interface-peer {eth0 n6}
+    interface-peer {eth3 n5}
+}
+
+node n8 {
+    type router
+    model router
+    network-config {
+	hostname router-7
+	!
+	interface eth3
+	 ip address 10.0.4.1/24
+	 ipv6 address 2001:4::1/64
+	!
+	interface eth0
+	 ip address 10.0.0.1/24
+	 ipv6 address 2001:0::1/64
+	!
+	interface eth2
+	 ip address 10.0.8.2/24
+	 ipv6 address 2001:8::2/64
+	!
+	interface eth1
+	 ip address 10.0.7.2/24
+	 ipv6 address 2001:7::2/64
+	!
+    }
+    canvas c1
+    iconcoords {783.3333333333334 345.3333333333333}
+    labelcoords {783.3333333333334 377.3333333333333}
+    interface-peer {eth1 n3}
+    interface-peer {eth2 n1}
+    interface-peer {eth0 n9}
+    interface-peer {eth3 n2}
+}
+
+node n9 {
+    type router
+    model router
+    network-config {
+	hostname router-1
+	!
+	interface eth3
+	 ip address 10.0.9.1/24
+	 ipv6 address 2001:9::1/64
+	!
+	interface eth0
+	 ip address 10.0.0.2/24
+	 ipv6 address 2001:0::2/64
+	!
+	interface eth2
+	 ip address 10.0.10.2/24
+	 ipv6 address 2001:10::2/64
+	!
+	interface eth1
+	 ip address 10.0.2.1/24
+	 ipv6 address 2001:2::1/64
+	!
+    }
+    canvas c1
+    iconcoords {1215.3333333333333 344.3333333333333}
+    labelcoords {1215.3333333333333 376.3333333333333}
+    interface-peer {eth1 n4}
+    interface-peer {eth2 n1}
+    interface-peer {eth0 n8}
+    interface-peer {eth3 n12}
+}
+
+node n2 {
+    type lanswitch
+    network-config {
+	hostname switch-1
+	!
+    }
+    canvas c1
+    iconcoords {249.0 205.0}
+    labelcoords {249.0 229.0}
+    interface-peer {e0 n11}
+    interface-peer {e1 n13}
+    interface-peer {e2 n14}
+    interface-peer {e3 n8}
+    interface-peer {e4 n15}
+    interface-peer {e5 n27}
+}
+
+node n5 {
+    type lanswitch
+    network-config {
+	hostname switch-5
+	!
+    }
+    canvas c1
+    iconcoords {235.0 892.0}
+    labelcoords {235.0 916.0}
+    interface-peer {e0 n7}
+    interface-peer {e1 n17}
+    interface-peer {e2 n18}
+    interface-peer {e3 n19}
+    interface-peer {e4 n20}
+    interface-peer {e5 n16}
+}
+
+node n10 {
+    type lanswitch
+    network-config {
+	hostname switch-6
+	!
+    }
+    canvas c1
+    iconcoords {1664.0 890.0}
+    labelcoords {1664.0 914.0}
+    interface-peer {e0 n6}
+    interface-peer {e1 n25}
+    interface-peer {e2 n26}
+    interface-peer {e3 n29}
+    interface-peer {e4 n30}
+    interface-peer {e5 n31}
+}
+
+node n12 {
+    type lanswitch
+    network-config {
+	hostname switch-2
+	!
+    }
+    canvas c1
+    iconcoords {1666.0 216.0}
+    labelcoords {1666.0 240.0}
+    interface-peer {e0 n9}
+    interface-peer {e1 n21}
+    interface-peer {e2 n23}
+    interface-peer {e3 n22}
+    interface-peer {e4 n24}
+    interface-peer {e5 n28}
+}
+
+node n11 {
+    type router
+    model host
+    network-config {
+	hostname lycoris-sp
+	!
+	interface eth0
+	 ip address 10.0.4.10/24
+	 ipv6 address 2001:4::10/64
+	!
+    }
+    canvas c1
+    iconcoords {248.0 108.0}
+    labelcoords {248.0 140.0}
+    interface-peer {eth0 n2}
+    custom-config {
+	custom-config-id service:UserDefined
+	custom-command UserDefined
+	config {
+	files=('load_lycoris_sp.sh', )
+	cmdup=('sh load_lycoris_sp.sh', )
+	}
+    }
+    custom-config {
+	custom-config-id service:UserDefined:load_lycoris_sp.sh
+	custom-command load_lycoris_sp.sh
+	config {
+	#!/bin/sh
+	
+	export TERM=xterm
+	
+	mkdir proj
+	cp -r /home/core/Desktop/cc/mini-dns-py/ proj/ &
+	cd proj/mini-dns-py &
+	export PYTHONPATH='.' &
+	pip3.10 -m venv env &
+	source env/bin/activate &
+	pip3.10 install -r wheelhouse/requirements.txt --no-index --find-links wheelhouse &
+	echo "all done"wheelhouse/requirements.txt --no-index --find-links wheelhouse#!/bin/sh
+	mkdir sp
+	cp -r /home/core/Desktop/cc/mini-dns-py sp/
+	}
+    }
+    services {DefaultRoute SSH UserDefined}
+}
+
+node n13 {
+    type router
+    model host
+    network-config {
+	hostname bell-recoil-sp
+	!
+	interface eth0
+	 ip address 10.0.4.11/24
+	 ipv6 address 2001:4::11/64
+	!
+    }
+    canvas c1
+    iconcoords {104.0 109.0}
+    labelcoords {104.0 141.0}
+    interface-peer {eth0 n2}
+}
+
+node n14 {
+    type router
+    model host
+    network-config {
+	hostname recoil-ss-2
+	!
+	interface eth0
+	 ip address 10.0.4.12/24
+	 ipv6 address 2001:4::12/64
+	!
+    }
+    canvas c1
+    iconcoords {105.0 206.0}
+    labelcoords {105.0 238.0}
+    interface-peer {eth0 n2}
+}
+
+node n15 {
+    type router
+    model PC
+    network-config {
+	hostname Kuon
+	!
+	interface eth0
+	 ip address 10.0.4.20/24
+	 ipv6 address 2001:4::20/64
+	!
+    }
+    canvas c1
+    iconcoords {106.0 302.0}
+    labelcoords {106.0 334.0}
+    interface-peer {eth0 n2}
+}
+
+node n17 {
+    type router
+    model host
+    network-config {
+	hostname recoil-sp
+	!
+	interface eth0
+	 ip address 10.0.5.10/24
+	 ipv6 address 2001:5::10/64
+	!
+    }
+    canvas c1
+    iconcoords {234.0 791.0}
+    labelcoords {234.0 823.0}
+    interface-peer {eth0 n5}
+}
+
+node n18 {
+    type router
+    model host
+    network-config {
+	hostname lycoris-ss
+	!
+	interface eth0
+	 ip address 10.0.5.11/24
+	 ipv6 address 2001:5::11/64
+	!
+    }
+    canvas c1
+    iconcoords {89.0 792.0}
+    labelcoords {89.0 824.0}
+    interface-peer {eth0 n5}
+}
+
+node n19 {
+    type router
+    model host
+    network-config {
+	hostname recoil-res
+	!
+	interface eth0
+	 ip address 10.0.5.12/24
+	 ipv6 address 2001:5::12/64
+	!
+    }
+    canvas c1
+    iconcoords {90.0 889.0}
+    labelcoords {90.0 921.0}
+    interface-peer {eth0 n5}
+}
+
+node n20 {
+    type router
+    model PC
+    network-config {
+	hostname Mereum
+	!
+	interface eth0
+	 ip address 10.0.5.20/24
+	 ipv6 address 2001:5::20/64
+	!
+    }
+    canvas c1
+    iconcoords {91.0 985.0}
+    labelcoords {91.0 1017.0}
+    interface-peer {eth0 n5}
+}
+
+node n16 {
+    type router
+    model PC
+    network-config {
+	hostname Hunter
+	!
+	interface eth0
+	 ip address 10.0.5.21/24
+	 ipv6 address 2001:5::21/64
+	!
+    }
+    canvas c1
+    iconcoords {235.0 986.0}
+    labelcoords {235.0 1018.0}
+    interface-peer {eth0 n5}
+}
+
+node n21 {
+    type router
+    model host
+    network-config {
+	hostname lycoris-ss-2
+	!
+	interface eth0
+	 ip address 10.0.9.10/24
+	 ipv6 address 2001:9::10/64
+	!
+    }
+    canvas c1
+    iconcoords {1665.0 120.0}
+    labelcoords {1665.0 152.0}
+    interface-peer {eth0 n12}
+}
+
+node n22 {
+    type router
+    model host
+    network-config {
+	hostname lili-lycoris-sp
+	!
+	interface eth0
+	 ip address 10.0.9.12/24
+	 ipv6 address 2001:9::12/64
+	!
+    }
+    canvas c1
+    iconcoords {1804.0 118.0}
+    labelcoords {1804.0 150.0}
+    interface-peer {eth0 n12}
+    custom-config {
+	custom-config-id service:UserDefined
+	custom-command UserDefined
+	config {
+	files=('load_server.sh', )
+	cmdup=('sh load_server.sh', )
+	}
+    }
+    custom-config {
+	custom-config-id service:UserDefined:load_server.sh
+	custom-command load_server.sh
+	config {
+	#!/bin/sh
+	mkdir proj
+	cp -r /home/core/Desktop/cc/mini-dns-py/ proj/
+	}
+    }
+    services {DefaultRoute SSH UserDefined}
+}
+
+node n23 {
+    type router
+    model host
+    network-config {
+	hostname lycoris-res
+	!
+	interface eth0
+	 ip address 10.0.9.11/24
+	 ipv6 address 2001:9::11/64
+	!
+    }
+    canvas c1
+    iconcoords {1812.0 216.0}
+    labelcoords {1812.0 248.0}
+    interface-peer {eth0 n12}
+}
+
+node n24 {
+    type router
+    model host
+    network-config {
+	hostname lili-lycoris-res
+	!
+	interface eth0
+	 ip address 10.0.9.13/24
+	 ipv6 address 2001:9::13/64
+	!
+    }
+    canvas c1
+    iconcoords {1806.0 311.0}
+    labelcoords {1806.0 343.0}
+    interface-peer {eth0 n12}
+}
+
+node n25 {
+    type router
+    model host
+    network-config {
+	hostname recoil-ss
+	!
+	interface eth0
+	 ip address 10.0.13.10/24
+	 ipv6 address 2001:13::10/64
+	!
+    }
+    canvas c1
+    iconcoords {1664.0 789.0}
+    labelcoords {1664.0 821.0}
+    interface-peer {eth0 n10}
+}
+
+node n26 {
+    type router
+    model host
+    network-config {
+	hostname lili-lycoris-ss
+	!
+	interface eth0
+	 ip address 10.0.13.11/24
+	 ipv6 address 2001:13::11/64
+	!
+    }
+    canvas c1
+    iconcoords {1809.0 792.0}
+    labelcoords {1809.0 824.0}
+    interface-peer {eth0 n10}
+    custom-config {
+	custom-config-id service:UserDefined
+	custom-command UserDefined
+	config {
+	cmdup=('sh load_server.sh', )
+	}
+    }
+    services {DefaultRoute SSH UserDefined}
+}
+
+node n27 {
+    type router
+    model host
+    network-config {
+	hostname lili-licoris-ss-2
+	!
+	interface eth0
+	 ip address 10.0.4.13/24
+	 ipv6 address 2001:4::13/64
+	!
+    }
+    canvas c1
+    iconcoords {246.0 300.0}
+    labelcoords {246.0 332.0}
+    interface-peer {eth0 n2}
+}
+
+node n28 {
+    type router
+    model host
+    network-config {
+	hostname lili-lycoris-mx
+	!
+	interface eth0
+	 ip address 10.0.9.14/24
+	 ipv6 address 2001:9::14/64
+	!
+    }
+    canvas c1
+    iconcoords {1665.0 313.0}
+    labelcoords {1665.0 345.0}
+    interface-peer {eth0 n12}
+}
+
+node n29 {
+    type router
+    model host
+    network-config {
+	hostname lili-lycoris-www
+	!
+	interface eth0
+	 ip address 10.0.13.12/24
+	 ipv6 address 2001:13::12/64
+	!
+    }
+    canvas c1
+    iconcoords {1808.0 886.0}
+    labelcoords {1808.0 918.0}
+    interface-peer {eth0 n10}
+}
+
+node n30 {
+    type router
+    model host
+    network-config {
+	hostname lili-lycoris-www-2
+	!
+	interface eth0
+	 ip address 10.0.13.13/24
+	 ipv6 address 2001:13::13/64
+	!
+    }
+    canvas c1
+    iconcoords {1810.0 983.0}
+    labelcoords {1810.0 1015.0}
+    interface-peer {eth0 n10}
+}
+
+node n31 {
+    type router
+    model host
+    network-config {
+	hostname bell-recoil-ss
+	!
+	interface eth0
+	 ip address 10.0.13.14/24
+	 ipv6 address 2001:13::14/64
+	!
+    }
+    canvas c1
+    iconcoords {1663.0 986.0}
+    labelcoords {1663.0 1018.0}
+    interface-peer {eth0 n10}
+}
+
+node n32 {
+    type lanswitch
+    network-config {
+	hostname switch-3
+	!
+    }
+    canvas c1
+    iconcoords {248.0 551.0}
+    labelcoords {248.0 575.0}
+    interface-peer {e0 n3}
+    interface-peer {e1 n33}
+    interface-peer {e2 n34}
+    interface-peer {e3 n35}
+    interface-peer {e4 n36}
+    interface-peer {e5 n37}
+}
+
+node n33 {
+    type router
+    model host
+    network-config {
+	hostname bell-recoil-ss-2
+	!
+	interface eth0
+	 ip address 10.0.16.10/24
+	 ipv6 address 2001:16::10/64
+	!
+    }
+    canvas c1
+    iconcoords {107.0 552.0}
+    labelcoords {107.0 584.0}
+    interface-peer {eth0 n32}
+}
+
+node n34 {
+    type router
+    model host
+    network-config {
+	hostname bell-recoil-mx
+	!
+	interface eth0
+	 ip address 10.0.16.11/24
+	 ipv6 address 2001:16::11/64
+	!
+    }
+    canvas c1
+    iconcoords {106.0 458.0}
+    labelcoords {106.0 490.0}
+    interface-peer {eth0 n32}
+}
+
+node n35 {
+    type router
+    model host
+    network-config {
+	hostname bell-recoil-mx-2
+	!
+	interface eth0
+	 ip address 10.0.16.12/24
+	 ipv6 address 2001:16::12/64
+	!
+    }
+    canvas c1
+    iconcoords {106.0 646.0}
+    labelcoords {106.0 678.0}
+    interface-peer {eth0 n32}
+}
+
+node n36 {
+    type router
+    model host
+    network-config {
+	hostname iino
+	!
+	interface eth0
+	 ip address 10.0.16.13/24
+	 ipv6 address 2001:16::13/64
+	!
+    }
+    canvas c1
+    iconcoords {248.0 457.0}
+    labelcoords {248.0 489.0}
+    interface-peer {eth0 n32}
+}
+
+node n37 {
+    type router
+    model host
+    network-config {
+	hostname reverse
+	!
+	interface eth0
+	 ip address 10.0.16.14/24
+	 ipv6 address 2001:16::14/64
+	!
+    }
+    canvas c1
+    iconcoords {246.0 641.0}
+    labelcoords {246.0 673.0}
+    interface-peer {eth0 n32}
+}
+
+node n38 {
+    type router
+    model host
+    network-config {
+	hostname in-addr
+	!
+	interface eth0
+	 ip address 10.0.17.11/24
+	 ipv6 address 2001:17::11/64
+	!
+    }
+    canvas c1
+    iconcoords {1810.0 457.0}
+    labelcoords {1810.0 489.0}
+    interface-peer {eth0 n41}
+}
+
+node n39 {
+    type router
+    model PC
+    network-config {
+	hostname Soul
+	!
+	interface eth0
+	 ip address 10.0.17.20/24
+	 ipv6 address 2001:17::20/64
+	!
+    }
+    canvas c1
+    iconcoords {1806.0 550.0}
+    labelcoords {1806.0 582.0}
+    interface-peer {eth0 n41}
+}
+
+node n40 {
+    type router
+    model PC
+    network-config {
+	hostname Takina
+	!
+	interface eth0
+	 ip address 10.0.17.21/24
+	 ipv6 address 2001:17::21/64
+	!
+    }
+    canvas c1
+    iconcoords {1804.0 625.0}
+    labelcoords {1804.0 657.0}
+    custom-config {
+	custom-config-id service:UserDefined
+	custom-command UserDefined
+	config {
+	files=('', 'load_client.sh', )
+	cmdup=('sh load_server.sh', )
+	}
+    }
+    custom-config {
+	custom-config-id service:UserDefined:load_client.sh
+	custom-command load_client.sh
+	config {
+	#!/bin/sh
+	mkdir proj
+	cp -r /home/core/Desktop/cc/mini-dns-py/ proj/
+	
+	}
+    }
+    services {DefaultRoute UserDefined}
+    interface-peer {eth0 n41}
+}
+
+node n42 {
+    type router
+    model host
+    network-config {
+	hostname maki
+	!
+	interface eth0
+	 ip address 10.0.17.10/24
+	 ipv6 address 2001:17::10/64
+	!
+    }
+    canvas c1
+    iconcoords {1665.0 458.0}
+    labelcoords {1665.0 490.0}
+    interface-peer {eth0 n41}
+}
+
+node n41 {
+    type lanswitch
+    network-config {
+	hostname switch-4
+	!
+    }
+    canvas c1
+    iconcoords {1655.0 554.0}
+    labelcoords {1655.0 578.0}
+    interface-peer {e0 n4}
+    interface-peer {e1 n42}
+    interface-peer {e2 n38}
+    interface-peer {e3 n39}
+    interface-peer {e4 n40}
+}
+
+link l3 {
+    nodes {n9 n4}
+    bandwidth 0
+}
+
+link l4 {
+    nodes {n4 n6}
+    bandwidth 0
+}
+
+link l7 {
+    nodes {n7 n3}
+    bandwidth 0
+}
+
+link l8 {
+    nodes {n3 n8}
+    bandwidth 0
+}
+
+link l9 {
+    nodes {n1 n8}
+    bandwidth 0
+}
+
+link l11 {
+    nodes {n1 n9}
+    bandwidth 0
+}
+
+link l12 {
+    nodes {n1 n4}
+    bandwidth 0
+}
+
+link l13 {
+    nodes {n1 n6}
+    bandwidth 0
+}
+
+link l15 {
+    nodes {n1 n7}
+    bandwidth 0
+}
+
+link l16 {
+    nodes {n1 n3}
+    bandwidth 0
+}
+
+link l1 {
+    nodes {n8 n9}
+    bandwidth 0
+}
+
+link l2 {
+    nodes {n7 n6}
+    bandwidth 0
+}
+
+link l5 {
+    nodes {n2 n11}
+    bandwidth 0
+}
+
+link l6 {
+    nodes {n2 n13}
+    bandwidth 0
+}
+
+link l10 {
+    nodes {n2 n14}
+    bandwidth 0
+}
+
+link l14 {
+    nodes {n2 n8}
+    bandwidth 0
+}
+
+link l17 {
+    nodes {n5 n7}
+    bandwidth 0
+}
+
+link l18 {
+    nodes {n9 n12}
+    bandwidth 0
+}
+
+link l19 {
+    nodes {n6 n10}
+    bandwidth 0
+}
+
+link l20 {
+    nodes {n15 n2}
+    bandwidth 0
+}
+
+link l21 {
+    nodes {n17 n5}
+    bandwidth 0
+}
+
+link l22 {
+    nodes {n18 n5}
+    bandwidth 0
+}
+
+link l23 {
+    nodes {n19 n5}
+    bandwidth 0
+}
+
+link l24 {
+    nodes {n20 n5}
+    bandwidth 0
+}
+
+link l25 {
+    nodes {n16 n5}
+    bandwidth 0
+}
+
+link l26 {
+    nodes {n12 n21}
+    bandwidth 0
+}
+
+link l27 {
+    nodes {n10 n25}
+    bandwidth 0
+}
+
+link l28 {
+    nodes {n12 n23}
+    bandwidth 0
+}
+
+link l29 {
+    nodes {n12 n22}
+    bandwidth 0
+}
+
+link l30 {
+    nodes {n2 n27}
+    bandwidth 0
+}
+
+link l31 {
+    nodes {n26 n10}
+    bandwidth 0
+}
+
+link l32 {
+    nodes {n12 n24}
+    bandwidth 0
+}
+
+link l33 {
+    nodes {n12 n28}
+    bandwidth 0
+}
+
+link l34 {
+    nodes {n10 n29}
+    bandwidth 0
+}
+
+link l35 {
+    nodes {n10 n30}
+    bandwidth 0
+}
+
+link l36 {
+    nodes {n31 n10}
+    bandwidth 0
+}
+
+link l37 {
+    nodes {n3 n32}
+    bandwidth 0
+}
+
+link l38 {
+    nodes {n32 n33}
+    bandwidth 0
+}
+
+link l39 {
+    nodes {n32 n34}
+    bandwidth 0
+}
+
+link l40 {
+    nodes {n32 n35}
+    bandwidth 0
+}
+
+link l41 {
+    nodes {n36 n32}
+    bandwidth 0
+}
+
+link l42 {
+    nodes {n32 n37}
+    bandwidth 0
+}
+
+link l43 {
+    nodes {n4 n41}
+    bandwidth 0
+}
+
+link l44 {
+    nodes {n41 n42}
+    bandwidth 0
+}
+
+link l45 {
+    nodes {n41 n38}
+    bandwidth 0
+}
+
+link l46 {
+    nodes {n41 n39}
+    bandwidth 0
+}
+
+link l47 {
+    nodes {n41 n40}
+    bandwidth 0
+}
+
+annotation a1 {
+    iconcoords {830.0 24.0}
+    type text
+    label {Testing Environment}
+    labelcolor black
+    fontfamily {Arial}
+    fontsize {20}
+    effects {bold italic}
+    canvas c1
+}
+
+annotation a3 {
+    iconcoords {45 743 314 1027}
+    type rectangle
+    label {LAN 1}
+    labelcolor black
+    fontfamily {Arial}
+    fontsize {12}
+    color #c0c0ff
+    width 0
+    border black
+    rad 25
+    canvas c1
+}
+
+annotation a4 {
+    iconcoords {1602.0 746.0 1873.0 1026.0}
+    type rectangle
+    label {LAN 2}
+    labelcolor black
+    fontfamily {Arial}
+    fontsize {12}
+    color #dec6ff
+    width 0
+    border black
+    rad 25
+    canvas c1
+}
+
+annotation a5 {
+    iconcoords {1608.0 80.0 1875.0 354.0}
+    type rectangle
+    label {LAN 3}
+    labelcolor black
+    fontfamily {Arial}
+    fontsize {12}
+    color #e6e993
+    width 0
+    border black
+    rad 25
+    canvas c1
+}
+
+annotation a6 {
+    iconcoords {47.0 62.0 314.0 357.0}
+    type rectangle
+    label {LAN 4}
+    labelcolor black
+    fontfamily {Arial}
+    fontsize {12}
+    color #78e9b0
+    width 0
+    border black
+    rad 25
+    canvas c1
+}
+
+annotation a7 {
+    iconcoords {1605.0 407.0 1872.0 693.0}
+    type rectangle
+    label {LAN 6}
+    labelcolor black
+    fontfamily {Arial}
+    fontsize {12}
+    color #c0fc00
+    width 0
+    border black
+    rad 25
+    canvas c1
+}
+
+annotation a8 {
+    iconcoords {47 407 316 692}
+    type rectangle
+    label {LAN 5}
+    labelcolor black
+    fontfamily {Arial}
+    fontsize {12}
+    color #11f6ff
+    width 0
+    border black
+    rad 25
+    canvas c1
+}
+
+annotation a2 {
+    iconcoords {475.0 212.0 1475.0 875.0}
+    type oval
+    label {Backbone Network}
+    labelcolor black
+    fontfamily {Arial}
+    fontsize {12}
+    color #b1ffab
+    width 0
+    border black
+    canvas c1
+}
+
+canvas c1 {
+    name {Canvas1}
+    refpt {0 0 47.5791667 -122.132322 2.0}
+    scale {150.0}
+    size {2000 2000}
+}
+
+option global {
+    interface_names no
+    ip_addresses yes
+    ipv6_addresses no
+    node_labels yes
+    link_labels yes
+    show_api no
+    background_images no
+    annotations yes
+    grid yes
+    traffic_start 0
+}
+
+option session {
+}
+

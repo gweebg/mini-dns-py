@@ -1,0 +1,31 @@
+# Database configuration file for the top level domain 'lycoris.maki.'. #
+
+# Default domain prefix set to 'lycoris.maki.' #
+@ DEFAULT lycoris.maki. 
+
+# Default time to live set to one minute (60s) #
+TTL DEFAULT 60
+
+@ SOASP sp.lycoris.maki. TTL
+@ SOAADMIN dns.admin@lycoris.maki TTL
+@ SOASERIAL 105001 TTL
+
+@ SOAREFRESH 45 TTL 
+@ SOARETRY 60 TTL
+@ SOAEXPIRE 60 TTL
+
+lycoris.maki. NS sp.lycoris.maki. TTL 1
+lycoris.maki. NS ss1.lycoris.maki. TTL 3
+lycoris.maki. NS ss2.lycoris.maki. TTL 2 
+
+# Its subdomain 'lili.@' primary server. # 
+lili.lycoris.maki. NS sp.lili.lycoris.maki TTL
+
+sp.lycoris.maki. A 10.0.4.10 TTL
+ss1.lycoris.maki. A 10.0.5.11 TTL
+ss2.lycoris.maki. A 10.0.9.10 TTL
+
+# Subdomain primary server address. #
+lili.lycoris.maki. A 10.0.9.12 TTL
+
+

@@ -1,0 +1,32 @@
+# Database configuration file for the subdomain 'bell.recoil.maki.' #
+
+# Default domain prefix set to 'bell.recoil.maki.' #
+@ DEFAULT bell.recoil.maki.
+
+# Default time to live set to one minute (60s) #
+TTL DEFAULT 45
+
+@ SOASP sp.bell.recoil.maki. TTL
+@ SOAADMIN dns.admin@bell.recoil.maki TTL
+@ SOASERIAL 105006 TTL
+
+@ SOAREFRESH 60 TTL 
+@ SOARETRY 30 TTL
+@ SOAEXPIRE 60 TTL
+
+@ NS sp.bell.recoil.maki. TTL 1
+@ NS ss1.bell.recoil.maki. TTL 3
+@ NS ss2.bell.recoil.maki. TTL 2
+
+@ MX mail1.bell.recoil.maki. TTL 
+@ MX mail2.bell.recoil.maki. TTL
+
+sp.bell.recoil.maki. A 10.0.4.11 TTL
+ss1.bell.recoil.maki. A 10.0.13.14 TTL
+ss2.bell.recoil.maki. A 10.0.16.10 TTL
+
+mail1.bell.recoil.maki. 10.0.16.11 TTL
+mail2.bell.recoil.maki. 10.0.16.12 TTL
+
+
+

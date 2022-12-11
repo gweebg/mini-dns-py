@@ -1,0 +1,27 @@
+# Database configuration file for the root 'maki.' top level domain. #
+
+# Default domain prefix set to 'maki.' #
+@ DEFAULT maki. 
+
+# Default time to live set to one minute (60s) #
+TTL DEFAULT 60
+
+@ SOASP sp.maki. TTL
+@ SOAADMIN dns.admin@maki TTL
+@ SOASERIAL 105002 TTL
+
+@ SOAREFRESH 45 TTL 
+@ SOARETRY 60 TTL
+@ SOAEXPIRE 60 TTL
+
+maki. NS sp.maki. TTL
+lycoris.maki. NS sp.lycoris.maki. TTL
+recoil.maki. NS sp.recoil.maki. TTL
+reverse.maki. NS in-addr.reverse.maki. TTL
+
+sp.maki. A 10.0.17.10 TTL
+sp.lycoris.maki. A 10.0.4.10 TTL
+sp.recoil.maki. A 10.0.5.10 TTL
+in-addr.reverse.maki. A 10.0.17.11 TTL
+
+

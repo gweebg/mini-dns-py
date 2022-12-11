@@ -1,0 +1,27 @@
+# Database configuration file for the top level domain 'recoil.maki.' #
+
+# Default domain prefix set to 'recoil.maki.' #
+@ DEFAULT recoil.maki. 
+
+# Default time to live set to one minute (60s) #
+TTL DEFAULT 45
+
+@ SOASP sp.recoil.maki. TTL
+@ SOAADMIN dns.admin@recoil.maki TTL
+@ SOASERIAL 105005 TTL
+
+@ SOAREFRESH 30 TTL 
+@ SOARETRY 120 TTL
+@ SOAEXPIRE 60 TTL
+
+recoil.maki. NS sp.recoil.maki. TTL 1
+recoil.maki. NS ss1.recoil.maki. TTL 2
+recoil.maki. NS ss2.recoid.maki. TTL 3
+
+bell.recoil.maki. NS sp.bell.recoil.maki. TTL
+
+sp.recoil.maki. A 10.0.5.10 TTL
+ss1.recoil.maki. A 10.0.13.10 TTL
+ss2.recoil.maki. A 10.0.4.12 TTL
+
+sp.bell.recoil.maki. A 10.0.4.11 TTL
