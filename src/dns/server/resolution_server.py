@@ -1,3 +1,4 @@
+from common.logger.logger import Logger
 from dns.dns_packet import DNSPacket, DNSPacketHeaderFlag
 from dns.server.base_datagram_server import BaseDatagramServer
 from dns.server.server_config import ServerConfiguration
@@ -8,7 +9,7 @@ from parser.abstract_parser import Mode
 from parser.parser_factory import FileParserFactory
 
 
-class ResolutionServer(BaseDatagramServer):
+class ResolutionServer(BaseDatagramServer, Logger):
     """
     A resolution server must be able to both receive and execute queries,
     it does not have a database, only a configuration file.
@@ -57,6 +58,8 @@ class ResolutionServer(BaseDatagramServer):
             # Relaying the packet to the intendend server at 'relay_ip_address'.
             self.udp_socket.sendto(packet.as_byte_string(), address)
 
+            # Todo #
+            # Send to another socket, else there will be conflict. #
             # Waiting, receving, decoding and parsing the response.
             data: str = self.udp_socket.recvfrom(self.read_size).decode('utf-8')
 
@@ -99,6 +102,9 @@ class ResolutionServer(BaseDatagramServer):
             print("Invalid DNS Packet", error)
             return 3
 
+        if DNSPacketHeaderFlag.Q not in packet.header.flags:
+            return 4
+
         # Todo #
         # Before executing the query, let's see if its cached.
         # if self.cache.match(...):
@@ -131,7 +137,6 @@ class ResolutionServer(BaseDatagramServer):
         if relay_ip_address in self.root_servers:
 
             while response is None:
-
                 next_root += 1
                 relay_ip_address = self.root_servers[next_root]
                 response = self.relay(packet, relay_ip_address)
