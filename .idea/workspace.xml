@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8fb73730-5d4d-4194-858b-416c8aec73ad" name="Changes" comment="Implementation of a resolution server.&#10;&#10;Missing response analysis!">
+    <list default="true" id="8fb73730-5d4d-4194-858b-416c8aec73ad" name="Changes" comment="Updated skeleton of Resolution Server.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cache/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/cache/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cache/cache.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/cache/cache.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dns/server/resolution_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/server/resolution_server.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -337,14 +335,8 @@
       <workItem from="1670624469367" duration="1593000" />
       <workItem from="1670706206242" duration="2095000" />
       <workItem from="1670866294176" duration="6001000" />
-      <workItem from="1670922803845" duration="1492000" />
-    </task>
-    <task id="LOCAL-00005" summary="Small improvements.">
-      <created>1667927061199</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1667927061199</updated>
+      <workItem from="1670922803845" duration="1510000" />
+      <workItem from="1670940548270" duration="4058000" />
     </task>
     <task id="LOCAL-00006" summary="Started implementing DNS Packet. DNS Header is done and working.&#10;&#10;Missing DNS Query Info and Data.">
       <created>1667996814757</created>
@@ -682,7 +674,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670872180649</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="Updated skeleton of Resolution Server.">
+      <created>1670924302015</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1670924302015</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -705,7 +704,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added logging to the client.&#10;&#10;Missing logging on servers." />
     <MESSAGE value="Added logging to server.&#10;&#10;Still missing some logging on the file parsing." />
     <MESSAGE value="Created 'server' package." />
     <MESSAGE value="Fixed enconding from 'utf-8' -&gt; 'ascii'." />
@@ -730,7 +728,8 @@
     <MESSAGE value="Added database files for testing_env.imn network." />
     <MESSAGE value="Added configuration files for the core network.&#10;&#10;Still missing, reverse (db,conf) and resolution servers (db, conf)." />
     <MESSAGE value="Implementation of a resolution server.&#10;&#10;Missing response analysis!" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implementation of a resolution server.&#10;&#10;Missing response analysis!" />
+    <MESSAGE value="Updated skeleton of Resolution Server." />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated skeleton of Resolution Server." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/mini_dns_py$zone_transfer_packet.coverage" NAME="zone_transfer_packet Coverage Results" MODIFIED="1669032299984" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/models" />
