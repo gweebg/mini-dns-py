@@ -17,10 +17,14 @@ List element marks: ✅, ❌, ⌛
 
 ❌ - Overall check on the parsers.
 
-❌ - Fix the testing environment.
-     - Add hierachy diagram like the one in docs/dns-hierarchy.txt .
-     - Write every database file.
+⌛ - Fix the testing environment.
+     ✅ - Add hierachy diagram like the one in docs/dns-hierarchy.txt .
+     ⌛ - Write every database file.
+       ? Hosts on TLD's ?
+       ? Resolution server's configuration, database files ?
 
 ⌛ - Figure order of events when running queries.
 
 ⌛ - Make the report.
+
+? When does a response include de A flag ?

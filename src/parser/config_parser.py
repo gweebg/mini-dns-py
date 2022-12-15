@@ -89,7 +89,7 @@ class ConfigFileParser(FileParser):
                     configuration.secondary_servers.append(ConfigEntry(line))
 
                 else:
-                    configuration.allowed_domains.append(parameter)
+                    configuration.allowed_domains.append(ConfigEntry(line))
 
             else:
                 raise InvalidConfigFileException(f"Invalid value type on file '{self.path}': {line}")

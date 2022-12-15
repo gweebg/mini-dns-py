@@ -38,9 +38,6 @@ class Server(BaseDatagramServer, BaseSegmentServer):
         :param debug: Run in debug mode (logging to stdout) if True.
         """
 
-        if not os.path.isfile(configuration_path):
-            raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), configuration_path)
-
         self.configuration: ServerConfiguration = FileParserFactory(configuration_path,
                                                                     Mode.CONFIG).get_parser().parse()
 
