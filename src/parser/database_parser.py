@@ -274,6 +274,7 @@ class DatabaseFileParser(FileParser):
         return DNSResource(line)
 
     def _parse_ptr(self, line: list[str]) -> DNSResource:
+        # Todo, implement this. #
         ...
 
     def parse(self) -> dict[DNSValueType, list[DNSResource]]:

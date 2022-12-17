@@ -17,6 +17,8 @@ List element marks: ✅, ❌, ⌛
 
 ❌ - Overall check on the parsers.
 
+❌ - Add rest of features to transfer zone.
+
 ⌛ - Fix the testing environment.
      ✅ - Add hierachy diagram like the one in docs/dns-hierarchy.txt .
      ⌛ - Write every database file.
