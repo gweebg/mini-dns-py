@@ -1,7 +1,9 @@
+from typing import Optional
+
 from pydantic import BaseModel, Field, conlist
 from enum import Enum
 
-from models.dns_resource import DNSValueType
+from models.dns_resource import DNSValueType, DNSResource
 from exceptions.exceptions import InvalidDNSPacket
 from dns.utils import __get_latest_id__
 
@@ -206,6 +208,29 @@ class DNSPacketQueryData(BaseModel):
 
     def get_values_as_dns_resources(self):
         ...
+
+    def match_cname(self, domain: str) -> Optional[str]:
+        """
+        This method, when given a domain name, tries to match its parameter value to any CNAME
+        entry within the extra_values.
+
+        :param domain: The domain name string we want to match.
+        :return: The parameter value indicated by the CNAME entry, if found. None, otherwise.
+        """
+
+        match = None
+
+        # Creating a list that only contains the CNAME entries.
+        cname_entries: list[str] = list(filter(lambda e: e.value == DNSValueType.CNAME ,self.extra_values))
+
+        # Iterating over the DNSResources until we find a match.
+        for entry in map(lambda i : DNSResource.from_string(i), cname_entries):
+
+            # Checking if we found the match, and setting match to the entry parameter..
+            if entry.value == domain:
+                match = entry.parameter
+
+        return match
 
     @classmethod
     def from_string(cls, query_values_string: str, header: DNSPacketHeader) -> 'DNSPacketQueryData':

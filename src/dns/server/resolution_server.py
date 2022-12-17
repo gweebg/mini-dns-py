@@ -1,8 +1,10 @@
 import socket
+
 from typing import Optional
 
-from common.logger.logger import Logger
-from dns.dns_packet import DNSPacket, DNSPacketHeaderFlag, DNSPacketQueryInfo
+from common.logger import Logger
+
+from dns.dns_packet import DNSPacket, DNSPacketHeaderFlag
 from dns.server.base_datagram_server import BaseDatagramServer
 from dns.server.server_config import ServerConfiguration
 
@@ -45,9 +47,13 @@ class ResolutionServer(BaseDatagramServer, Logger):
         self.timeout = timeout
 
         # Todo #
+        # Setting up the logger.
+        # super(BaseDatragramServer, self).__init__(debug)
+
+        # Todo #
         # Loading database/configuration values into cache.
         # self.cache = Cache()
-        # self.cache.from_configuration(self.configuration, "R")
+        # self.cache.from_configuration(self.configuration, "R") R: resolution
 
     @staticmethod
     def get_next_address(received_packet: DNSPacket, domain_name: str) -> Optional[str]:
@@ -66,7 +72,7 @@ class ResolutionServer(BaseDatagramServer, Logger):
         matched_authority: Optional[DNSResource] = None
         closest_index: int = -1
 
-        # Let's first check if we can find the match without having to replace any CNAME entry.
+        # Let's first check if we can find the match.
         for auth_entry in received_packet.query_data.authorities_values:
 
             # Converted the string entry to a DNSResource object, for the ease of use.
@@ -78,11 +84,6 @@ class ResolutionServer(BaseDatagramServer, Logger):
                 # If it is, we check if it is the closest substring of the authority values.
                 if domain_name.index(entry.parameter) > closest_index:
                     matched_authority = entry
-
-        # If there's still no match, then we will need to look for the CNAME entries.
-        if matched_authority is None:
-            # Todo, replace CNAME's like macros. #
-            ...
 
         # Now that we're sure that we found a match, we will get it address!
         for extra_value in received_packet.query_data.extra_values:
@@ -120,11 +121,19 @@ class ResolutionServer(BaseDatagramServer, Logger):
             # Setting the same timeout value as for the normal queries.
             relay_socket.settimeout(self.timeout)
 
-            # Binding the socket to the given address and to a random available port (value 0 does that).
-            relay_socket.bind((address, 0))
+            try:
 
-            # Relaying the packet to the intendend server at 'relay_ip_address'.
-            relay_socket.sendto(packet.as_byte_string(), address)
+                # Binding the socket to the given address and to a random available port (value 0 does that).
+                relay_socket.bind((address, 0))
+
+                # Relaying the packet to the intendend server at 'relay_ip_address'.
+                relay_socket.sendto(packet.as_byte_string(), address)
+
+            except (socket.error, socket.timeout):
+
+                # If there's an error when sending to the server, we abort and try another address.
+                relay_socket.close()
+                return None
 
             # Waiting, receving, decoding and parsing the response.
             data: str = relay_socket.recv(self.read_size).decode('utf-8')
@@ -180,6 +189,8 @@ class ResolutionServer(BaseDatagramServer, Logger):
             return 3
 
         if DNSPacketHeaderFlag.Q not in packet.header.flags:
+
+            # If the query isn't of type Q then we shall ignore it.
             return 4
 
         # Todo #
@@ -202,8 +213,6 @@ class ResolutionServer(BaseDatagramServer, Logger):
         # We didn't find anything, so we will be asking the root server.
         else:
 
-            # Todo #
-            # Turn root servers into queue and pop each time ?
             # Retrieving a root server address.
             relay_ip_address: str = self.root_servers[next_root]
 
