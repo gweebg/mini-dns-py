@@ -45,7 +45,7 @@ class ServerConfiguration(BaseModel):
         # Iterating over the DD configuration entries.
         for entry in self.allowed_domains:
 
-            # Matching the longest sufix.
+            # Matching the longest suffix.
             if entry.parameter in data.query_info.name:
 
                 substring_index: int = data.query_info.name.index(entry.parameter)
@@ -56,12 +56,6 @@ class ServerConfiguration(BaseModel):
                     smallest_index = substring_index
 
         return result
-
-
-
-
-
-
 
     def __str__(self):
         """

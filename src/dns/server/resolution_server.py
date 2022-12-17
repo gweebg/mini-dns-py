@@ -26,9 +26,9 @@ class ResolutionServer(BaseDatagramServer, Logger):
 
     Since it is both a responder and an executer, we must determine when the answer we are reading
     is a final response or a relay request. By adding to the DNS Packet a new flag F, final, we can easily
-    determine the querie's objective.
+    determine the queries objective.
 
-    The resoulution server will only communicate via UDP, thus extending BaseDatagramServer. It is also responsible
+    The resolution server will only communicate via UDP, thus extending BaseDatagramServer. It is also responsible
     for relaying the query to other servers that will, via long prefix match, respond back.
     """
 
@@ -43,14 +43,14 @@ class ResolutionServer(BaseDatagramServer, Logger):
         self.root_servers: list[str] = FileParserFactory(self.configuration.root_servers_path,
                                                          Mode.RT).get_parser().parse()
 
-        # Storing the timeout value for later use while realying the message.
+        # Storing the timeout value for later use while relaying the message.
         self.timeout = timeout
 
-        # Todo #
+        # Todo Logger #
         # Setting up the logger.
-        # super(BaseDatragramServer, self).__init__(debug)
+        # super(BaseDatagramServer, self).__init__(debug)
 
-        # Todo #
+        # Todo Cache #
         # Loading database/configuration values into cache.
         # self.cache = Cache()
         # self.cache.from_configuration(self.configuration, "R") R: resolution
@@ -61,7 +61,7 @@ class ResolutionServer(BaseDatagramServer, Logger):
         The get_next_address method is used to determine the next address we will be contacting.
         At this point we already know that there will only exist values on authority values and extra values.
         We need to get the 'longest' suffix match out of every authority value, not forgetting to check and replace
-        the name if there's a CNAME entry for any authority, and then retrive its corresponding address from
+        the name if there's a CNAME entry for any authority, and then retrieve its corresponding address from
         the extra values.
 
         :param received_packet: The answer obtained from one of the servers, where we will look for.
@@ -94,7 +94,7 @@ class ResolutionServer(BaseDatagramServer, Logger):
             # Matching the resource value and the extra value parameter to check if we got the correct address.
             if matched_authority.value == extra_entry.parameter:
 
-                # This will be the next address we will be realying the packet to!
+                # This will be the next address we will be relaying the packet to!
                 return extra_entry.value
 
         # This function should never return None, if it does, then the server that created 'received_packet'
@@ -112,7 +112,7 @@ class ResolutionServer(BaseDatagramServer, Logger):
         """
 
         # While the answer we receive is not final, we will keep trying.
-        while DNSPacketHeaderFlag.F not in packet.header.flags:
+        while True:
 
             # We need to relay the message to another socket, else there will
             # be conflict with the main listening thread.
@@ -126,16 +126,16 @@ class ResolutionServer(BaseDatagramServer, Logger):
                 # Binding the socket to the given address and to a random available port (value 0 does that).
                 relay_socket.bind((address, 0))
 
-                # Relaying the packet to the intendend server at 'relay_ip_address'.
+                # Relaying the packet to the intended server at 'relay_ip_address'.
                 relay_socket.sendto(packet.as_byte_string(), address)
 
             except (socket.error, socket.timeout):
 
                 # If there's an error when sending to the server, we abort and try another address.
                 relay_socket.close()
-                return None
+                return None  # This will trigger the 'udp_handle' to choose another root server address.
 
-            # Waiting, receving, decoding and parsing the response.
+            # Waiting, receiving, decoding and parsing the response.
             data: str = relay_socket.recv(self.read_size).decode('utf-8')
 
             try:
@@ -143,8 +143,8 @@ class ResolutionServer(BaseDatagramServer, Logger):
 
             except InvalidDNSPacket as error:
 
-                # Todo: Handle the exception. #
-                raise
+                # Ups, the query received is wrongfully formatted, let's warn the user.
+                return DNSPacket.generate_bad_format_response()
 
             # Let's check if the answer is already final.
             if DNSPacketHeaderFlag.F in received_packet:
@@ -184,16 +184,18 @@ class ResolutionServer(BaseDatagramServer, Logger):
 
         except InvalidDNSPacket as error:
 
-            # Todo: Handle the exception. #
-            print("Invalid DNS Packet", error)
-            return 3
+            # Creating and sending a packet with the information for a parsing error (response code = 3).
+            bad_format_response: DNSPacket = DNSPacket.generate_bad_format_response()
+            self.udp_socket.sendto(bad_format_response.as_byte_string(), address)
+
+            return 3  # Returning the response code.
 
         if DNSPacketHeaderFlag.Q not in packet.header.flags:
 
             # If the query isn't of type Q then we shall ignore it.
-            return 4
+            return 4  # Let's just return 4, as the time of being.
 
-        # Todo #
+        # Todo Cache #
         # Before executing the query, let's see if its cached.
         # if self.cache.match(...):
         #     ...
@@ -201,7 +203,7 @@ class ResolutionServer(BaseDatagramServer, Logger):
         # We need to know where to relay the query, it will be either to a root server, or if there's a
         # DD match, we can ask directly to the indicated address.
 
-        # Let's check our DD records to see if we can match any sufix.
+        # Let's check our DD records to see if we can match any suffix.
         # We are keeping a 'next_root' variable in case the root server fails to answer.
         next_root = 0
 
@@ -223,6 +225,8 @@ class ResolutionServer(BaseDatagramServer, Logger):
         if relay_ip_address in self.root_servers:
 
             while response is None:
+
+                # Todo: Add checking for index out of bounds.
                 next_root += 1
                 relay_ip_address = self.root_servers[next_root]
                 response = self.relay(packet, relay_ip_address)
