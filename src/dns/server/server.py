@@ -4,7 +4,9 @@ import errno
 import os
 import socket
 from multiprocessing import Process
+from typing import Optional
 
+from common.timer import RepeatedTimer
 from dns.dns_packet import DNSPacket, DNSPacketQueryData, DNSPacketHeaderFlag, DNSPacketHeader
 from dns.server.base_datagram_server import BaseDatagramServer
 from dns.server.base_segment_server import BaseSegmentServer
@@ -57,8 +59,16 @@ class Server(BaseDatagramServer, BaseSegmentServer):
             # If the server is a secondary server.
             self.log('all', f'EV | 127.0.0.1 | Im a secondary server!', 'debug')
 
+            # This stores the database version for the secondary server,
             self.database_version = 0
-            self.database = self.zone_transfer()
+
+            # Let's start with an empty database, and then run the zone transfer process.
+            self.database: Optional[Database] = None
+            self.zone_transfer()
+
+            # Now we will schedule the zone transfer process to run every
+            time_interval = self.database.database.get(DNSValueType.SOAEXPIRE)[0].value  # Getting the time interval.
+            self.zone_transfer_timer = RepeatedTimer(int(time_interval), self.zone_transfer())
 
         self.root_servers: list[str] = FileParserFactory(self.configuration.root_servers_path,
                                                          Mode.RT).get_parser().parse()
@@ -171,7 +181,7 @@ class Server(BaseDatagramServer, BaseSegmentServer):
                 look for authorities by searching given domain name
                 get extras by getting ips
             else:
-                look for authorities by searching for given domain's superdomain (example.com -> .com)
+                look for authorities by searching for given domain's super-domain (example.com -> .com)
                 get extras by getting ips
 
             if no authorities nor extras nor response values:
@@ -473,7 +483,7 @@ class Server(BaseDatagramServer, BaseSegmentServer):
 
             database[data_as_packet.type].append(data_as_packet)
 
-        return Database(database=database)
+        self.database = Database(database=database)
 
     def run(self):
         """
