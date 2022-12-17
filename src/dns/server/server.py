@@ -1,12 +1,15 @@
 import argparse
 import logging
+import socket
 import errno
 import os
-import socket
+import time
+
 from multiprocessing import Process
 from typing import Optional
 
 from common.timer import RepeatedTimer
+
 from dns.dns_packet import DNSPacket, DNSPacketQueryData, DNSPacketHeaderFlag, DNSPacketHeader
 from dns.server.base_datagram_server import BaseDatagramServer
 from dns.server.base_segment_server import BaseSegmentServer
@@ -59,8 +62,9 @@ class Server(BaseDatagramServer, BaseSegmentServer):
             # If the server is a secondary server.
             self.log('all', f'EV | 127.0.0.1 | Im a secondary server!', 'debug')
 
-            # This stores the database version for the secondary server,
+            # This stores the database version for the secondary server and the last time it was updated.
             self.database_version = 0
+            self.database_updated_at = 0
 
             # Let's start with an empty database, and then run the zone transfer process.
             self.database: Optional[Database] = None
@@ -419,11 +423,31 @@ class Server(BaseDatagramServer, BaseSegmentServer):
             conn.close()
 
     def zone_transfer(self):
+        """
+        Method responsible fot the process of zone transfer.
+        :return: None
+        """
 
+        # Alright, first let's check if the server can request a database update.
+        # We can do that by checking the last updated time and checking if a delay as passed.
+
+        # Checking if this is not the first run.
+        if self.database is not None:
+
+            # Getting the retry delay value from the database, SOARETRY.
+            retry_delay = int(self.database.database.get(DNSValueType.SOARETRY)[0].value)
+
+            # If the current time is less than the last updated time plus the retry delay, then the delay has not passed
+            # in this case, we exit from the function.
+            if time.time() < self.database_updated_at + retry_delay:
+                return
+
+        # Retrieving the address of the servers primary server.
         address = self.get_primary_server_address()
 
         self.log('all', f'ZT | {address[0]} | A zone transfer process has been started.', 'info')
 
+        # Establishing and connecting to a TCP connection with the primary server.
         client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         client.connect(address)
 
@@ -448,18 +472,25 @@ class Server(BaseDatagramServer, BaseSegmentServer):
         database_version = packet.value
 
         if self.database_version != 0:
+
+            # Checking if the database version of the server is less updated than mine.
+            # If so we abort the process by sending a special end connection packet.
             if database_version <= self.database_version:
+
+                # End connection packet to terminate the connection.
                 end_connection_packet = ZoneTransferPacket(
                     mode=ZoneTransferMode.ACK,
                     domain=packet.domain,
                     num_value=0
                 )
+
                 client.send(end_connection_packet.as_byte_string())
                 self.log(domain, f'EZ | {address[0]} | My database is more recent than the PS\'s, aborting zone '
                                  f'transfer...', 'error')
 
                 return
 
+        # If the version is superior to ours, we confirm that we want the database.
         ack_packet = ZoneTransferPacket(
             mode=ZoneTransferMode.ACK,
             domain=packet.domain,
@@ -468,12 +499,14 @@ class Server(BaseDatagramServer, BaseSegmentServer):
         client.send(ack_packet.as_byte_string())
         self.log(domain, f'QE | {address[0]} | {ack_packet}', 'info')
 
-        # Receiving the lines of the database.
+        # Now everything is prepared for us to receive the lines of the database.
 
-        self.database_version = database_version
-        database: dict[DNSValueType, list[DNSResource]] = {}
+        self.database_version = database_version  # Updating the database version.
+        database: dict[DNSValueType, list[DNSResource]] = {}  # Empty database.
 
+        # Reading the exact number of lines of the database.
         for i in range(number_of_entries):
+
             data = recv_msg(client).decode('ascii')
             data_as_packet = DNSResource.from_string(data)
             self.log(domain, f'RR | {address[0]} | {data}', 'info')
@@ -481,9 +514,12 @@ class Server(BaseDatagramServer, BaseSegmentServer):
             if data_as_packet.type not in database:
                 database[data_as_packet.type] = []
 
+            # Adding the resource to the database.
             database[data_as_packet.type].append(data_as_packet)
 
+        # Setting the database acquired and the update time.
         self.database = Database(database=database)
+        self.database_updated_at = time.time()
 
     def run(self):
         """
