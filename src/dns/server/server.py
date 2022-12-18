@@ -1,14 +1,12 @@
 import argparse
-import logging
 import socket
-import errno
-import os
 import time
 
 from multiprocessing import Process
 from typing import Optional
 
 from common.timer import RepeatedTimer
+from common.logger import Logger
 
 from dns.dns_packet import DNSPacket, DNSPacketQueryData, DNSPacketHeaderFlag, DNSPacketHeader
 from dns.server.base_datagram_server import BaseDatagramServer
@@ -21,13 +19,12 @@ from exceptions.exceptions import InvalidDNSPacket, InvalidZoneTransferPacket
 
 from models.zone_transfer_packet import ZoneTransferPacket, ZoneTransferMode
 from models.dns_resource import DNSResource, DNSValueType
-from models.config_entry import ConfigEntry
 
 from parser.parser_factory import FileParserFactory
 from parser.abstract_parser import Mode
 
 
-class Server(BaseDatagramServer, BaseSegmentServer):
+class Server(BaseDatagramServer, BaseSegmentServer, Logger):
     """
     This class represents a DNS server. It answers queries based on its
     configuration file and database.
@@ -46,7 +43,7 @@ class Server(BaseDatagramServer, BaseSegmentServer):
         self.configuration: ServerConfiguration = FileParserFactory(configuration_path,
                                                                     Mode.CONFIG).get_parser().parse()
 
-        self.loggers: dict[str, logging.Logger] = self.create_loggers(self.configuration.logs_path, debug)
+        super(BaseSegmentServer, self).__init__(self.configuration.logs_path, debug)
         self.log('all', f'EV | 127.0.0.1 | Loaded configuration at "{configuration_path}".', 'info')
 
         if self.configuration.primary_server is None:
@@ -82,65 +79,6 @@ class Server(BaseDatagramServer, BaseSegmentServer):
         super().__init__(get_ip_from_interface(localhost=True), port, timeout, 1024)
         super(BaseDatagramServer, self).__init__(get_ip_from_interface(localhost=True), port, timeout, 1024)
 
-    @staticmethod
-    def create_loggers(logs_list: list[ConfigEntry], debug_flag: bool):
-        """
-        Given a list of every log file that's supposed to exist, this function creates a logger for each entry
-        and stores the logger inside a dictionary using its name as a key.
-
-        :param logs_list: List of ConfigEntry of type LG.
-        :param debug_flag: If debug_flag is enabled, we should add a handler to print to stdout.
-        :return: None
-        """
-
-        loggers: dict[str, logging.Logger] = {}
-
-        for entry in logs_list:
-
-            logger_name = entry.parameter
-            logger_loc = entry.value
-
-            # Create logger.
-            logger = logging.getLogger(logger_name)
-            logger.setLevel(logging.INFO)
-
-            # Configure the handler and formatter.
-            logger_handler = logging.FileHandler(logger_loc, mode='a')
-            logger_formatter = logging.Formatter("%(filename)s %(levelname)s | %(asctime)s | %(message)s")
-
-            # Add formatter to the handler and handler to the logger.
-            logger_handler.setFormatter(logger_formatter)
-            logger.addHandler(logger_handler)
-
-            # Enable console output if debug is active.
-            if debug_flag:
-                logger_console_handler = logging.StreamHandler()
-                logger_console_handler.setLevel(logging.INFO)
-                logger_console_handler.setFormatter(logger_formatter)
-                logger.addHandler(logger_console_handler)
-
-            loggers[logger_name] = logger
-
-        return loggers
-
-    def log(self, logger_name: str, content: str, mode: str):
-        """
-        We use this function to log 'content' to 'logger_name' in mode 'mode'.
-        If a 'all' logger exists, then it will always log to 'all' independently of the provided 'logger_name'.
-
-        :param logger_name: Which logger to use.
-        :param content: What content to write to the log file.
-        :param mode: In which mode we want to log (info, debug, warning, error, ...)
-        :return: None
-        """
-
-        if logger_name in self.loggers:
-            func = getattr(self.loggers.get(logger_name), mode)
-            func(content)
-
-        if 'all' in self.loggers and logger_name != 'all':
-            func = getattr(self.loggers.get('all'), mode)
-            func(content)
 
     def is_authority(self, name: str):
         """

@@ -4,18 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8fb73730-5d4d-4194-858b-416c8aec73ad" name="Changes" comment="Zone transfer timer, done and tested.">
+    <list default="true" id="8fb73730-5d4d-4194-858b-416c8aec73ad" name="Changes" comment="Documentation, part 1.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dns/dns_packet.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/dns_packet.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dns/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/config_entry.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/config_entry.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/dns_resource.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/dns_resource.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/parser/abstract_parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/abstract_parser.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/parser/config_parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/config_parser.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/parser/database_parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/database_parser.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/parser/parser_factory.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/parser_factory.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/parser/regex_compiles.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/regex_compiles.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/parser/root_parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/root_parser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/logger.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/logger.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dns/server/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/server/server.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,7 +78,7 @@
       <recent name="$PROJECT_DIR$/src/server" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.server (secondary)">
+  <component name="RunManager" selected="Python.server (primary)">
     <configuration name="client (w/ args)" type="PythonConfigurationType" factoryName="Python">
       <module name="mini-dns-py" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -258,13 +250,6 @@
       <workItem from="1671376395387" duration="813000" />
       <workItem from="1671377444232" duration="322000" />
       <workItem from="1671377812584" duration="203000" />
-    </task>
-    <task id="LOCAL-00012" summary="Added support to &quot;Q&quot; queries.">
-      <created>1668422648624</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1668422648624</updated>
     </task>
     <task id="LOCAL-00013" summary="Don't remember what changed.">
       <created>1668422662631</created>
@@ -602,7 +587,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671380624738</updated>
     </task>
-    <option name="localTasksCounter" value="61" />
+    <task id="LOCAL-00061" summary="Documentation, part 1.">
+      <created>1671393236072</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1671393236072</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -625,7 +617,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added PrimaryServer::run(.). &#10;&#10;To spawn tcp, udp listeners." />
     <MESSAGE value="Added documentation to some files." />
     <MESSAGE value="Created a zone transfer packet to ease the ZT." />
     <MESSAGE value="Documentation for BaseSegementServer." />
@@ -650,16 +641,17 @@
     <MESSAGE value="Fixed logic bug in relay().&#10;&#10;Removed tld_server.py, useless." />
     <MESSAGE value="Added SOARETRY check on zone transfer." />
     <MESSAGE value="Zone transfer timer, done and tested." />
-    <option name="LAST_COMMIT_MESSAGE" value="Zone transfer timer, done and tested." />
+    <MESSAGE value="Documentation, part 1." />
+    <option name="LAST_COMMIT_MESSAGE" value="Documentation, part 1." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/mini_dns_py$server__secondary_.coverage" NAME="server (secondary) Coverage Results" MODIFIED="1671380549835" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/mini_dns_py$server__secondary_.coverage" NAME="server (secondary) Coverage Results" MODIFIED="1671400012740" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/mini_dns_py$zone_transfer_packet.coverage" NAME="zone_transfer_packet Coverage Results" MODIFIED="1669032299984" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/models" />
     <SUITE FILE_PATH="coverage/mini_dns_py$server.coverage" NAME="server Coverage Results" MODIFIED="1668880885650" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns" />
     <SUITE FILE_PATH="coverage/mini_dns_py$Client__w__args_.coverage" NAME="Client (w/ args) Coverage Results" MODIFIED="1668880890614" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns" />
     <SUITE FILE_PATH="coverage/mini_dns_py$main.coverage" NAME="main Coverage Results" MODIFIED="1669322308642" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/mini_dns_py$Main.coverage" NAME="Main Coverage Results" MODIFIED="1667927009726" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/mini_dns_py$server__primary_.coverage" NAME="server (primary) Coverage Results" MODIFIED="1671380547687" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns/server" />
+    <SUITE FILE_PATH="coverage/mini_dns_py$server__primary_.coverage" NAME="server (primary) Coverage Results" MODIFIED="1671400008066" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns/server" />
     <SUITE FILE_PATH="coverage/mini_dns_py$sserver.coverage" NAME="sserver Coverage Results" MODIFIED="1669294557269" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns/server" />
     <SUITE FILE_PATH="coverage/mini_dns_py$utils.coverage" NAME="utils Coverage Results" MODIFIED="1669496407794" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns" />
     <SUITE FILE_PATH="coverage/mini_dns_py$client.coverage" NAME="Client (w/ args) Coverage Results" MODIFIED="1668422446726" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns" />
