@@ -4,9 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8fb73730-5d4d-4194-858b-416c8aec73ad" name="Changes" comment="Fixed logic bug in relay().&#10;&#10;Removed tld_server.py, useless.">
+    <list default="true" id="8fb73730-5d4d-4194-858b-416c8aec73ad" name="Changes" comment="Added SOARETRY check on zone transfer.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dns/server/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/server/server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/todo-features.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/todo-features.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dns/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/config.conf" beforeDir="false" afterPath="$PROJECT_DIR$/tests/config.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/config_ss.conf" beforeDir="false" afterPath="$PROJECT_DIR$/tests/config_ss.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/database.conf" beforeDir="false" afterPath="$PROJECT_DIR$/tests/database.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/re_domain_tests.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/root.data" beforeDir="false" afterPath="$PROJECT_DIR$/tests/root.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,21 +56,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/guilherme/PycharmProjects/races-ai&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;aDefault&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.reader.mode&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/Guilherme/Documents/PyCharmProjects/mini-dns-py",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "run.code.analysis.last.selected.profile": "aDefault",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/core" />
@@ -77,29 +83,7 @@
       <recent name="$PROJECT_DIR$/src/server" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.timer">
-    <configuration name="cache" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="mini-dns-py" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/cache" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/cache/cache.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Python.server (primary)">
     <configuration name="client (w/ args)" type="PythonConfigurationType" factoryName="Python">
       <module name="mini-dns-py" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -122,29 +106,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="secondary" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="mini-dns-py" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/dns/server" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/dns/server/secondary.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="server (debug)" type="PythonConfigurationType" factoryName="Python">
+    <configuration name="server (primary)" type="PythonConfigurationType" factoryName="Python">
       <module name="mini-dns-py" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -158,73 +120,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/dns/server/server.py" />
-      <option name="PARAMETERS" value="-c $PROJECT_DIR$/core/config-lili-lycoris-sp.conf -p 20023 -t 1500 -d" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="ss" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="mini-dns-py" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/dns/server" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/dns/server/ss.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="timer" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="mini-dns-py" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/common" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/common/timer.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="utils" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="mini-dns-py" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/dns" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/dns/utils.py" />
-      <option name="PARAMETERS" value="" />
+      <option name="PARAMETERS" value="-c C:\Users\Guilherme\Documents\&quot;PyCharm\ Projects&quot;\mini-dns-py\tests\config.conf -p 20023 -t 1500 -d" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -234,22 +130,8 @@
     </configuration>
     <list>
       <item itemvalue="Python.client (w/ args)" />
-      <item itemvalue="Python.server (debug)" />
-      <item itemvalue="Python.timer" />
-      <item itemvalue="Python.cache" />
-      <item itemvalue="Python.secondary" />
-      <item itemvalue="Python.utils" />
-      <item itemvalue="Python.ss" />
+      <item itemvalue="Python.server (primary)" />
     </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Python.timer" />
-        <item itemvalue="Python.cache" />
-        <item itemvalue="Python.utils" />
-        <item itemvalue="Python.secondary" />
-        <item itemvalue="Python.ss" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -345,13 +227,10 @@
       <workItem from="1671020067873" duration="51000" />
       <workItem from="1671026279272" duration="4949000" />
       <workItem from="1671294466083" duration="7000" />
-    </task>
-    <task id="LOCAL-00010" summary="Made example/* multithreaded to support multiple clients.">
-      <created>1668170711395</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1668170711395</updated>
+      <workItem from="1671375421191" duration="942000" />
+      <workItem from="1671376395387" duration="813000" />
+      <workItem from="1671377444232" duration="322000" />
+      <workItem from="1671377812584" duration="203000" />
     </task>
     <task id="LOCAL-00011" summary="Made client interface (argparse, pdu builder).">
       <created>1668422601379</created>
@@ -689,7 +568,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671305530284</updated>
     </task>
-    <option name="localTasksCounter" value="59" />
+    <task id="LOCAL-00059" summary="Added SOARETRY check on zone transfer.">
+      <created>1671309195236</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1671309195236</updated>
+    </task>
+    <option name="localTasksCounter" value="60" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -712,7 +598,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Created BaseSegmentServer for TCP handle.&#10;&#10;And added multiprocessing to run both udp and tcp listeners at the same time." />
     <MESSAGE value="Change methods name to be the same format as TCP." />
     <MESSAGE value="Added PrimaryServer::run(.). &#10;&#10;To spawn tcp, udp listeners." />
     <MESSAGE value="Added documentation to some files." />
@@ -737,12 +622,14 @@
     <MESSAGE value="Iterative resolution almost done.&#10;&#10;Only missing the Todo's!" />
     <MESSAGE value="Added periodic zone transfer requests to SS." />
     <MESSAGE value="Fixed logic bug in relay().&#10;&#10;Removed tld_server.py, useless." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed logic bug in relay().&#10;&#10;Removed tld_server.py, useless." />
+    <MESSAGE value="Added SOARETRY check on zone transfer." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added SOARETRY check on zone transfer." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/mini_dns_py$server.coverage" NAME="server Coverage Results" MODIFIED="1668880885650" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns" />
     <SUITE FILE_PATH="coverage/mini_dns_py$server__debug_.coverage" NAME="server (debug) Coverage Results" MODIFIED="1669986427858" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns/server" />
     <SUITE FILE_PATH="coverage/mini_dns_py$.coverage" NAME=" Coverage Results" MODIFIED="1669286199871" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/mini_dns_py$server__primary_.coverage" NAME="server (primary) Coverage Results" MODIFIED="1671377752476" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns/server" />
     <SUITE FILE_PATH="coverage/mini_dns_py$example_client.coverage" NAME="example-client Coverage Results" MODIFIED="1668295250528" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/example" />
     <SUITE FILE_PATH="coverage/mini_dns_py$example_server.coverage" NAME="example-server Coverage Results" MODIFIED="1668295214278" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/example" />
     <SUITE FILE_PATH="coverage/mini_dns_py$gserver.coverage" NAME="gserver Coverage Results" MODIFIED="1669294593506" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns/server" />

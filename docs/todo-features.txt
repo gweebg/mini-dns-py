@@ -11,22 +11,20 @@ List element marks: ✅, ❌, ⌛
     - Unit test.
     - Must be an implementable module (ex. class Server(Cached): ...)
 
-    Be carefull with thread/process safety, the server has two main processes that will need to share the cache
+    Be careful with thread/process safety, the server has two main processes that will need to share the cache
     and each process may create a thread that will also work with the cache.
     Multiprocessing queue ? multiprocessing.Queue(.put(), .get())
 
-❌ - Overall check on the parsers.
+✅ - Overall check on the parsers.
 
-❌ - Add rest of features to transfer zone.
+✅ - Add rest of features to transfer zone.
 
 ⌛ - Fix the testing environment.
-     ✅ - Add hierachy diagram like the one in docs/dns-hierarchy.txt .
+     ✅ - Add hierarchy diagram like the one in docs/dns-hierarchy.txt .
      ⌛ - Write every database file.
        ? Hosts on TLD's ?
        ? Resolution server's configuration, database files ?
 
-⌛ - Figure order of events when running queries.
+✅ - Figure order of events when running queries.
 
 ⌛ - Make the report.
-
-? When does a response include de A flag ?

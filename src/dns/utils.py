@@ -63,7 +63,7 @@ def __load_latest_id__() -> int:
 
 def __get_latest_id__() -> str:
     """
-    Function that only reads the latest id written on the messsage if file.
+    Function that only reads the latest id written on the file.
 
     :return: Returns the id as string instead of integer.
     """
@@ -100,7 +100,3 @@ def recvall(sock, n):
         data.extend(packet)
 
     return data
-
-
-def get_my_ip(interface: str) -> str:
-    return ifaddresses(interface)[AF_INET][0]['addr']
