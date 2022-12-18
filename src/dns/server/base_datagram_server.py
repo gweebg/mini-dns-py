@@ -59,7 +59,7 @@ class BaseDatagramServer:
             encoded_data, address = self.udp_socket.recvfrom(self.read_size)
             self.logger.debug(f'EV | {self.socket_address[0]} | New UDP connection, {address} connected.')
 
-            thread = threading.Thread(target=self.udp_handle, args=(encoded_data, address))
+            thread = threading.Thread(target=self.udp_handle, args=(encoded_data, address), daemon=True)
             thread.start()
 
             self.logger.debug(f'EV | {self.socket_address[0]} | Active UDP connections: {threading.active_count() - 1}')

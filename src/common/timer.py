@@ -32,7 +32,12 @@ class RepeatedTimer:
 
         self.is_running = False
         self.start()
-        self.function(*self.args, **self.kwargs)
+
+        if not self.args and not self.kwargs:
+            self.function()
+
+        else:
+            self.function(*self.args, **self.kwargs)
 
     def start(self):
         """
@@ -42,6 +47,7 @@ class RepeatedTimer:
 
         if not self.is_running:
             self._timer = Timer(self.interval, self._run)
+            self._timer.daemon = True
             self._timer.start()
             self.is_running = True
 

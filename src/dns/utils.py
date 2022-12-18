@@ -6,14 +6,18 @@ import netifaces
 from parser.regex_compiles import RE_IVP4
 
 
-def get_ip_from_interface(interface: str = 'eth0') -> str:
+def get_ip_from_interface(interface: str = 'eth0', localhost: bool = False) -> str:
     """
     This helper function returns the IP address from a given interface.
     The default interface used is 'eth0'.
 
     :param interface: Interface to get the ip from.
-    :return: The obtained ip address.
+    :param localhost: Boolean that represents whether we want the real address or just localhost.
+    :return: The obtained ip address or the localhost address if 'localhost' is set to true.
     """
+    if localhost:
+        return '127.0.0.1'
+
     return netifaces.ifaddresses(interface)[netifaces.AF_INET][0]['addr']
 
 

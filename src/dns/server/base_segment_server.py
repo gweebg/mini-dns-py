@@ -61,7 +61,7 @@ class BaseSegmentServer:
             conn, address = self.tcp_socket.accept()
             self.tcp_logger.info(f'EV | {self.tcp_socket_address[0]} | New connection, {address} connected.')
 
-            thread = threading.Thread(target=self.tcp_handle, args=(conn, address))
+            thread = threading.Thread(target=self.tcp_handle, args=(conn, address), daemon=True)
             thread.start()
 
             self.tcp_logger.info(f'EV | {self.tcp_socket_address[0]} | TCP Active connections: {threading.active_count() - 1}')

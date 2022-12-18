@@ -72,15 +72,15 @@ class Server(BaseDatagramServer, BaseSegmentServer):
 
             # Now we will schedule the zone transfer process to run every
             time_interval = self.database.database.get(DNSValueType.SOAEXPIRE)[0].value  # Getting the time interval.
-            self.zone_transfer_timer = RepeatedTimer(int(time_interval), self.zone_transfer())
+            self.zone_transfer_timer = RepeatedTimer(int(time_interval), self.zone_transfer)
 
         self.root_servers: list[str] = FileParserFactory(self.configuration.root_servers_path,
                                                          Mode.RT).get_parser().parse()
 
         self.log('all', f'EV | 127.0.0.1 | Loaded root list at "{self.configuration.root_servers_path}"', 'info')
 
-        super().__init__(get_ip_from_interface(), port, timeout, 1024)
-        super(BaseDatagramServer, self).__init__(get_ip_from_interface(), port, timeout, 1024)
+        super().__init__(get_ip_from_interface(localhost=True), port, timeout, 1024)
+        super(BaseDatagramServer, self).__init__(get_ip_from_interface(localhost=True), port, timeout, 1024)
 
     @staticmethod
     def create_loggers(logs_list: list[ConfigEntry], debug_flag: bool):
@@ -434,12 +434,15 @@ class Server(BaseDatagramServer, BaseSegmentServer):
         # Checking if this is not the first run.
         if self.database is not None:
 
+            self.log('all', f'EZ | 127.0.0.1 | Tried to zone transfer but RETRY hasnt passed.', 'error')
+
             # Getting the retry delay value from the database, SOARETRY.
             retry_delay = int(self.database.database.get(DNSValueType.SOARETRY)[0].value)
 
             # If the current time is less than the last updated time plus the retry delay, then the delay has not passed
             # in this case, we exit from the function.
             if time.time() < self.database_updated_at + retry_delay:
+                self.database_updated_at = time.time()
                 return
 
         # Retrieving the address of the servers primary server.
