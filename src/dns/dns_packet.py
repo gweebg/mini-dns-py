@@ -1,7 +1,7 @@
 from typing import Optional
+from enum import Enum
 
 from pydantic import BaseModel, Field, conlist
-from enum import Enum
 
 from models.dns_resource import DNSValueType, DNSResource
 from exceptions.exceptions import InvalidDNSPacket
@@ -54,6 +54,7 @@ class DNSPacketHeader(BaseModel):
     number_extra: int = Field(ge=0, le=255)
 
     def as_binary(self):
+        # Todo: DNSPacketHeader::as_binary() #
         ...
 
     @staticmethod
@@ -221,10 +222,10 @@ class DNSPacketQueryData(BaseModel):
         match = None
 
         # Creating a list that only contains the CNAME entries.
-        cname_entries: list[str] = list(filter(lambda e: e.value == DNSValueType.CNAME ,self.extra_values))
+        cname_entries: list[str] = list(filter(lambda e: e.value == DNSValueType.CNAME, self.extra_values))
 
         # Iterating over the DNSResources until we find a match.
-        for entry in map(lambda i : DNSResource.from_string(i), cname_entries):
+        for entry in map(lambda i: DNSResource.from_string(i), cname_entries):
 
             # Checking if we found the match, and setting match to the entry parameter..
             if entry.value == domain:
@@ -416,7 +417,7 @@ class DNSPacket(BaseModel):
         """
         return f"{self.header}{self.query_info}\n{self.query_data}"
 
-
+# Module testing:
 # query = """3874,R+A,0,2,3,5;example.com.,MX;
 # example.com. MX mx1.example.com 86400 10,
 # example.com. MX mx2.example.com 86400 20;
@@ -439,7 +440,3 @@ class DNSPacket(BaseModel):
 # packet_2 = DNSPacket.from_string(query_2)
 #
 # packet_2.prettify()
-
-
-
-

@@ -1,18 +1,34 @@
-from parser.abstract_parser import Mode
-from parser.abstract_parser import FileParser
-from exceptions.exceptions import InvalidDatabaseFileException
-from parser.regex_compiles import *
-from models.dns_resource import DNSResource, DNSValueType
-
 import re
+
 from typing import Callable
+
+from parser.abstract_parser import FileParser
+from parser.abstract_parser import Mode
+from parser.regex_compiles import *
+
+from exceptions.exceptions import InvalidDatabaseFileException
+from models.dns_resource import DNSResource, DNSValueType
 
 
 class DatabaseFileParser(FileParser):
+    """
+    Class responsible for the parsing of a database file, it is not used alone but called
+    by the FileParserFactory.
+    """
 
     def __init__(self, file_path_str: str, mode: Mode):
+        """
+        Constructor for the DatabaseFileParser.
+        Responsible for setting base properties as well as necessary 'conversion tables' for the parsing.
+
+        :param file_path_str: Path of the file to parse, already checked for existance.
+        :param mode: Mode on which to parse, must be Mode.DB for this to work.
+        """
+
         super(DatabaseFileParser, self).__init__(file_path_str, mode)
 
+        # Map that tells which function to run for each type, basically a jump table.
+        # This avoids multiple if statements.
         self.operations = {
             'DEFAULT': self._parse_default,
             'SOASP': self._parse_soasp,
@@ -28,12 +44,17 @@ class DatabaseFileParser(FileParser):
             'PTR': self._parse_ptr
         }
 
-        self.macros = {}
-        self.alias = {}
-        # self.dns_entries = None
+        self.macros = {}  # Storing the found macros (DEFAULT).
+        self.alias = {}  # Storing the found alias (CNAME).
 
     @staticmethod
     def _check_ttl_value(value_string: str) -> bool:
+        """
+        This method checks whether a string is a valid time-to-live value.
+
+        :param value_string: String containing the TTL value.
+        :return: True if it is valid, false otherwise.
+        """
 
         if value_string.isnumeric() and int(value_string) in range(0, 255):
             return True
@@ -41,6 +62,14 @@ class DatabaseFileParser(FileParser):
         return False
 
     def _replace_macros(self, line: list[str], ignore_index: int | None = None) -> list[str]:
+        """
+        This method is responsible for replacing any values that are declared as DEFAULT
+        on the database.
+
+        :param line: Line to have its macro's replaced.
+        :param ignore_index: Index of a parameter that must be ignored, not replace its macro.
+        :return: The string (as list) with the replaced macros.
+        """
 
         for macro in self.macros:
             if ignore_index is not None:
@@ -72,7 +101,7 @@ class DatabaseFileParser(FileParser):
         This field does not accept priority values.
 
         :param line: Inputted line to be checked and parsed.
-        :return:
+        :return: The parsed line as a DNSResource.
         """
 
         if len(line) != 3:
@@ -96,7 +125,7 @@ class DatabaseFileParser(FileParser):
         This field does not accept priority values.
 
         :param line: Inputted line to be checked and parsed.
-        :return:
+        :return: The parsed line as a DNSResource.
         """
 
         if len(line) != 4:
@@ -127,7 +156,7 @@ class DatabaseFileParser(FileParser):
         This field does not accept priority values.
 
         :param line: Inputted line to be checked and parsed.
-        :return:
+        :return: The parsed line as a DNSResource.
         """
 
         if len(line) != 4:
@@ -173,7 +202,7 @@ class DatabaseFileParser(FileParser):
             @ SOAEXPIRE 604800 TTL
 
         :param line: Inputted line to be checked and parsed.
-        :return:
+        :return: The parsed line as a DNSResource.
         """
 
         if len(line) != 4:
@@ -209,7 +238,7 @@ class DatabaseFileParser(FileParser):
             @ MX mx2.example.com TTL 20
 
         :param line: Inputted line to be checked and parsed.
-        :return:
+        :return: The parsed line as a DNSResource.
         """
 
         line = self._replace_macros(line)
@@ -237,6 +266,13 @@ class DatabaseFileParser(FileParser):
         return DNSResource(line, has_priority)
 
     def _parse_a(self, line: list[str]) -> DNSResource:
+        """
+        An 'A' entry contains a value that represents the address of its parameter, it supports priority and
+        must have at least one entry per domain nameserver entry (NS).
+
+        :param line: Input line to parse.
+        :return: The parsed line as a DNSResource.
+        """
 
         line = self._replace_macros(line)
 
@@ -259,6 +295,13 @@ class DatabaseFileParser(FileParser):
         return DNSResource(line, has_priority)
 
     def _parse_cname(self, line: list[str]) -> DNSResource:
+        """
+        The CNAME entry is an entry whose value serves as an alias to its parameter.
+        It does not accept priority value!
+
+        :param line: Input line to be parsed.
+        :return: The parsed line as a DNSResource.
+        """
 
         line = self._replace_macros(line)
         line_length: int = len(line)
@@ -274,20 +317,41 @@ class DatabaseFileParser(FileParser):
         return DNSResource(line)
 
     def _parse_ptr(self, line: list[str]) -> DNSResource:
-        # Todo, implement this. #
-        ...
+        """
+        A 'PTR' entry is a special entry used on the reverse name resolution.
+        Its value indicates the domain of which 'parameter' it belongs to.
+
+        Example:
+
+            10.0.2.10 PTR example.com. TTL
+
+        :param line: Input line to be parsed.
+        :return: The parsed line as a DNSResource.
+        """
+
+        if len(line) != 4:
+            raise InvalidDatabaseFileException(f"{line[1]}: The entry 'PTR' must have four exact elements: {len(line)}")
+
+        line = self._replace_macros(line)
+
+        if not re.fullmatch(RE_IVP4, line[0]):
+            raise InvalidDatabaseFileException(f"{line[1]}: The value for 'PTR' entry must be a valid "
+                                               f"IPv4 address: {line[0]}")
+
+        if not re.fullmatch(RE_DOMAIN_DOT, line[2]):
+            raise InvalidDatabaseFileException(f"{line[1]}: The parameter for 'PTR' entry must be a valid "
+                                               f"domain name: {line[2]}")
+
+        return DNSResource(line)
 
     def parse(self) -> dict[DNSValueType, list[DNSResource]]:
         """
         Function that parses a given configuration file for an SP database file.
 
         :return: Database object containing the file information.
-
-        TODO: Default TTL to 0 when parameter is non existent.
         """
 
         content_lines = self.clean_up(self.path)
-        # self.dns_entries: list[DNSResource] = []
 
         result: dict[DNSValueType, list[DNSResource]] = {}
 
@@ -297,9 +361,6 @@ class DatabaseFileParser(FileParser):
             operation: Callable[[list[str]], ...] = self.operations.get(line[1])
             dns_resource = operation(line)
 
-            # if dns_resource is not None:
-            #     self.dns_entries.append(dns_resource)
-
             if dns_resource is not None:
 
                 if dns_resource.type not in result:
@@ -307,6 +368,4 @@ class DatabaseFileParser(FileParser):
 
                 result[dns_resource.type].append(dns_resource)
 
-        # return self.dns_entries
-        # print(result)
         return result

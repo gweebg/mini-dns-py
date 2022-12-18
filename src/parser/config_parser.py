@@ -1,3 +1,5 @@
+import os
+
 from exceptions.exceptions import InvalidConfigFileException
 
 from models.config_entry import ConfigEntry
@@ -7,8 +9,6 @@ from dns.server.server_config import ServerConfiguration
 from parser.regex_compiles import RE_DOMAIN, RE_IVP4
 from parser.abstract_parser import FileParser
 from parser.abstract_parser import Mode
-
-import os
 
 
 class ConfigFileParser(FileParser):
@@ -29,6 +29,13 @@ class ConfigFileParser(FileParser):
     """
 
     def __init__(self, file_path_str: str, mode: Mode):
+        """
+        Constructor for ConfigFileParser.
+
+        :param file_path_str: Path of the file to be parsed.
+        :param mode: Mode in which to parse the file.
+        """
+
         super(ConfigFileParser, self).__init__(file_path_str, mode)
 
     def parse(self) -> ServerConfiguration:

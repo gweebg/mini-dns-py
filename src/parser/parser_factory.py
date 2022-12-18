@@ -1,27 +1,37 @@
+import errno
+import os
+
+from abc import abstractmethod
+
 from parser.database_parser import DatabaseFileParser
 from parser.abstract_parser import FileParser, Mode
 from parser.config_parser import ConfigFileParser
 from parser.root_parser import RootListParser
-
-from abc import abstractmethod
-import errno
-import os
 
 
 class FileParserFactory:
 
     """
     Factory that creates a FileParser object given an operation mode.
-    The factory does not maintain any instace of any object that creates.
+    The factory does not maintain any instance of any object that creates.
     """
 
     def __init__(self, file_path_str: str, mode: Mode):
+        """
+        Constructor for FileParserFactory.
+
+        :param file_path_str: Path to the file to parse.
+        :param mode: Mode in which to parse the file.
+        """
+
+        # Checking if the file actually exists.
         if not os.path.isfile(file_path_str):
             raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), file_path_str)
 
         self.path: str = file_path_str
         self.mode: Mode = mode
 
+        # Dictionary that converts Mode.* to the respective class.
         self.call: dict = {
             Mode.CONFIG: ConfigFileParser,
             Mode.DB: DatabaseFileParser,
@@ -36,7 +46,7 @@ class FileParserFactory:
         """
         return self.call.get(self.mode)(self.path, self.mode)
 
-
+# In module testing:
 # def main():
 #     # file_parser = FileParserFactory("../tests/config.conf", Mode.CONFIG)
 #     # config = file_parser.get_parser().parse()

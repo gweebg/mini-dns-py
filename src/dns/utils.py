@@ -1,8 +1,10 @@
-import os
 import struct
+import os
+
 from argparse import ArgumentTypeError
 
 import netifaces
+
 from parser.regex_compiles import RE_IVP4
 
 
@@ -76,31 +78,60 @@ def __get_latest_id__() -> str:
         return file.read()
 
 
-def send_msg(sock, msg):
-    # Prefix each message with a 4-byte length (network byte order)
-    msg = struct.pack('>I', len(msg)) + msg
-    sock.sendall(msg)
+def send_msg(sock, msg) -> None:
+    """
+    This function prefixes a message ('msg') with a 4-byte length (network byte order).
+    Then it sends through the socket ('sock').
+
+    :param sock: Socket to send the 'encoded' message.
+    :param msg: Message to encode and send.
+    :return: None
+    """
+
+    msg = struct.pack('>I', len(msg)) + msg  # Adding the 4-byte length.
+    sock.sendall(msg)  # Sending the message.
 
 
 def recv_msg(sock):
-    # Read message length and unpack it into an integer
+    """
+    Read a message from a given socket and unpack it into an integer
+    in order to obtain the message length.
+
+    :param sock: Socket to read from.
+    :return: Read data.
+    """
+
+    # Read message length and unpack it into an integer.
     raw_msglen = recvall(sock, 4)
+
     if not raw_msglen:
         return None
-    msglen = struct.unpack('>I', raw_msglen)[0]
 
-    # Read the message data
+    msglen = struct.unpack('>I', raw_msglen)[0]  # Unpacking the message.
+
+    # Read the message data.
     return recvall(sock, msglen)
 
 
 def recvall(sock, n):
+    """
+    Helper function to receive 'n' bytes or until hits EOF from 'sock'.
+
+    :param sock: Socket to read from.
+    :param n: Number of bytes to read.
+    :return: Read data from socket.
+    """
+
     # Helper function to recv n bytes or return None if EOF is hit
     data = bytearray()
-    while len(data) < n:
+
+    while len(data) < n:  # Reading 'n' bytes.
 
         packet = sock.recv(n - len(data))
+
         if not packet:
             return None
+
         data.extend(packet)
 
     return data
