@@ -7,7 +7,7 @@ from parser.abstract_parser import Mode
 from parser.regex_compiles import *
 
 from exceptions.exceptions import InvalidDatabaseFileException
-from models.dns_resource import DNSResource, DNSValueType
+from dns.models.dns_resource import DNSResource, DNSValueType
 
 
 class DatabaseFileParser(FileParser):

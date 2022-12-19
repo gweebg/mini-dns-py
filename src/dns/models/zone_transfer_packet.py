@@ -3,7 +3,7 @@ from typing import Optional
 from enum import Enum
 
 from exceptions.exceptions import InvalidZoneTransferPacket
-from models.dns_resource import DNSResource
+from dns.models.dns_resource import DNSResource
 
 
 class ZoneTransferMode(Enum):

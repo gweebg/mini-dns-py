@@ -2,7 +2,7 @@ import os
 
 from exceptions.exceptions import InvalidConfigFileException
 
-from models.config_entry import ConfigEntry
+from dns.models.config_entry import ConfigEntry
 
 from dns.server.server_config import ServerConfiguration
 

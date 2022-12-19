@@ -1,10 +1,10 @@
 import time
 
-from abc import ABC
-from typing import Optional
 from collections.abc import MutableSequence
+from typing import Optional
+from abc import ABC
 
-from models.dns_resource import DNSResource, DNSValueType
+from dns.models.dns_resource import DNSResource, DNSValueType
 
 
 class CacheEntry:

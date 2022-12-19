@@ -1,5 +1,5 @@
-from dns.dns_packet import DNSPacket
-from models.config_entry import ConfigEntry, ConfigEntryType
+from dns.models.dns_packet import DNSPacket
+from dns.models.config_entry import ConfigEntry
 
 from typing import Optional
 from pydantic import BaseModel

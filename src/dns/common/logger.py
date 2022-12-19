@@ -1,6 +1,6 @@
 import logging
 
-from models.config_entry import ConfigEntry
+from dns.models.config_entry import ConfigEntry
 
 
 class Logger:

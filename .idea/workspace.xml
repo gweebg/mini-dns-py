@@ -4,10 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8fb73730-5d4d-4194-858b-416c8aec73ad" name="Changes" comment="Documentation, part 1.">
+    <list default="true" id="8fb73730-5d4d-4194-858b-416c8aec73ad" name="Changes" comment="Seperated the logging logic into another class.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/logger.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/logger.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/common/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/cache.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/common/cache.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/logger.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/common/logger.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/timer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/common/timer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dns/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dns/dns_database.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/models/dns_database.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dns/dns_packet.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/models/dns_packet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dns/server/resolution_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/server/resolution_server.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dns/server/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/server/server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dns/server/server_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/server/server_config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/models/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/config_entry.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/models/config_entry.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/dns_resource.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/models/dns_resource.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/zone_transfer_packet.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/models/zone_transfer_packet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parser/config_parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/config_parser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parser/database_parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/database_parser.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,8 +52,8 @@
     </option>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/dns/models/dns_resource.py" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/dns/server/resolution_server.py" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/models/dns_resource.py" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/parser/database_parser.py" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -51,31 +65,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/Guilherme/Documents/PyCharmProjects/mini-dns-py",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "run.code.analysis.last.selected.profile": "aDefault",
-    "settings.editor.selected.configurable": "Errors",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Guilherme/Documents/PyCharmProjects/mini-dns-py&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;aDefault&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;Errors&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/core" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/dns/models" />
+      <recent name="$PROJECT_DIR$/src/dns" />
       <recent name="$PROJECT_DIR$/src/common" />
       <recent name="$PROJECT_DIR$/core/database_files" />
       <recent name="$PROJECT_DIR$/core/configuration_files" />
-      <recent name="$PROJECT_DIR$/src/dns" />
-      <recent name="$PROJECT_DIR$/src/server" />
     </key>
   </component>
   <component name="RunManager" selected="Python.server (primary)">
@@ -250,13 +264,7 @@
       <workItem from="1671376395387" duration="813000" />
       <workItem from="1671377444232" duration="322000" />
       <workItem from="1671377812584" duration="203000" />
-    </task>
-    <task id="LOCAL-00013" summary="Don't remember what changed.">
-      <created>1668422662631</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1668422662631</updated>
+      <workItem from="1671487692723" duration="358000" />
     </task>
     <task id="LOCAL-00014" summary="Introduced PrimaryServer.">
       <created>1668437721938</created>
@@ -594,7 +602,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671393236072</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <task id="LOCAL-00062" summary="Seperated the logging logic into another class.">
+      <created>1671400074772</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1671400074772</updated>
+    </task>
+    <option name="localTasksCounter" value="63" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -617,7 +632,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added documentation to some files." />
     <MESSAGE value="Created a zone transfer packet to ease the ZT." />
     <MESSAGE value="Documentation for BaseSegementServer." />
     <MESSAGE value="Started working on zone transfer.&#10;&#10;Missing SS side." />
@@ -642,7 +656,8 @@
     <MESSAGE value="Added SOARETRY check on zone transfer." />
     <MESSAGE value="Zone transfer timer, done and tested." />
     <MESSAGE value="Documentation, part 1." />
-    <option name="LAST_COMMIT_MESSAGE" value="Documentation, part 1." />
+    <MESSAGE value="Seperated the logging logic into another class." />
+    <option name="LAST_COMMIT_MESSAGE" value="Seperated the logging logic into another class." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/mini_dns_py$server__secondary_.coverage" NAME="server (secondary) Coverage Results" MODIFIED="1671400012740" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
@@ -651,7 +666,7 @@
     <SUITE FILE_PATH="coverage/mini_dns_py$Client__w__args_.coverage" NAME="Client (w/ args) Coverage Results" MODIFIED="1668880890614" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns" />
     <SUITE FILE_PATH="coverage/mini_dns_py$main.coverage" NAME="main Coverage Results" MODIFIED="1669322308642" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/mini_dns_py$Main.coverage" NAME="Main Coverage Results" MODIFIED="1667927009726" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/mini_dns_py$server__primary_.coverage" NAME="server (primary) Coverage Results" MODIFIED="1671400008066" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns/server" />
+    <SUITE FILE_PATH="coverage/mini_dns_py$server__primary_.coverage" NAME="server (primary) Coverage Results" MODIFIED="1671487951973" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns/server" />
     <SUITE FILE_PATH="coverage/mini_dns_py$sserver.coverage" NAME="sserver Coverage Results" MODIFIED="1669294557269" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns/server" />
     <SUITE FILE_PATH="coverage/mini_dns_py$utils.coverage" NAME="utils Coverage Results" MODIFIED="1669496407794" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns" />
     <SUITE FILE_PATH="coverage/mini_dns_py$client.coverage" NAME="Client (w/ args) Coverage Results" MODIFIED="1668422446726" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns" />

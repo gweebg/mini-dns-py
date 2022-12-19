@@ -5,20 +5,20 @@ import time
 from multiprocessing import Process
 from typing import Optional
 
-from common.timer import RepeatedTimer
-from common.logger import Logger
+from dns.common.timer import RepeatedTimer
+from dns.common.logger import Logger
 
-from dns.dns_packet import DNSPacket, DNSPacketQueryData, DNSPacketHeaderFlag, DNSPacketHeader
+from dns.models.dns_packet import DNSPacket, DNSPacketQueryData, DNSPacketHeaderFlag, DNSPacketHeader
 from dns.server.base_datagram_server import BaseDatagramServer
 from dns.server.base_segment_server import BaseSegmentServer
 from dns.server.server_config import ServerConfiguration
-from dns.dns_database import Database
+from dns.models.dns_database import Database
 from dns.utils import send_msg, recv_msg, get_ip_from_interface
 
 from exceptions.exceptions import InvalidDNSPacket, InvalidZoneTransferPacket
 
-from models.zone_transfer_packet import ZoneTransferPacket, ZoneTransferMode
-from models.dns_resource import DNSResource, DNSValueType
+from dns.models.zone_transfer_packet import ZoneTransferPacket, ZoneTransferMode
+from dns.models.dns_resource import DNSResource, DNSValueType
 
 from parser.parser_factory import FileParserFactory
 from parser.abstract_parser import Mode
@@ -40,14 +40,16 @@ class Server(BaseDatagramServer, BaseSegmentServer, Logger):
         :param debug: Run in debug mode (logging to stdout) if True.
         """
 
+        # Loading and storing the server configuration.
         self.configuration: ServerConfiguration = FileParserFactory(configuration_path,
                                                                     Mode.CONFIG).get_parser().parse()
 
+        # Setting up the logging 'module'.
         super(BaseSegmentServer, self).__init__(self.configuration.logs_path, debug)
         self.log('all', f'EV | 127.0.0.1 | Loaded configuration at "{configuration_path}".', 'info')
 
+        # If the server is a primary server.
         if self.configuration.primary_server is None:
-            # If the server is a primary server.
             self.log('all', f'EV | 127.0.0.1 | Im a primary server!', 'info')
 
             self.database: Database = Database(database=FileParserFactory(self.configuration.database_path,
@@ -55,8 +57,8 @@ class Server(BaseDatagramServer, BaseSegmentServer, Logger):
 
             self.log('all', f'EV | 127.0.0.1 | Loaded database at "{self.configuration.database_path}"', 'info')
 
+        # If the server is a secondary server.
         else:
-            # If the server is a secondary server.
             self.log('all', f'EV | 127.0.0.1 | Im a secondary server!', 'debug')
 
             # This stores the database version for the secondary server and the last time it was updated.
@@ -71,14 +73,15 @@ class Server(BaseDatagramServer, BaseSegmentServer, Logger):
             time_interval = self.database.database.get(DNSValueType.SOAEXPIRE)[0].value  # Getting the time interval.
             self.zone_transfer_timer = RepeatedTimer(int(time_interval), self.zone_transfer)
 
+        # Loading and storing the list of addresses of the root servers.
         self.root_servers: list[str] = FileParserFactory(self.configuration.root_servers_path,
                                                          Mode.RT).get_parser().parse()
 
         self.log('all', f'EV | 127.0.0.1 | Loaded root list at "{self.configuration.root_servers_path}"', 'info')
 
-        super().__init__(get_ip_from_interface(localhost=True), port, timeout, 1024)
-        super(BaseDatagramServer, self).__init__(get_ip_from_interface(localhost=True), port, timeout, 1024)
-
+        # Initializing both the UDP and TCP listeners.
+        super().__init__(get_ip_from_interface(localhost=True), port, timeout, 1024)  # UDP
+        super(BaseDatagramServer, self).__init__(get_ip_from_interface(localhost=True), port, timeout, 1024)  # TCP
 
     def is_authority(self, name: str):
         """

@@ -1,7 +1,6 @@
 from pydantic import BaseModel
 
-from dns.dns_packet import DNSPacket
-from models.dns_resource import DNSValueType, DNSResource
+from dns.models.dns_resource import DNSValueType, DNSResource
 
 
 class Database(BaseModel):

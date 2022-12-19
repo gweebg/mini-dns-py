@@ -2,14 +2,14 @@ import socket
 
 from typing import Optional
 
-from common.logger import Logger
+from dns.common.logger import Logger
 
-from dns.dns_packet import DNSPacket, DNSPacketHeaderFlag
+from dns.models.dns_packet import DNSPacket, DNSPacketHeaderFlag
+from dns.models.dns_resource import DNSValueType, DNSResource
 from dns.server.base_datagram_server import BaseDatagramServer
 from dns.server.server_config import ServerConfiguration
 
 from exceptions.exceptions import InvalidDNSPacket
-from models.dns_resource import DNSValueType, DNSResource
 
 from parser.abstract_parser import Mode
 from parser.parser_factory import FileParserFactory
@@ -46,9 +46,8 @@ class ResolutionServer(BaseDatagramServer, Logger):
         # Storing the timeout value for later use while relaying the message.
         self.timeout = timeout
 
-        # Todo Logger #
         # Setting up the logger.
-        # super(BaseDatagramServer, self).__init__(debug)
+        super(BaseDatagramServer, self).__init__(self.configuration.logs_path, debug)
 
         # Todo Cache #
         # Loading database/configuration values into cache.

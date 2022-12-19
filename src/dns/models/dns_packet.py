@@ -3,7 +3,7 @@ from enum import Enum
 
 from pydantic import BaseModel, Field, conlist
 
-from models.dns_resource import DNSValueType, DNSResource
+from dns.models.dns_resource import DNSValueType, DNSResource
 from exceptions.exceptions import InvalidDNSPacket
 from dns.utils import __get_latest_id__
 
