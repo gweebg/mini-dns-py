@@ -135,3 +135,21 @@ def recvall(sock, n):
         data.extend(packet)
 
     return data
+
+
+def split_address(address: str) -> tuple[str, int]:
+    """
+    This function, when given a string of an IPv4 address (10.0.1.12:2002) parses the address into
+    a tuple of the IP address and port (10.0.1.12, 2002).
+
+    :param address: Given address to parse.
+    :return: Tuple containing the obtained values.
+    """
+
+    addr: list[str] = address.split(":")
+    port: int = 53
+
+    if len(addr) > 1:
+        port = int(addr[1])
+
+    return addr[0], port

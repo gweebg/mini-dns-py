@@ -383,7 +383,7 @@ class DNSPacket(BaseModel):
 
         query_header = DNSPacketHeader(
             message_id=current_message_id,
-            flags=[DNSPacketHeaderFlag.A],
+            flags=[DNSPacketHeaderFlag.A, DNSPacketHeaderFlag.F],
             response_code=3,
             number_values=0,
             number_authorities=0,

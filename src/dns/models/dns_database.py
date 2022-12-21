@@ -80,7 +80,7 @@ class Database(BaseModel):
                 if updated_value == address.parameter:
                     extra_values.append(address)
 
-        # ss1 CNAME ns2 TTL
+        """
         for value in self.database.get(DNSValueType.CNAME):
             for prev in previous_values:
 
@@ -91,6 +91,7 @@ class Database(BaseModel):
 
                 if value.value == compare_with and value not in previous_values and value not in extra_values:
                     extra_values.append(value)
+        """
 
         return extra_values
 

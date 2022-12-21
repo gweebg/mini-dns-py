@@ -78,8 +78,6 @@ class Client:
 
             try:
                 self.udp_socket.sendto(self.query.as_byte_string(), self.address)
-                # client_logger.info(f"EV 127.0.0.1 Sent query to {self.address[0]}:{self.address[1]} .")
-                # self.udp_socket.sendto("120,Q,0,0,0,0;abc.example.com.,MX".encode("utf-8"), self.address)
 
             except Exception as error:
                 client_logger.error(f"SP 127.0.0.1 Could not send query to {self.address[0]}:{self.address[1]} : {error}")

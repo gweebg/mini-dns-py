@@ -202,7 +202,7 @@ class Server(BaseDatagramServer, BaseSegmentServer, Logger):
                     # Domain name does not exist.
                     new_header = packet.header
                     new_header.response_code = 2
-                    new_header.flags = [DNSPacketHeaderFlag.A]
+                    new_header.flags = [DNSPacketHeaderFlag.A, DNSPacketHeaderFlag.F]
 
                     not_found = DNSPacket(
                         header=new_header,
@@ -247,7 +247,7 @@ class Server(BaseDatagramServer, BaseSegmentServer, Logger):
                 # Direct match on the database.
                 header = DNSPacketHeader(
                     message_id=packet.header.message_id,
-                    flags=[DNSPacketHeaderFlag.A],
+                    flags=[DNSPacketHeaderFlag.A, DNSPacketHeaderFlag.F],
                     response_code=0,
                     number_values=len(database_results[0]),
                     number_authorities=len(database_results[1]),

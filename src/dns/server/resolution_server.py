@@ -1,3 +1,4 @@
+import argparse
 import socket
 
 from typing import Optional
@@ -8,6 +9,7 @@ from dns.models.dns_packet import DNSPacket, DNSPacketHeaderFlag
 from dns.models.dns_resource import DNSValueType, DNSResource
 from dns.server.base_datagram_server import BaseDatagramServer
 from dns.server.server_config import ServerConfiguration
+from dns.utils import split_address, get_ip_from_interface
 
 from exceptions.exceptions import InvalidDNSPacket
 
@@ -32,9 +34,13 @@ class ResolutionServer(BaseDatagramServer, Logger):
     for relaying the query to other servers that will, via long prefix match, respond back.
     """
 
-    def __init__(self, config_file: str, ip_address: str, port: int = 53, timeout: int = 120, debug: bool = False):
+    def __init__(self, config_file: str, port: int = 53, timeout: int = 120, debug: bool = False):
+
+        # First, let's get our IP address.
+        self.ip_address = get_ip_from_interface(localhost=True)
+
         # Initializing the UDP server, dns.server.base_datagram_server::BaseDatagramServer()
-        super().__init__(ip_address, port, timeout)
+        super().__init__(self.ip_address, port, timeout)
 
         # Reading and parsing the configuration file.
         self.configuration: ServerConfiguration = FileParserFactory(config_file, Mode.CONFIG).get_parser().parse()
@@ -54,6 +60,8 @@ class ResolutionServer(BaseDatagramServer, Logger):
         # self.cache = Cache()
         # self.cache.from_configuration(self.configuration, "R") R: resolution
 
+        self.log('all', f'EV | {self.ip_address} | Finished setting up the resolution server!', 'info')
+
     @staticmethod
     def get_next_address(received_packet: DNSPacket, domain_name: str) -> Optional[str]:
         """
@@ -62,6 +70,8 @@ class ResolutionServer(BaseDatagramServer, Logger):
         We need to get the 'longest' suffix match out of every authority value, not forgetting to check and replace
         the name if there's a CNAME entry for any authority, and then retrieve its corresponding address from
         the extra values.
+
+        # Todo, change check of flag 'F' to, error code + #values.
 
         :param received_packet: The answer obtained from one of the servers, where we will look for.
         :param domain_name: The domain name we want and need to match.
@@ -84,6 +94,8 @@ class ResolutionServer(BaseDatagramServer, Logger):
                 if domain_name.index(entry.parameter) > closest_index:
                     matched_authority = entry
 
+        print(matched_authority)
+
         # Now that we're sure that we found a match, we will get it address!
         for extra_value in received_packet.query_data.extra_values:
 
@@ -92,7 +104,6 @@ class ResolutionServer(BaseDatagramServer, Logger):
 
             # Matching the resource value and the extra value parameter to check if we got the correct address.
             if matched_authority.value == extra_entry.parameter:
-
                 # This will be the next address we will be relaying the packet to!
                 return extra_entry.value
 
@@ -100,7 +111,7 @@ class ResolutionServer(BaseDatagramServer, Logger):
         # is not well-built!
         return None
 
-    def relay(self, packet: DNSPacket, address: str) -> Optional[DNSPacket]:
+    def relay(self, packet: DNSPacket, address: tuple[str, int]) -> Optional[DNSPacket]:
         """
         This method is responsible for obtaining the query result by
         relaying possibly multiple times the query through the servers.
@@ -113,6 +124,8 @@ class ResolutionServer(BaseDatagramServer, Logger):
         # While the answer we receive is not final, we will keep trying.
         while True:
 
+            self.log('all', f'EV | {address[0]} | Asking {address[0]} for {str(packet.query_info)}', 'info')
+
             # We need to relay the message to another socket, else there will
             # be conflict with the main listening thread.
             relay_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -123,15 +136,20 @@ class ResolutionServer(BaseDatagramServer, Logger):
             try:
 
                 # Binding the socket to the given address and to a random available port (value 0 does that).
-                relay_socket.bind((address, 0))
+                relay_socket.bind((address[0], 0))
 
                 # Relaying the packet to the intended server at 'relay_ip_address'.
                 relay_socket.sendto(packet.as_byte_string(), address)
+
+                self.log('all', f'EV | Established connection with {address}.', 'info')
 
             except (socket.error, socket.timeout):
 
                 # If there's an error when sending to the server, we abort and try another address.
                 relay_socket.close()
+
+                self.log('all', f'TO | Connection with {address} timed out.', 'warning')
+
                 return None  # This will trigger the 'udp_handle' to choose another root server address.
 
             # Waiting, receiving, decoding and parsing the response.
@@ -139,14 +157,17 @@ class ResolutionServer(BaseDatagramServer, Logger):
 
             try:
                 received_packet: DNSPacket = DNSPacket.from_string(data)
+                print(received_packet.prettify())
 
             except InvalidDNSPacket as error:
+
+                self.log('all', f'ER | {address[0]} | Received bad query packet.', 'error')
 
                 # Ups, the query received is wrongfully formatted, let's warn the user.
                 return DNSPacket.generate_bad_format_response()
 
             # Let's check if the answer is already final.
-            if DNSPacketHeaderFlag.F in received_packet:
+            if DNSPacketHeaderFlag.F in received_packet.header.flags:
                 return received_packet
 
             # Ouch, it was not final, let's relay it to somewhere else specified on the received packet!
@@ -157,11 +178,11 @@ class ResolutionServer(BaseDatagramServer, Logger):
                 return received_packet
 
             # Now, let's update our address to the one indicated on the received_packet.
-            # To do this, let's use the method 'get_next_address'.
+            # To do this, let's use the method 'get_next_address' with the split_address,
+            # so we can already have the address divided into the address and port tuple.
+            address = split_address(self.get_next_address(received_packet, packet.query_info.name))
 
-            address = self.get_next_address(received_packet, packet.query_info.name)
-
-            relay_socket.close()
+            relay_socket.close()  # Closing the socket before starting all over again.
 
     def udp_handle(self, data: bytes, address: tuple[str, int]):
         """
@@ -175,6 +196,7 @@ class ResolutionServer(BaseDatagramServer, Logger):
 
         # Decoding the received binary data.
         data: str = data.strip().decode("utf-8")
+        self.log('all', f'QR | {address[0]} | Received and decoded a query: {data}', 'info')
 
         try:
 
@@ -187,11 +209,14 @@ class ResolutionServer(BaseDatagramServer, Logger):
             bad_format_response: DNSPacket = DNSPacket.generate_bad_format_response()
             self.udp_socket.sendto(bad_format_response.as_byte_string(), address)
 
+            self.log('all', f'ER | {address[0]} | Received bad query packet.', 'error')
+
             return 3  # Returning the response code.
 
         if DNSPacketHeaderFlag.Q not in packet.header.flags:
-
             # If the query isn't of type Q then we shall ignore it.
+            self.log('all', f'EV | {self.ip_address} | Received a query but it does not contain flag Q.', 'warning')
+
             return 4  # Let's just return 4, as the time of being.
 
         # Todo Cache #
@@ -209,26 +234,85 @@ class ResolutionServer(BaseDatagramServer, Logger):
         if match := self.configuration.match_dd(packet):
 
             # Now we can contact this address instead of the root.
-            relay_ip_address: str = match.value
+            relay_ip_address: tuple[str, int] = split_address(match.value)
+            self.log('all', f'EV | {self.ip_address} | Found a match in DD entries for the next hop!', 'info')
 
         # We didn't find anything, so we will be asking the root server.
         else:
 
             # Retrieving a root server address.
-            relay_ip_address: str = self.root_servers[next_root]
+            relay_ip_address = split_address(self.root_servers[next_root])
+            self.log('all', f'EV | {self.ip_address} | Relay address set to one of the root servers.', 'info')
 
         # Now let's relay the query to 'relay_ip_address'!
         response: DNSPacket = self.relay(packet, relay_ip_address)
 
         # If the destination is a root server, and the root server is not responding, we will try another one!
-        if relay_ip_address in self.root_servers:
+        string_address: str = f'{relay_ip_address[0]}:{relay_ip_address[1]}'
+        if string_address in self.root_servers:
+
+            self.log('all', f'EV | {self.ip_address} | Failed to contact root server {self.root_servers[next_root]}, '
+                            f'trying next!', 'warning')
 
             while response is None:
 
-                # Todo: Add checking for index out of bounds.
                 next_root += 1
-                relay_ip_address = self.root_servers[next_root]
+
+                # When we reach the final root server we can't do anything more, thus we end the connection.
+                if next_root + 1 >= len(self.root_servers):
+                    self.log('all', f'SP | {self.ip_address} | Could not find a root server that was available.', 'error')
+                    return 5
+
+                relay_ip_address = split_address(self.root_servers[next_root])
                 response = self.relay(packet, relay_ip_address)
 
         # Now that we have our response, let's reply to the client!
         self.udp_socket.sendto(response.as_byte_string(), address)
+        self.log('all', f'RR | {address[0]} | Sent the final query response to the client.', 'info')
+
+    def run(self):
+
+        try:
+            self.udp_start()
+
+        except KeyboardInterrupt:
+
+            self.udp_socket.close()
+            self.log('all', f'SP | {self.ip_address} | Goodbye!', 'info')
+
+
+# Setting up the launch part of the server.
+def main():
+
+    # Setting up the command line argument parser.
+    parser = argparse.ArgumentParser(prog="mini-dns-resolution-server",
+                                     description="mini-dns-py resolution server application",
+                                     epilog="project made by gweebg")
+
+    # Adding the four possible arguments, self-descriptive.
+    parser.add_argument('-c', '--configuration',
+                        required=True,
+                        help='absolute path to the configuration file.')
+
+    parser.add_argument('-p', '--port',
+                        required=False,
+                        help='socket port to listen to.')
+
+    parser.add_argument('-t', '--timeout',
+                        required=False,
+                        help='milliseconds timeout value for the connection.')
+
+    parser.add_argument('-d', '--debug',
+                        action='store_true',
+                        help='run in debug mode.')
+
+    # Parsing the arguments.
+    args: argparse.Namespace = parser.parse_args()
+
+    # Initializing and running the resolution server on the specified arguments.
+    res_server = ResolutionServer(args.configuration, int(args.port), int(args.timeout), args.debug)
+    res_server.run()
+
+
+if __name__ == "__main__":
+    SystemExit(main())
