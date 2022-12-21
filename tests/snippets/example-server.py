@@ -2,7 +2,7 @@ import socket
 import threading
 import time
 
-from example.example_protocol import MathProtocol, MathOperation
+from snippets.example_protocol import MathProtocol, MathOperation
 
 # IP = "127.0.0.1"
 # PORT = 5555

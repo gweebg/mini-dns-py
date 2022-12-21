@@ -1,5 +1,5 @@
 import socket
-from example.example_protocol import MathProtocol
+from snippets.example_protocol import MathProtocol
 
 
 class MathClient:
