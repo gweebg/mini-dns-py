@@ -1,125 +1,97 @@
 import time
 
-from collections.abc import MutableSequence
+from enum import Enum
 from typing import Optional
-from abc import ABC
+from threading import Lock
 
+from dns.common.logger import Logger
+from dns.models.dns_database import Database
+from dns.models.dns_packet import DNSPacketQueryData, DNSPacketQueryInfo
 from dns.models.dns_resource import DNSResource, DNSValueType
 
 
+class EntryOrigin(Enum):
+    """
+    Enumeration that represents the origin of data in a cache entry.
+    """
+
+    FILE = 1  # If the cache entry data came from a file.
+    PS = 2  # If the cache entry data came for a primary server.
+    OTHER = 3  # If the cache entry has another different origin.
+
+
 class CacheEntry:
+    """
+    This class represents an entry on a TTL cache for resource records.
+    """
 
-    def __init__(self, resource_record: DNSResource, overwrite_ttl: Optional[int] = None):
-        self.resource_record = resource_record
-        self.time_to_live = overwrite_ttl if overwrite_ttl else self.resource_record.ttl
-        self.timestamp = None
+    def __init__(self, resource_record: DNSResource, origin: EntryOrigin, overwrite_ttl: Optional[int] = None) -> None:
 
-    def stamp(self):
+        self.data = resource_record  # The entry data will be the resource record from database/server.
+        self.timestamp = None  # When adding this to a cache we will be using CacheEntry::stamp() to mark the time.
+        self.origin = origin
+
+        self.ttl = self.data.ttl
+
+        if overwrite_ttl:
+            self.ttl = overwrite_ttl  # We can forcefully add a different TTL value to any entry.
+
+        if self.origin.name == "FILE":
+            self.ttl = None  # If the TTL value is set to none, then we shall never take it out of cache.
+
+        self.expire_time = None  # Value used to determine if the TTL value has passed.
+
+    def stamp(self) -> None:
+        """
+        When this entry is added to a cache we stamp the entry to give us the time it was added.
+        Besides that we also calculate at what time it should no longer be valid.
+        :return: None
+        """
         self.timestamp = time.time()
 
+        if self.ttl:
+            self.expire_time = self.timestamp + self.ttl
 
-class Cache(MutableSequence, ABC):
+    def is_valid(self) -> bool:
+        """
+        This method returns whether an entry is valid on not based on it's time to live.
+        :return: True if valid, false otherwise.
+        """
+        if self.ttl is None:  # If the TTL value is None, then the entry stays forever.
+            return True
 
-    def __init__(self, maxsize: int = 128):
+        return time.time() <= self.expire_time
 
-        super(Cache, self).__init__()
 
-        self.type = CacheEntry
-        self.maxsize = maxsize
+class Cache:
+    """
+    Class that represents a cache for a DNS server.
+    """
 
-        self.list = list()
+    def __init__(self) -> None:
 
-    def check(self, value):
+        self.entries: list[CacheEntry] = []
+        self.lock = Lock()
 
-        if not isinstance(value, self.type):
-            raise TypeError(value)
+    def add_entry(self, entry: CacheEntry) -> None:
 
-    def __iter__(self):
-
-        entry: CacheEntry
-        for entry in self.list.copy():
-
-            expiry_stamp = entry.timestamp + entry.resource_record.ttl
-
-            if time.time() >= expiry_stamp:
-                self.list.remove(entry)
-                continue
-
-            yield entry
-
-    def __delitem__(self, key):
-        ...
-
-    def __getitem__(self, item):
-        ...
-
-    def __len__(self):
-
-        counter = 0
-        for _ in self.__iter__():
-            counter += 1
-
-        return counter
-
-    def __setitem__(self, key, value):
-        ...
-
-    def insert(self, index, value) -> None:
-        ...
-
-    def add_entry(self, entry: CacheEntry):
-
-        if len(self.list) < self.maxsize:
-            self.check(entry)
+        with self.lock:
             entry.stamp()
-            self.insert(len(self.list), entry)
+            self.entries.append(entry)
 
-    def lookup(self, name: str, type_of_value: DNSValueType):
+    def add_from_query_data(self, response: DNSPacketQueryData) -> None:
 
-        entry: CacheEntry
-        for entry in self.__iter__():
-            if (entry.resource_record.parameter == name) and (entry.resource_record.type == type_of_value):
-                return entry
+        every_response: list = response.response_values + response.authorities_values + response.extra_values
 
+        with self.lock:
+            for response in every_response:
 
-rr1 = DNSResource.from_string('lili.lycoris. NS ns1.lili.lycoris. 200')
-rr2 = DNSResource.from_string('lili.lycoris. NS ns2.lili.lycoris. 300')
+                entry = CacheEntry(DNSResource.from_string(response), EntryOrigin.OTHER)
+                entry.stamp()
+                self.entries.append(entry)
 
-ce1 = CacheEntry(rr1)
-ce2 = CacheEntry(rr2)
+    def match(self, query_info: DNSPacketQueryInfo) -> None:
+        ...
 
-c = Cache(maxsize=3)
-
-c.add_entry(ce1)
-c.add_entry(ce2)
-
-for e in c:
-    print(e)
-
-# class Cache(dict):
-#
-#     def __init__(self, maxsize: int = 100):
-#         super().__init__()
-#         self.__table = {}
-#         self.maxsize = maxsize
-#
-#     def add(self, key, value, timeout=1):
-#         if self.__len__() + 1 < self.maxsize:
-#             self.__table[key] = time.time() + timeout
-#             dict.update(self, {key: value})
-#
-#     def __contains__(self, item):
-#         return time.time() < self.__table.get(item)
-#
-#     def __iter__(self):
-#         for item in dict.__iter__(self):
-#             if time.time() < self.__table.get(item):
-#                 yield item
-#
-#     def __len__(self):
-#         counter = 0
-#         for item in dict.__iter__(self):
-#             if time.time() < self.__table.get(item):
-#                 counter += 1
-#
-#         return counter
+    def from_database(self, database: Database) -> None:
+        ...
