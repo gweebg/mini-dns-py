@@ -87,7 +87,6 @@ class Server(BaseDatagramServer, BaseSegmentServer, Logger):
 
         self.log('all', f'EV | {self.socket_address}| Loaded root list file.', 'info')
 
-
         self.log('all', f'EV | {self.socket_address} | Finished setting up the server.', 'info')
 
     def is_authority(self, name: str):
@@ -122,6 +121,22 @@ class Server(BaseDatagramServer, BaseSegmentServer, Logger):
     def get_primary_server_domain(self):
         return self.configuration.primary_server.parameter
 
+    def is_whitelisted(self, name: str):
+        """
+        Check if a domain is white listed on the (self) server.
+
+        :param name: Domain name to check.
+        :return: True if its whitelisted, otherwise False.
+        """
+
+        for allowed_domain in self.configuration.allowed_domains:
+
+            if allowed_domain.parameter in name:
+
+                return True
+
+        return False
+
     def match(self, packet: DNSPacket):
         """
         This function only runs if this server is an authority to the domain specified in the query.
@@ -155,15 +170,6 @@ class Server(BaseDatagramServer, BaseSegmentServer, Logger):
         return Database.values_as_string(response_values), Database.values_as_string(
             authorities_values), Database.values_as_string(extra_values)
 
-    def is_whitelisted(self, name: str):
-        """
-        Check if a domain is white listed on the (self) server.
-
-        :param name: Domain name to check.
-        :return: True if its whitelisted, otherwise False.
-        """
-        return name[:-1] in self.configuration.allowed_domains
-
     def udp_handle(self, data: bytes, address: tuple[str, int]) -> int:
         """
         Handle the data received from the socket.
@@ -174,122 +180,86 @@ class Server(BaseDatagramServer, BaseSegmentServer, Logger):
         :return: An integer representing the query error code.
         """
 
+        # Receiving and decoding the binary encoded data from the UDP socket.
         data: str = data.strip().decode("utf-8")
-        self.log('all', f'QR | {address[0]}:{address[1]} | {data}', 'info')
+        self.log('all', f'QR | {address} | Received and decoded a query: {data}', 'info')
 
-        # Check if the received data is a DNSPacket. If it isn't than reply to client with response code 3.
         try:
+            # Check if the received data is a DNSPacket.
             packet: DNSPacket = DNSPacket.from_string(data)
 
-        except InvalidDNSPacket as error:
+        except InvalidDNSPacket:
 
-            self.log('all', f'ER | {address[0]}:{address[1]} |\n{error}', 'error')
-            bad_format_packet: DNSPacket = DNSPacket.generate_bad_format_response()
+            # Generating the error packet.
+            self.log('all', f'ER | {address} | Failed to parse the data into a DNSPacket: {data}', 'error')
+            bad_format_packet = DNSPacket.generate_bad_format_response()
 
-            self.log('all', f'RP | {address[0]}:{address[1]} |\n{bad_format_packet}', 'info')
+            # Sending the error packet to the client.
+            self.log('all', f'RP | {address} | Sent to address "invalid dns packet" packet.', 'info')
             self.udp_socket.sendto(bad_format_packet.as_byte_string(), address)
+
             return 3
 
         # Check if the domain name received on the query is whitelisted (has a DD entry).
-        # is_whitelisted = self.is_whitelisted(packet.query_info.name)
+        is_whitelisted = self.is_whitelisted(packet.query_info.name)
 
         # Check if the current instance of server is an authority of the domain name (is a PS or SS).
-        if self.is_authority(packet.query_info.name):  # and is_whitelisted: # Todo handle DD. #
+        # A primary server will only act uppon a query if the domain its about is the server itself or
+        # a subdomain and if the domain is whitelisted on the configuration file.
+        if self.is_authority(packet.query_info.name) and is_whitelisted:
 
-            self.log('example.com.',
-                     f'EV | {address[0]}:{address[1]} | Searching on database for {packet.query_info.name}, {packet.query_info.type_of_value}',
+            self.log(packet.query_info.name,
+                     f'EV | {address} | Searching on database for '
+                     f'{packet.query_info.name}, {packet.query_info.type_of_value}',
                      'info')
-            database_results = self.match(packet)  # Check the database for entries.
+
+            # Check the database for entries.
+            database_results = self.match(packet)
 
             # Check if there were any actual matches on the database, if not reply to client with.
-            if len(database_results[0]) == 0:
+            # The Server::match() method returns a tuple with the 3 kinds of values, we still need to
+            # construct the packet.
 
-                if len(database_results[1]) == 0 and len(database_results[2]) == 0:
+            # Building the query data part, it is used on the DNSPacket::build_packet() method.
+            response_data = DNSPacketQueryData(
+                response_values=database_results[0],
+                authorities_values=database_results[1],
+                extra_values=database_results[2]
+            )
 
-                    # Domain name does not exist.
-                    new_header = packet.header
-                    new_header.response_code = 2
-                    new_header.flags = [DNSPacketHeaderFlag.A, DNSPacketHeaderFlag.F]
+            # Building the response packet.
+            response_packet = DNSPacket.build_packet(packet, response_data)
+            response_code = response_packet.header.response_code
 
-                    not_found = DNSPacket(
-                        header=new_header,
-                        query_info=packet.query_info,
-                        query_data=DNSPacketQueryData.empty()
-                    )
+            # Logging the results.
+            if response_code == 2:
 
-                    self.log('all', f'RP | {address[0]}:{address[1]} |\n\t{not_found}', 'info')
-                    self.udp_socket.sendto(not_found.as_byte_string(), address)
-                    return 2
+                self.log('all', f'RP | {address} | Domain {packet.query_info.name} does not exist.', 'info')
 
-                else:
+            elif response_code == 1:
 
-                    # Domain does exist but not here.
-                    header = DNSPacketHeader(
-                        message_id=packet.header.message_id,
-                        flags=[DNSPacketHeaderFlag.A],
-                        response_code=1,
-                        number_values=0,
-                        number_authorities=len(database_results[1]),
-                        number_extra=len(database_results[2])
-                    )
-
-                    query_data = DNSPacketQueryData(
-                        response_values=[],
-                        authorities_values=database_results[1],
-                        extra_values=database_results[2]
-                    )
-
-                    exists_response = DNSPacket(
-                        header=header,
-                        query_info=packet.query_info,
-                        query_data=query_data
-                    )
-
-                    self.log('all', f'RP | {address[0]}:{address[1]} |\n\t{exists_response}', 'info')
-                    self.udp_socket.sendto(exists_response.as_byte_string(), address)
-                    return 1
+                self.log('all', f'RP | {address} | Domain {packet.query_info.name} exists but its my subdomain.', 'info')
 
             else:
 
-                # Direct match on the database.
-                header = DNSPacketHeader(
-                    message_id=packet.header.message_id,
-                    flags=[DNSPacketHeaderFlag.A, DNSPacketHeaderFlag.F],
-                    response_code=0,
-                    number_values=len(database_results[0]),
-                    number_authorities=len(database_results[1]),
-                    number_extra=len(database_results[2])
-                )
+                self.log('all', f'RP | {address} | Perfect match on {packet.query_info.name}, {packet.query_info.type_of_value}', 'info')
 
-                query_data = DNSPacketQueryData(
-                    response_values=database_results[0],
-                    authorities_values=database_results[1],
-                    extra_values=database_results[2]
-                )
+            self.udp_socket.sendto(response_packet.as_byte_string(), address)
+            return response_code
 
-                found_response = DNSPacket(
-                    header=header,
-                    query_info=packet.query_info,
-                    query_data=query_data
-                )
-
-                self.log('all', f'RP | {address[0]}:{address[1]} |\n\t{found_response}', 'info')
-                self.udp_socket.sendto(found_response.as_byte_string(), address)
-                return 0
-
-        # Domain name does not exist.
+        # Worst case scenario, I have no authority over the domain.
         new_header = packet.header
         new_header.response_code = 2
         new_header.flags = [DNSPacketHeaderFlag.A]
 
-        not_found = DNSPacket(
+        not_found_packet = DNSPacket(
             header=new_header,
             query_info=packet.query_info,
             query_data=DNSPacketQueryData.empty()
         )
 
-        self.log('all', f'RP | {address[0]}:{address[1]} |\n\t{not_found}', 'info')
-        self.udp_socket.sendto(not_found.as_byte_string(), address)
+        self.log('all', f'RP | {address} | Domain {packet.query_info.name} does not exist.', 'info')
+        self.udp_socket.sendto(not_found_packet.as_byte_string(), address)
         return 2
 
     def tcp_handle(self, conn: socket, address: tuple[str, int]):

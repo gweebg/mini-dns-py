@@ -15,6 +15,9 @@ class Database(BaseModel):
         """
         Given domain_name and type_of_value, this function searches the database for full matches of the parameters.
 
+        # Todo: Make distintion between 'domain exists but its a subdomain' and 'entry does not exist'.
+        # Error on CNAME:
+
         :param domain_name: Domain name we are looking for.
         :param type_of_value: Type of value we are looking for.
         :return: List with every full match entry.

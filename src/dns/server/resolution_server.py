@@ -168,7 +168,10 @@ class ResolutionServer(BaseDatagramServer, Logger):
                 return DNSPacket.generate_bad_format_response()
 
             # Let's check if the answer is already final.
-            if DNSPacketHeaderFlag.F in received_packet.header.flags:
+            # if DNSPacketHeaderFlag.F in received_packet.header.flags:
+            #     return received_packet
+
+            if received_packet.header.response_code == 0:
                 return received_packet
 
             # Ouch, it was not final, let's relay it to somewhere else specified on the received packet!
