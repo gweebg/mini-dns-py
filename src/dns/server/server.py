@@ -41,6 +41,10 @@ class Server(BaseDatagramServer, BaseSegmentServer, Logger):
         :param debug: Run in debug mode (logging to stdout) if True.
         """
 
+        # Initializing both the UDP and TCP listeners.
+        super().__init__(get_ip_from_interface(localhost=True), port, timeout, 1024)  # UDP
+        super(BaseDatagramServer, self).__init__(get_ip_from_interface(localhost=True), port, timeout, 1024)  # TCP
+
         # Storing the flag that indicates whether the server is a root server or not.
         self.is_root = root
 
@@ -50,20 +54,20 @@ class Server(BaseDatagramServer, BaseSegmentServer, Logger):
 
         # Setting up the logging 'module'.
         super(BaseSegmentServer, self).__init__(self.configuration.logs_path, debug)
-        self.log('all', f'EV | 127.0.0.1 | Loaded configuration at "{config_path}".', 'info')
+        self.log('all', f'EV | {self.socket_address} | Loaded configuration file.', 'info')
 
         # If the server is a primary server.
         if self.configuration.primary_server is None:
-            self.log('all', f'EV | 127.0.0.1 | Im a primary server!', 'info')
+            self.log('all', f'EV | {self.socket_address} | Setting up as a Primary Server.', 'info')
 
             self.database: Database = Database(database=FileParserFactory(self.configuration.database_path,
                                                                           Mode.DB).get_parser().parse())
 
-            self.log('all', f'EV | 127.0.0.1 | Loaded database at "{self.configuration.database_path}"', 'info')
+            self.log('all', f'EV | {self.socket_address} | Loaded database file.', 'info')
 
         # If the server is a secondary server.
         else:
-            self.log('all', f'EV | 127.0.0.1 | Im a secondary server!', 'debug')
+            self.log('all', f'EV | {self.socket_address} | Setting up as a Secondary Server.', 'info')
 
             # This stores the database version for the secondary server and the last time it was updated.
             self.database_version = 0
@@ -81,11 +85,10 @@ class Server(BaseDatagramServer, BaseSegmentServer, Logger):
         self.root_servers: list[str] = FileParserFactory(self.configuration.root_servers_path,
                                                          Mode.RT).get_parser().parse()
 
-        self.log('all', f'EV | 127.0.0.1 | Loaded root list at "{self.configuration.root_servers_path}"', 'info')
+        self.log('all', f'EV | {self.socket_address}| Loaded root list file.', 'info')
 
-        # Initializing both the UDP and TCP listeners.
-        super().__init__(get_ip_from_interface(localhost=True), port, timeout, 1024)  # UDP
-        super(BaseDatagramServer, self).__init__(get_ip_from_interface(localhost=True), port, timeout, 1024)  # TCP
+
+        self.log('all', f'EV | {self.socket_address} | Finished setting up the server.', 'info')
 
     def is_authority(self, name: str):
         """
@@ -191,7 +194,7 @@ class Server(BaseDatagramServer, BaseSegmentServer, Logger):
         # is_whitelisted = self.is_whitelisted(packet.query_info.name)
 
         # Check if the current instance of server is an authority of the domain name (is a PS or SS).
-        if self.is_authority(packet.query_info.name):  # and is_whitelisted:
+        if self.is_authority(packet.query_info.name):  # and is_whitelisted: # Todo handle DD. #
 
             self.log('example.com.',
                      f'EV | {address[0]}:{address[1]} | Searching on database for {packet.query_info.name}, {packet.query_info.type_of_value}',

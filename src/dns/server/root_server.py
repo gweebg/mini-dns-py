@@ -18,6 +18,11 @@ from parser.parser_factory import FileParserFactory
 
 
 class RootServer(BaseDatagramServer, Logger):
+    """
+    Due to the not so modular implementation of the class Server, it is needed
+    an individual class for the Root Server. The only major difference is that
+    the root server only tries to match the NS entries and not the ones.
+    """
 
     def __init__(self, config_file: str, port: int = 53, timeout: int = 120, debug: bool = False):
 
@@ -43,7 +48,7 @@ class RootServer(BaseDatagramServer, Logger):
 
         self.log('all', f'EV | {self.socket_address} | Finished setting up the root server!', 'info')
 
-    def match_address_to_nameserver(self, nameserver: DNSResource) -> Optional[str]:
+    def match_address_to_nameserver(self, nameserver: DNSResource) -> Optional[DNSResource]:
         """
         Given a nameserver entry of the database, this method tries to match
         the nameserver to an 'A' entry of the database.
@@ -59,7 +64,7 @@ class RootServer(BaseDatagramServer, Logger):
             for address_entry in address_entries:
 
                 if address_entry.parameter == nameserver.value:
-                    return address_entry.value
+                    return address_entry
 
         return None  # This shall never happen, for god's sake.
 
@@ -107,7 +112,7 @@ class RootServer(BaseDatagramServer, Logger):
                 return DNSPacketQueryData(
                     response_values=[],
                     authorities_values=[matched_nameserver.as_log_string()],
-                    extra_values=[address]
+                    extra_values=[address.as_log_string()]
                 )
 
         return DNSPacketQueryData.empty()  # If there was a match not found, we return an empty query data.
@@ -155,6 +160,8 @@ class RootServer(BaseDatagramServer, Logger):
         # Send the found response to the original sender.
         self.udp_socket.sendto(response_packet.as_byte_string(), address)
 
+        self.log('all', f'RP | {address} | Found and sent an answer to the query:\n\n{response_packet}\n', 'info')
+
         return response_packet.header.response_code  # Response code from the 'response_packet', never used.
 
     def run(self):
@@ -163,4 +170,4 @@ class RootServer(BaseDatagramServer, Logger):
             self.udp_start()
 
         except KeyboardInterrupt:
-            self.log('all', f'EV | {self.socket_address} | Root server out!', 'info')
+            self.log('all', f'EV | {self.socket_address} | Shutting down!', 'info')

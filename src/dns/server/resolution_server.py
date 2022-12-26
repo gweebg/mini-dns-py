@@ -1,5 +1,6 @@
 import argparse
 import socket
+import time
 
 from typing import Optional
 
@@ -45,15 +46,17 @@ class ResolutionServer(BaseDatagramServer, Logger):
         # Reading and parsing the configuration file.
         self.configuration: ServerConfiguration = FileParserFactory(config_file, Mode.CONFIG).get_parser().parse()
 
+        # Setting up the logger.
+        super(BaseDatagramServer, self).__init__(self.configuration.logs_path, debug)
+        self.log('all', f'EV | {self.socket_address} | Loaded configuration file.', 'info')
+
         # Getting the list with the root servers.
         self.root_servers: list[str] = FileParserFactory(self.configuration.root_servers_path,
                                                          Mode.RT).get_parser().parse()
+        self.log('all', f'EV | {self.socket_address} | Loaded root list file.', 'info')
 
         # Storing the timeout value for later use while relaying the message.
         self.timeout = timeout
-
-        # Setting up the logger.
-        super(BaseDatagramServer, self).__init__(self.configuration.logs_path, debug)
 
         # Todo Cache #
         # Loading database/configuration values into cache.
@@ -91,7 +94,7 @@ class ResolutionServer(BaseDatagramServer, Logger):
             if entry.type == DNSValueType.NS and entry.parameter in domain_name:
 
                 # If it is, we check if it is the closest substring of the authority values.
-                if idx := domain_name.index(entry.parameter) <= closest_index:
+                if (idx := domain_name.index(entry.parameter)) <= closest_index:
                     closest_index = idx
                     matched_authority = entry
 
@@ -194,7 +197,7 @@ class ResolutionServer(BaseDatagramServer, Logger):
 
         # Decoding the received binary data.
         data: str = data.strip().decode("utf-8")
-        self.log('all', f'QR | {address[0]} | Received and decoded a query: {data}', 'info')
+        self.log('all', f'QR | {address} | Received and decoded a query: {data}', 'info')
 
         try:
 
