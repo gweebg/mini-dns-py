@@ -79,7 +79,7 @@ class ResolutionServer(BaseDatagramServer, Logger):
         """
 
         matched_authority: Optional[DNSResource] = None
-        closest_index: int = -1
+        closest_index: int = 100
 
         # Let's first check if we can find the match.
         for auth_entry in received_packet.query_data.authorities_values:
@@ -91,10 +91,9 @@ class ResolutionServer(BaseDatagramServer, Logger):
             if entry.type == DNSValueType.NS and entry.parameter in domain_name:
 
                 # If it is, we check if it is the closest substring of the authority values.
-                if domain_name.index(entry.parameter) > closest_index:
+                if idx := domain_name.index(entry.parameter) <= closest_index:
+                    closest_index = idx
                     matched_authority = entry
-
-        print(matched_authority)
 
         # Now that we're sure that we found a match, we will get it address!
         for extra_value in received_packet.query_data.extra_values:
@@ -157,7 +156,6 @@ class ResolutionServer(BaseDatagramServer, Logger):
 
             try:
                 received_packet: DNSPacket = DNSPacket.from_string(data)
-                print(received_packet.prettify())
 
             except InvalidDNSPacket as error:
 
@@ -251,10 +249,10 @@ class ResolutionServer(BaseDatagramServer, Logger):
         string_address: str = f'{relay_ip_address[0]}:{relay_ip_address[1]}'
         if string_address in self.root_servers:
 
-            self.log('all', f'EV | {self.ip_address} | Failed to contact root server {self.root_servers[next_root]}, '
-                            f'trying next!', 'warning')
-
             while response is None:
+
+                self.log('all', f'EV | {self.ip_address} | Failed to contact root server {self.root_servers[next_root]}, '
+                                f'trying next!', 'warning')
 
                 next_root += 1
 

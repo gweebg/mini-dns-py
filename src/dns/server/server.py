@@ -11,6 +11,7 @@ from dns.common.logger import Logger
 from dns.models.dns_packet import DNSPacket, DNSPacketQueryData, DNSPacketHeaderFlag, DNSPacketHeader
 from dns.server.base_datagram_server import BaseDatagramServer
 from dns.server.base_segment_server import BaseSegmentServer
+from dns.server.root_server import RootServer
 from dns.server.server_config import ServerConfiguration
 from dns.models.dns_database import Database
 from dns.utils import send_msg, recv_msg, get_ip_from_interface
@@ -30,23 +31,26 @@ class Server(BaseDatagramServer, BaseSegmentServer, Logger):
     configuration file and database.
     """
 
-    def __init__(self, configuration_path: str, port: int = 53, timeout: int = 1600, debug: bool = False):
+    def __init__(self, config_path: str, port: int = 53, timeout: int = 1600, debug: bool = False, root: bool = False):
         """
         DNS Server constructor.
 
         :param port: Socket port to listen to.
-        :param configuration_path: File path configuration to the servers configuration file.
+        :param config_path: File path configuration to the servers configuration file.
         :param timeout: Milliseconds timeout value for the connection.
         :param debug: Run in debug mode (logging to stdout) if True.
         """
 
+        # Storing the flag that indicates whether the server is a root server or not.
+        self.is_root = root
+
         # Loading and storing the server configuration.
-        self.configuration: ServerConfiguration = FileParserFactory(configuration_path,
+        self.configuration: ServerConfiguration = FileParserFactory(config_path,
                                                                     Mode.CONFIG).get_parser().parse()
 
         # Setting up the logging 'module'.
         super(BaseSegmentServer, self).__init__(self.configuration.logs_path, debug)
-        self.log('all', f'EV | 127.0.0.1 | Loaded configuration at "{configuration_path}".', 'info')
+        self.log('all', f'EV | 127.0.0.1 | Loaded configuration at "{config_path}".', 'info')
 
         # If the server is a primary server.
         if self.configuration.primary_server is None:
@@ -508,13 +512,24 @@ def main():
                         required=False,
                         help='Milliseconds timeout value for the connection.')
 
+    parser.add_argument('-r', '--root',
+                        action='store_true',
+                        help='Flag that indicates whether the server is root or not.')
+
     parser.add_argument('-d', '--debug',
                         action='store_true',
                         help='Run in debug mode.')
 
     args: argparse.Namespace = parser.parse_args()
 
-    server = Server(args.configuration, int(args.port), int(args.timeout), args.debug)
+    if args.root:
+
+        server = RootServer(args.configuration, int(args.port), int(args.timeout), args.debug)
+
+    else:
+
+        server = Server(args.configuration, int(args.port), int(args.timeout), args.debug)
+
     server.run()
 
 

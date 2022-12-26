@@ -23,9 +23,10 @@ class Database(BaseModel):
         response_values = []
         same_type_values: list[DNSResource] = self.database.get(type_of_value)
 
-        for entry in same_type_values:
-            if entry.type == type_of_value and entry.parameter == domain_name:
-                response_values.append(entry)
+        if same_type_values:
+            for entry in same_type_values:
+                if entry.type == type_of_value and entry.parameter == domain_name:
+                    response_values.append(entry)
 
         return response_values
 
@@ -34,27 +35,26 @@ class Database(BaseModel):
         Given a domain_name, this function searches the database for matches with the given domain name and type of NS.
         If there was no result found on Database::response_values(), it looks for matches on its super-domain if it exists.
 
+        :param type_of_value: Type of value we are looking for.
         :param prev_values: Previous values list used to not repeat values!
         :param domain_name: Domain name we are looking for.
         :return: List with every NS match entry.
         """
 
         authorities_values = []
-        look_for_super = len(prev_values) <= 0
-
         nameservers = self.database.get(DNSValueType.NS)
 
-        # entry.parameter : example.com
-        # domain_name: Smaller.example.com.
-        for entry in nameservers:
-            if entry not in prev_values and entry not in authorities_values:
+        if nameservers:
+            for entry in nameservers:
+                if entry not in prev_values and entry not in authorities_values:
 
-                if type_of_value in [DNSValueType.A, DNSValueType.CNAME]:
-                    if entry.parameter in domain_name:
+                    if type_of_value in [DNSValueType.A, DNSValueType.CNAME]:
+                        if entry.parameter in domain_name:
+                            authorities_values.append(entry)
+
+                    if domain_name in entry.parameter:
+                        print("Match")
                         authorities_values.append(entry)
-
-                if domain_name in entry.parameter:
-                    authorities_values.append(entry)
 
         return authorities_values
 

@@ -403,6 +403,42 @@ class DNSPacket(BaseModel):
 
         return cls(header=query_header, query_info=query_info, query_data=query_data)
 
+    @classmethod
+    def build_packet(cls, original_packet: 'DNSPacket', response: DNSPacketQueryData) -> 'DNSPacket':
+        """
+        Given a packet and a new, updated, query data, this method builds a properlly formatted
+        packet with the new values using the message id from the original packet.
+
+        :param original_packet: Packet to build from.
+        :param response: Query data to use.
+        :return: DNSPacket object with the correct header, info and data.
+        """
+
+        response_code: int = 0
+
+        if len(response.response_values) == 0:  # If there are no response values than we get response code 1.
+
+            response_code = 1
+
+            if len(response.authorities_values) == 0 and len(response.extra_values) == 0:
+
+                response_code = 2
+
+        header = DNSPacketHeader(
+            message_id=original_packet.header.message_id,
+            flags=[DNSPacketHeaderFlag.A],
+            response_code=response_code,
+            number_values=len(response.response_values),
+            number_authorities=len(response.authorities_values),
+            number_extra=len(response.extra_values)
+        )
+
+        return cls(
+            header=header,
+            query_info=original_packet.query_info,
+            query_data=response
+        )
+
     def prettify(self) -> str:
         """
         Produces a prettified version of a DNSPacket.
