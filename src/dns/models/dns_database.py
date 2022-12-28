@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic import BaseModel
 
 from dns.models.dns_resource import DNSValueType, DNSResource
@@ -11,17 +13,67 @@ class Database(BaseModel):
 
     database: dict[DNSValueType, list[DNSResource]]
 
-    def response_values(self, domain_name: str, type_of_value: DNSValueType) -> [DNSResource]:
+    @staticmethod
+    def get_address_from_ptr(domain_name: str) -> str:
+        """
+        Method that retrieves the correct address from a query name of type PTR.
+
+        Example:
+
+            > get_address_from_ptr("3.2.0.10-inaddr.reverse.")
+            > 10.0.2.3
+
+            > get_address_from_ptr("20023:1.0.0.127-inaddr.reverse.")
+            > 127.0.0.1:20023
+
+        :param domain_name: Domain name to parse.
+        :return: The address obtained.
+        """
+
+        # The address port.
+        port = None
+
+        # Transform the p:x.y.z.w-inaddr.reverse. into p:x.y.z.w.
+        address_part = domain_name.split("-")[0]
+
+        if ":" in address_part:
+
+            # This should transform an address of type x.y.z.w:p on a [[p], [w, z, y, x]] object.
+            divided_address = [part.split(".") for part in [p for p in address_part.split(":")]]
+            port = divided_address[0][0]  # Get the port of the address.
+
+        else:
+
+            # This should transform an address of type x.y.z.w on a [[], [w, z, y, x]] object.
+            divided_address = [part.split(".") for part in [p for p in address_part.split(":")]]
+            divided_address = [[], divided_address[0]]  # We format like this to re-use our code, bellow.
+
+        divided_address[1].reverse()  # Reverse the list to get the correct address.
+
+        # Reconstructing the address as a string, [w, z, y, x] to x.y.z.w.
+        reconstructed_address = "".join(f"{part}." for part in divided_address[1]).strip()
+        reconstructed_address = reconstructed_address[:-1]
+
+        return f"{reconstructed_address}:{port}" if port else reconstructed_address
+
+    def response_values(self, domain_name: str, type_of_value: DNSValueType) -> [Optional[DNSResource]]:
         """
         Given domain_name and type_of_value, this function searches the database for full matches of the parameters.
 
-        # Todo: Make distintion between 'domain exists but its a subdomain' and 'entry does not exist'.
-        # Error on CNAME:
+        # Todo: Add PTR search.
 
         :param domain_name: Domain name we are looking for.
         :param type_of_value: Type of value we are looking for.
         :return: List with every full match entry.
         """
+
+        # The queries of type PTR is a little different. Instead of providing a domain name, we provide
+        # the *-inaddr name, for example, if we want to know what is the domain of 10.0.3.1 the query
+        # would look like '1.3.0.10-inaddr.reverse.', this happens so that we can get to the in-addr domain
+        # via recursive or iterative resolution. It will match on the '0.10-...'.
+        if type_of_value is DNSValueType.PTR:
+
+            domain_name = self.get_address_from_ptr(domain_name)
 
         response_values = []
         same_type_values: list[DNSResource] = self.database.get(type_of_value)
@@ -48,20 +100,29 @@ class Database(BaseModel):
         nameservers = self.database.get(DNSValueType.NS)
 
         if nameservers:
+
             for entry in nameservers:
+
                 if entry not in prev_values and entry not in authorities_values:
 
-                    if type_of_value in [DNSValueType.A, DNSValueType.CNAME]:
-                        if entry.parameter in domain_name:
-                            authorities_values.append(entry)
+                    if entry.parameter in domain_name:
 
-                    if domain_name in entry.parameter:
-                        print("Match")
                         authorities_values.append(entry)
+
+        # if nameservers:
+        #     for entry in nameservers:
+        #         if entry not in prev_values and entry not in authorities_values:
+        #
+        #             if type_of_value in [DNSValueType.A, DNSValueType.CNAME]:
+        #                 if entry.parameter in domain_name:
+        #                     authorities_values.append(entry)
+        #
+        #             if domain_name in entry.parameter:
+        #                 authorities_values.append(entry)
 
         return authorities_values
 
-    def extra_values(self, previous_values: [DNSResource]):
+    def extra_values(self, previous_values: list[DNSResource]):
         """
         Given the concatenated results of the Database::response_values() and Database::authorities_values(), this method
         looks in the database for entries of type A with the name of the values on the previous results.
@@ -74,6 +135,7 @@ class Database(BaseModel):
         addresses = self.database.get(DNSValueType.A)
 
         for value in previous_values:
+
             for address in addresses:
 
                 updated_value = value.value
@@ -82,19 +144,6 @@ class Database(BaseModel):
 
                 if updated_value == address.parameter:
                     extra_values.append(address)
-
-        """
-        for value in self.database.get(DNSValueType.CNAME):
-            for prev in previous_values:
-
-                compare_with = prev.value
-
-                if prev.type == DNSValueType.MX:
-                    compare_with = compare_with + '.'
-
-                if value.value == compare_with and value not in previous_values and value not in extra_values:
-                    extra_values.append(value)
-        """
 
         return extra_values
 
@@ -134,10 +183,20 @@ class Database(BaseModel):
         :param values: Given values of type list[DNSResource].
         :return: New list of strings.
         """
-        return list(map(lambda resource: resource.as_log_string(), values))
+        return list(map(lambda resource: resource.as_log_string(), filter(lambda r: r, values)))
 
     class Config:
         """
         Pydantic way of saying that we don't need validators for custom types.
         """
         arbitrary_types_allowed = True
+
+
+if __name__ == '__main__':
+
+    names = ["1.0.0.127-inaddr.reverse.maki.", "20023:1.0.0.127-inaddr.reverse.maki."]
+
+    for name in names:
+        print("Start: ", name)
+        print("End: ", Database.get_address_from_ptr(name))
+

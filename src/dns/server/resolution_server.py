@@ -1,6 +1,5 @@
 import argparse
 import socket
-import time
 
 from typing import Optional
 
@@ -74,8 +73,6 @@ class ResolutionServer(BaseDatagramServer, Logger):
         the name if there's a CNAME entry for any authority, and then retrieve its corresponding address from
         the extra values.
 
-        # Todo, change check of flag 'F' to, error code + #values.
-
         :param received_packet: The answer obtained from one of the servers, where we will look for.
         :param domain_name: The domain name we want and need to match.
         :return: Returns the address that matched the longest suffix.
@@ -133,7 +130,7 @@ class ResolutionServer(BaseDatagramServer, Logger):
             relay_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
             # Setting the same timeout value as for the normal queries.
-            relay_socket.settimeout(self.timeout)
+            relay_socket.settimeout(self.timeout // 2)
 
             try:
 
@@ -143,9 +140,12 @@ class ResolutionServer(BaseDatagramServer, Logger):
                 # Relaying the packet to the intended server at 'relay_ip_address'.
                 relay_socket.sendto(packet.as_byte_string(), address)
 
+                # Waiting, receiving, decoding and parsing the response.
+                data: str = relay_socket.recv(self.read_size).decode('utf-8')
+
                 self.log('all', f'EV | Established connection with {address}.', 'info')
 
-            except (socket.error, socket.timeout):
+            except (socket.error, socket.timeout, TimeoutError):
 
                 # If there's an error when sending to the server, we abort and try another address.
                 relay_socket.close()
@@ -153,9 +153,6 @@ class ResolutionServer(BaseDatagramServer, Logger):
                 self.log('all', f'TO | Connection with {address} timed out.', 'warning')
 
                 return None  # This will trigger the 'udp_handle' to choose another root server address.
-
-            # Waiting, receiving, decoding and parsing the response.
-            data: str = relay_socket.recv(self.read_size).decode('utf-8')
 
             try:
                 received_packet: DNSPacket = DNSPacket.from_string(data)
@@ -168,9 +165,6 @@ class ResolutionServer(BaseDatagramServer, Logger):
                 return DNSPacket.generate_bad_format_response()
 
             # Let's check if the answer is already final.
-            # if DNSPacketHeaderFlag.F in received_packet.header.flags:
-            #     return received_packet
-
             if received_packet.header.response_code == 0:
                 return received_packet
 

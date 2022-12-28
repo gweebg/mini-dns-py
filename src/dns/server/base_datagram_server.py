@@ -27,7 +27,7 @@ class BaseDatagramServer:
         try:
             self.logger.info(f'EV | {ip_address} | UDP server is starting...')
             self.udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-            self.udp_socket.settimeout(timeout)
+            self.udp_socket.settimeout(timeout)  # Todo: Fix Timeout.
             self.udp_socket.bind(self.socket_address)
 
         except Exception as error:

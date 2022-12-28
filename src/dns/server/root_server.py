@@ -73,8 +73,6 @@ class RootServer(BaseDatagramServer, Logger):
         This method matches a packet to its coorresponding authorities and extra values, since
         this is a root server, we won't have any response values.
 
-        # Todo: Ignore queries for the root domain.
-
         :param packet: Packet to match.
         :return: Query data used to build a response.
         """

@@ -54,7 +54,6 @@ class DNSPacketHeader(BaseModel):
     number_extra: int = Field(ge=0, le=255)
 
     def as_binary(self):
-        # Todo: DNSPacketHeader::as_binary() #
         ...
 
     @staticmethod
@@ -290,7 +289,8 @@ class DNSPacketQueryData(BaseModel):
 
             if len(list_of_values) > 0:
                 for value in list_of_values:
-                    result = result + f"{values.replace('_', '-').upper()} = {value},\n"
+                    if value:
+                        result = result + f"{values.replace('_', '-').upper()} = {value},\n"
 
                 result = result[:-2] + ";\n"
 

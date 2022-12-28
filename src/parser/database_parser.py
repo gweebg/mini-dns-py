@@ -81,7 +81,7 @@ class DatabaseFileParser(FileParser):
                     if macro in line_slice:
                         line[idx] = line[idx].replace(macro, self.macros[macro])
 
-        if not line[0].endswith('.'):
+        if line[1] != 'PTR' and not line[0].endswith('.'):
             line[0] = line[0] + f".{self.macros.get('@')}"
 
         if not line[2].endswith('.') and line[1] == 'CNAME':

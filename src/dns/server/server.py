@@ -97,17 +97,19 @@ class Server(BaseDatagramServer, BaseSegmentServer, Logger):
         :return: True if it is an authority, otherwise False.
         """
 
-        name = name[:-1]
-        p_server = self.configuration.primary_server
+        return True # TODO FIX!
 
-        if p_server and p_server.parameter in name:
-            return True
-
-        for s_server in self.configuration.secondary_servers:
-            if s_server.parameter in name:
-                return True
-
-        return False
+        # name = name[:-1]
+        # p_server = self.configuration.primary_server
+        #
+        # if p_server and p_server.parameter in name:
+        #     return True
+        #
+        # for s_server in self.configuration.secondary_servers:
+        #     if s_server.parameter in name:
+        #         return True
+        #
+        # return False
 
     def get_primary_server_address(self):
         address = self.configuration.primary_server.value
@@ -129,13 +131,15 @@ class Server(BaseDatagramServer, BaseSegmentServer, Logger):
         :return: True if its whitelisted, otherwise False.
         """
 
-        for allowed_domain in self.configuration.allowed_domains:
+        return True
 
-            if allowed_domain.parameter in name:
-
-                return True
-
-        return False
+        # for allowed_domain in self.configuration.allowed_domains:
+        #
+        #     if allowed_domain.parameter in name:
+        #
+        #         return True
+        #
+        # return False
 
     def match(self, packet: DNSPacket):
         """
