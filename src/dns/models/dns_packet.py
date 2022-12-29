@@ -424,9 +424,13 @@ class DNSPacket(BaseModel):
 
                 response_code = 2
 
+        flags = [DNSPacketHeaderFlag.A]
+        if DNSPacketHeaderFlag.R in original_packet.header.flags:
+            flags.append(DNSPacketHeaderFlag.R)
+
         header = DNSPacketHeader(
             message_id=original_packet.header.message_id,
-            flags=[DNSPacketHeaderFlag.A],
+            flags=flags,
             response_code=response_code,
             number_values=len(response.response_values),
             number_authorities=len(response.authorities_values),

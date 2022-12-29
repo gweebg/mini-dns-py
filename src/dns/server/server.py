@@ -5,16 +5,17 @@ import time
 from multiprocessing import Process
 from typing import Optional
 
+from dns.common.recursive import Recursive
 from dns.common.timer import RepeatedTimer
 from dns.common.logger import Logger
 
-from dns.models.dns_packet import DNSPacket, DNSPacketQueryData, DNSPacketHeaderFlag, DNSPacketHeader
+from dns.models.dns_packet import DNSPacket, DNSPacketQueryData, DNSPacketHeaderFlag
 from dns.server.base_datagram_server import BaseDatagramServer
 from dns.server.base_segment_server import BaseSegmentServer
 from dns.server.root_server import RootServer
 from dns.server.server_config import ServerConfiguration
 from dns.models.dns_database import Database
-from dns.utils import send_msg, recv_msg, get_ip_from_interface
+from dns.utils import send_msg, recv_msg, get_ip_from_interface, split_address
 
 from exceptions.exceptions import InvalidDNSPacket, InvalidZoneTransferPacket
 
@@ -25,7 +26,7 @@ from parser.parser_factory import FileParserFactory
 from parser.abstract_parser import Mode
 
 
-class Server(BaseDatagramServer, BaseSegmentServer, Logger):
+class Server(BaseDatagramServer, BaseSegmentServer, Logger, Recursive):
     """
     This class represents a DNS server. It answers queries based on its
     configuration file and database.
@@ -47,6 +48,9 @@ class Server(BaseDatagramServer, BaseSegmentServer, Logger):
 
         # Storing the flag that indicates whether the server is a root server or not.
         self.is_root = root
+
+        # Timeout value.
+        self.timeout  = timeout
 
         # Loading and storing the server configuration.
         self.configuration: ServerConfiguration = FileParserFactory(config_path,
@@ -247,8 +251,35 @@ class Server(BaseDatagramServer, BaseSegmentServer, Logger):
 
                 self.log('all', f'RP | {address} | Perfect match on {packet.query_info.name}, {packet.query_info.type_of_value}', 'info')
 
-            self.udp_socket.sendto(response_packet.as_byte_string(), address)
-            return response_code
+            # Let's check whether the flag is recursive or not.
+            if DNSPacketHeaderFlag.R in packet.header.flags and response_packet.header.response_code == 1:
+
+                print("IS RECURSIVE!!!")
+
+                # Retrieving the address we should contact next from the response packet.
+                relay_address: str = self.get_next_address(response_packet, packet.query_info.name)
+
+                # Obtaining (or not) the packet resulted from the relay.
+                relayed_packet: Optional[DNSPacket] = self.single_relay(relay_address,
+                                                                        packet,
+                                                                        self.timeout,
+                                                                        self.read_size)
+
+                # If we got a packet, then we send it to the original client and return the response code.
+                if relayed_packet:
+
+                    self.udp_socket.sendto(relayed_packet.as_byte_string(), address)  # Sending to client.
+                    return relayed_packet.header.response_code  # Returning response code.
+
+                else:
+
+                    # Else, we just return a random integer.
+                    return 5
+
+            else:
+
+                self.udp_socket.sendto(response_packet.as_byte_string(), address)
+                return response_code
 
         # Worst case scenario, I have no authority over the domain.
         new_header = packet.header

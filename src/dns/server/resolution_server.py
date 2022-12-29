@@ -4,6 +4,7 @@ import socket
 from typing import Optional
 
 from dns.common.logger import Logger
+from dns.common.recursive import Recursive
 
 from dns.models.dns_packet import DNSPacket, DNSPacketHeaderFlag
 from dns.models.dns_resource import DNSValueType, DNSResource
@@ -17,7 +18,7 @@ from parser.abstract_parser import Mode
 from parser.parser_factory import FileParserFactory
 
 
-class ResolutionServer(BaseDatagramServer, Logger):
+class ResolutionServer(BaseDatagramServer, Logger, Recursive):
     """
     A resolution server must be able to both receive and execute queries,
     it does not have a database, only a configuration file.
@@ -63,52 +64,6 @@ class ResolutionServer(BaseDatagramServer, Logger):
         # self.cache.from_configuration(self.configuration, "R") R: resolution
 
         self.log('all', f'EV | {self.ip_address} | Finished setting up the resolution server!', 'info')
-
-    @staticmethod
-    def get_next_address(received_packet: DNSPacket, domain_name: str) -> Optional[str]:
-        """
-        The get_next_address method is used to determine the next address we will be contacting.
-        At this point we already know that there will only exist values on authority values and extra values.
-        We need to get the 'longest' suffix match out of every authority value, not forgetting to check and replace
-        the name if there's a CNAME entry for any authority, and then retrieve its corresponding address from
-        the extra values.
-
-        :param received_packet: The answer obtained from one of the servers, where we will look for.
-        :param domain_name: The domain name we want and need to match.
-        :return: Returns the address that matched the longest suffix.
-        """
-
-        matched_authority: Optional[DNSResource] = None
-        closest_index: int = 100
-
-        # Let's first check if we can find the match.
-        for auth_entry in received_packet.query_data.authorities_values:
-
-            # Converted the string entry to a DNSResource object, for the ease of use.
-            entry = DNSResource.from_string(auth_entry)
-
-            # Here we check if the entry parameter is a substring for the domain.
-            if entry.type == DNSValueType.NS and entry.parameter in domain_name:
-
-                # If it is, we check if it is the closest substring of the authority values.
-                if (idx := domain_name.index(entry.parameter)) <= closest_index:
-                    closest_index = idx
-                    matched_authority = entry
-
-        # Now that we're sure that we found a match, we will get it address!
-        for extra_value in received_packet.query_data.extra_values:
-
-            # Parsing the string value into a DNSResource.
-            extra_entry = DNSResource.from_string(extra_value)
-
-            # Matching the resource value and the extra value parameter to check if we got the correct address.
-            if matched_authority.value == extra_entry.parameter:
-                # This will be the next address we will be relaying the packet to!
-                return extra_entry.value
-
-        # This function should never return None, if it does, then the server that created 'received_packet'
-        # is not well-built!
-        return None
 
     def relay(self, packet: DNSPacket, address: tuple[str, int]) -> Optional[DNSPacket]:
         """
@@ -163,6 +118,8 @@ class ResolutionServer(BaseDatagramServer, Logger):
 
                 # Ups, the query received is wrongfully formatted, let's warn the user.
                 return DNSPacket.generate_bad_format_response()
+
+            print(received_packet.header.flags)
 
             # Let's check if the answer is already final.
             if received_packet.header.response_code == 0:

@@ -1,9 +1,10 @@
 from typing import Optional
 
 from dns.common.logger import Logger
+from dns.common.recursive import Recursive
 
 from dns.models.dns_database import Database
-from dns.models.dns_packet import DNSPacket, DNSPacketQueryData
+from dns.models.dns_packet import DNSPacket, DNSPacketQueryData, DNSPacketHeaderFlag
 from dns.models.dns_resource import DNSResource, DNSValueType
 
 from dns.server.base_datagram_server import BaseDatagramServer
@@ -17,7 +18,7 @@ from parser.abstract_parser import Mode
 from parser.parser_factory import FileParserFactory
 
 
-class RootServer(BaseDatagramServer, Logger):
+class RootServer(BaseDatagramServer, Logger, Recursive):
     """
     Due to the not so modular implementation of the class Server, it is needed
     an individual class for the Root Server. The only major difference is that
@@ -157,12 +158,45 @@ class RootServer(BaseDatagramServer, Logger):
         # Build a DNS packet based on the database results found.
         response_packet: DNSPacket = DNSPacket.build_packet(packet, database_results)
 
-        # Send the found response to the original sender.
-        self.udp_socket.sendto(response_packet.as_byte_string(), address)
+        # Let's check whether the packet is recursive or not.
+        if DNSPacketHeaderFlag.R in packet.header.flags and response_packet.header.response_code == 1:
 
-        self.log('all', f'RP | {address} | Found and sent an answer to the query:\n\n{response_packet}\n', 'info')
+            self.log('all', f'EV | {address} | Packet is recursive, getting next address.', 'info')
 
-        return response_packet.header.response_code  # Response code from the 'response_packet', never used.
+            # Retrieving the address we should contact next from the response packet.
+            relay_address: str = self.get_next_address(response_packet, packet.query_info.name)
+
+            self.log('all', f'EV | {address} | Relaying packet to address {relay_address}', 'info')
+
+            # Obtaining (or not) the packet resulted from the relay.
+            relayed_packet: Optional[DNSPacket] = self.single_relay(relay_address,
+                                                                    packet,
+                                                                    self.timeout,
+                                                                    self.read_size)
+
+            self.log('all', f'EV | {relay_address} | Success, obtained an answer from the relaying.', 'info')
+
+            # If we got a packet, then we send it to the original client and return the response code.
+            if relayed_packet:
+
+                self.log('all', f'RR | {relay_address} | Sent the final query response to the client.', 'info')
+
+                self.udp_socket.sendto(relayed_packet.as_byte_string(), address)  # Sending to client.
+                return relayed_packet.header.response_code  # Returning response code.
+
+            else:
+
+                self.log('all', f'ER | {address} | There was an error with the connection.', 'error')
+
+                # Else, we just return a random integer.
+                return 5
+
+        else:
+
+            self.log('all', f'RP | {address} | Found and sent an answer to the query:\n\n{response_packet}\n', 'info')
+
+            self.udp_socket.sendto(response_packet.as_byte_string(), address)
+            return response_packet.header.response_code # Response code from the 'response_packet', never used.
 
     def run(self):
 
