@@ -41,7 +41,7 @@ class Logger:
             logger_handler = logging.FileHandler(logger_path, mode='a')  # We are going to append to the file if exists.
 
             # Example: [logger.py - ERROR] [2022-12-18 21:10:40,520] [EZ | 127.0.0.1 | Some error message goes here.]
-            logger_formatter = logging.Formatter("[%(filename)s - %(levelname)s] [%(asctime)s] [%(message)s]")
+            logger_formatter = logging.Formatter("[%(levelname)s] [%(asctime)s] %(message)s")
 
             # Adding the formatter and setting the formatter to the logger handler.
             logger_handler.setFormatter(logger_formatter)

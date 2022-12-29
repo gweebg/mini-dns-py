@@ -2,13 +2,15 @@ import time
 
 from enum import Enum
 from typing import Optional
-from threading import Lock
+from threading import Lock, RLock
+from itertools import filterfalse
 
-from dns.common.logger import Logger
 from dns.models.dns_database import Database
 from dns.models.dns_packet import DNSPacketQueryData, DNSPacketQueryInfo
 from dns.models.dns_resource import DNSResource, DNSValueType
 
+
+# TODO implement __equals__ to cache entry and others.
 
 class EntryOrigin(Enum):
     """
@@ -22,7 +24,7 @@ class EntryOrigin(Enum):
 
 class CacheEntry:
     """
-    This class represents an entry on a TTL cache for resource records.
+    This class represents an entry on a TTL positive cache for resource records.
     """
 
     def __init__(self, resource_record: DNSResource, origin: EntryOrigin, overwrite_ttl: Optional[int] = None) -> None:
@@ -31,7 +33,7 @@ class CacheEntry:
         self.timestamp = None  # When adding this to a cache we will be using CacheEntry::stamp() to mark the time.
         self.origin = origin
 
-        self.ttl = self.data.ttl
+        self.ttl = float(self.data.ttl)
 
         if overwrite_ttl:
             self.ttl = overwrite_ttl  # We can forcefully add a different TTL value to any entry.
@@ -70,28 +72,137 @@ class Cache:
 
     def __init__(self) -> None:
 
-        self.entries: list[CacheEntry] = []
-        self.lock = Lock()
+        self.entries: dict[DNSValueType, list[CacheEntry]] = {}
+        self.__init_cache()
+
+        self.lock = RLock()
+
+    def __init_cache(self):
+
+        for data_value in DNSValueType:
+            self.entries[data_value] = []
 
     def add_entry(self, entry: CacheEntry) -> None:
 
         with self.lock:
             entry.stamp()
-            self.entries.append(entry)
+            self.entries.get(entry.data.type).append(entry)
 
     def add_from_query_data(self, response: DNSPacketQueryData) -> None:
 
-        every_response: list = response.response_values + response.authorities_values + response.extra_values
-
         with self.lock:
-            for response in every_response:
 
+            every_response: list = response.response_values + response.authorities_values + response.extra_values
+
+            for response in every_response:
                 entry = CacheEntry(DNSResource.from_string(response), EntryOrigin.OTHER)
                 entry.stamp()
-                self.entries.append(entry)
+                self.entries.get(entry.data.type).append(entry)
 
-    def match(self, query_info: DNSPacketQueryInfo) -> None:
-        ...
+    def __match_response(self, query_info: DNSPacketQueryInfo) -> Optional[list[DNSResource]]:
 
-    def from_database(self, database: Database) -> None:
+        try:
+            self.lock.acquire()
+
+            response_values = []
+
+            # Iterating over every entry, looking for the ones we want.
+            for entry in self.entries.get(query_info.type_of_value):
+
+                # If the entry is valid (within its TTL), we look up for answers.
+                if entry.is_valid():
+
+                    if entry.data.type == query_info.type_of_value and entry.data.parameter == query_info.name:
+                        response_values.append(entry)
+
+                else:
+
+                    # If the entry is no longer valid, we remove it.
+                    self.entries.get(query_info.type_of_value)[:] = filterfalse(
+                        lambda x: x == entry,
+                        self.entries.get(query_info.type_of_value)
+                    )
+
+            if len(response_values) > 0:
+                return list(map(lambda r: r.data, response_values))
+
+            return None
+
+        finally:
+            self.lock.release()
+
+    def __match_authorities(self, response_values: list[DNSResource], query_info: DNSPacketQueryInfo) -> list[
+        DNSResource]:
+
+        with self.lock:
+
+            authorities_values = []
+
+            for entry in self.entries.get(DNSValueType.NS):  # Iterating over authorities.
+
+                # If entry is valid and not duplicated.
+                if entry.is_valid() and entry.data not in response_values and entry not in authorities_values:
+
+                    if entry.data.parameter in query_info.name:
+                        authorities_values.append(entry)
+
+                else:
+
+                    # If the entry is no longer valid, we remove it.
+                    self.entries.get(DNSValueType.NS)[:] = filterfalse(
+                        lambda x: x == entry,
+                        self.entries.get(DNSValueType.NS)
+                    )
+
+            return list(map(lambda a: a.data, authorities_values))
+
+    def __match_addresses(self, response_values: list[DNSResource], authorities_values: list[DNSResource]) -> list[
+        DNSResource]:
+
+        with self.lock:
+
+            extra_values = []
+
+            # Let's get the addresses of the collected values.
+            for value in response_values + authorities_values:
+
+                for address in self.entries.get(DNSValueType.A):
+
+                    if address.is_valid():
+
+                        updated_value = value.value
+                        if not value.value.endswith("."):
+                            updated_value = value.value + "."
+
+                        if updated_value == address.data.parameter:
+                            extra_values.append(address)
+
+                    else:
+
+                        # If the entry is no longer valid, we remove it.
+                        self.entries.get(DNSValueType.A)[:] = filterfalse(
+                            lambda x: x == address,
+                            self.entries.get(DNSValueType.A)
+                        )
+
+        return list(map(lambda e: e.data, extra_values))
+
+    def cache_match(self, query_info: DNSPacketQueryInfo) -> Optional[DNSPacketQueryData]:
+
+        with self.lock:
+            response_values = self.__match_response(query_info)
+
+            if response_values:
+                authorities_values = self.__match_authorities(response_values, query_info)
+                extra_values = self.__match_addresses(response_values, authorities_values)
+
+                return DNSPacketQueryData(
+                    response_values=response_values,  # TODO, tem de ser strings.
+                    authorities_values=authorities_values,
+                    extra_values=extra_values
+                )
+
+            return None
+
+    def cache_from_database(self, database: Database) -> None:
         ...

@@ -60,8 +60,6 @@ class Database(BaseModel):
         """
         Given domain_name and type_of_value, this function searches the database for full matches of the parameters.
 
-        # Todo: Add PTR search.
-
         :param domain_name: Domain name we are looking for.
         :param type_of_value: Type of value we are looking for.
         :return: List with every full match entry.
@@ -192,11 +190,11 @@ class Database(BaseModel):
         arbitrary_types_allowed = True
 
 
-if __name__ == '__main__':
-
-    names = ["1.0.0.127-inaddr.reverse.maki.", "20023:1.0.0.127-inaddr.reverse.maki."]
-
-    for name in names:
-        print("Start: ", name)
-        print("End: ", Database.get_address_from_ptr(name))
+# if __name__ == '__main__':
+#
+#     names = ["1.0.0.127-inaddr.reverse.maki.", "20023:1.0.0.127-inaddr.reverse.maki."]
+#
+#     for name in names:
+#         print("Start: ", name)
+#         print("End: ", Database.get_address_from_ptr(name))
 

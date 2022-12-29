@@ -3,6 +3,7 @@ import socket
 
 from typing import Optional
 
+from dns.common.cache import Cache
 from dns.common.logger import Logger
 from dns.common.recursive import Recursive
 
@@ -17,7 +18,7 @@ from parser.abstract_parser import Mode
 from parser.parser_factory import FileParserFactory
 
 
-class ResolutionServer(BaseDatagramServer, Logger, Recursive):
+class ResolutionServer(BaseDatagramServer, Logger, Recursive, Cache):
     """
     A resolution server must be able to both receive and execute queries,
     it does not have a database, only a configuration file.
@@ -51,7 +52,7 @@ class ResolutionServer(BaseDatagramServer, Logger, Recursive):
         self.log('all', f'ST | localhost |\nResolution Server information:\n'
                         f' +address:{self.socket_address[0]}\n'
                         f' +port:{self.socket_address[1]}\n'
-                        f' +timeout:{timeout}\n', 'info')
+                        f' +timeout:{timeout}', 'info')
 
         self.log('all', 'EV | localhost | Loaded configuration file.', 'info')
 
@@ -63,10 +64,9 @@ class ResolutionServer(BaseDatagramServer, Logger, Recursive):
         # Storing the timeout value for later use while relaying the message.
         self.timeout = timeout
 
-        # Todo Cache #
-        # Loading database/configuration values into cache.
-        # self.cache = Cache()
-        # self.cache.from_configuration(self.configuration, "R") R: resolution
+        # Initializing cache.
+        super(Recursive, self).__init__()
+        self.log('all', 'EV | localhost | Cache initialized.', 'info')
 
         self.log('all', 'EV | localhost | Finished setting up the resolution server!', 'info')
 
@@ -128,6 +128,10 @@ class ResolutionServer(BaseDatagramServer, Logger, Recursive):
 
             # Let's check if the answer is already final.
             if received_packet.header.response_code == 0:
+
+                self.add_from_query_data(received_packet.query_data)
+                self.log('all', f'EV | localhost | Added to cache:\n{str(received_packet)}', 'info')
+
                 return received_packet
 
             # Ouch, it was not final, let's relay it to somewhere else specified on the received packet!
@@ -181,52 +185,58 @@ class ResolutionServer(BaseDatagramServer, Logger, Recursive):
 
             return 4  # Let's just return 4, as the time of being.
 
-        # Todo Cache #
         # Before executing the query, let's see if its cached.
-        # if self.cache.match(...):
-        #     ...
+        if cached_data := self.cache_match(packet.query_info):
 
-        # We need to know where to relay the query, it will be either to a root server, or if there's a
-        # DD match, we can ask directly to the indicated address.
+            # The variable 'cached_data' is an object of type DNSPacketQueryData.
+            # Building the packet with the obtained data.
+            response = DNSPacket.build_packet(packet, cached_data, True)
 
-        # Let's check our DD records to see if we can match any suffix.
-        # We are keeping a 'next_root' variable in case the root server fails to answer.
-        next_root: int = 0
+            self.log('all', f'EV | localhost | Found a response in cache for:\n{str(packet)}\n', 'info')
 
-        if match := self.configuration.match_dd(packet):
-
-            # Now we can contact this address instead of the root.
-            relay_ip_address: tuple[str, int] = split_address(match.value)
-            self.log('all', f'EV | localhost | Found a match in DD entries for the next hop!', 'info')
-
-        # We didn't find anything, so we will be asking the root server.
         else:
 
-            # Retrieving a root server address.
-            relay_ip_address = split_address(self.root_servers[next_root])
-            self.log('all', f'EV | localhost | Relay address set to one of the root servers.', 'info')
+            # We need to know where to relay the query, it will be either to a root server, or if there's a
+            # DD match, we can ask directly to the indicated address.
 
-        # Now let's relay the query to 'relay_ip_address'!
-        response: DNSPacket = self.relay(packet, relay_ip_address)
+            # Let's check our DD records to see if we can match any suffix.
+            # We are keeping a 'next_root' variable in case the root server fails to answer.
+            next_root: int = 0
 
-        # If the destination is a root server, and the root server is not responding, we will try another one!
-        string_address: str = f'{relay_ip_address[0]}:{relay_ip_address[1]}'
-        if string_address in self.root_servers:
+            if match := self.configuration.match_dd(packet):
 
-            while response is None:
+                # Now we can contact this address instead of the root.
+                relay_ip_address: tuple[str, int] = split_address(match.value)
+                self.log('all', f'EV | localhost | Found a match in DD entries for the next hop!', 'info')
 
-                self.log('all', f'FL | localhost | Failed to contact root server {self.root_servers[next_root]}, '
-                                f'trying next!', 'warning')
+            # We didn't find anything, so we will be asking the root server.
+            else:
 
-                next_root += 1
-
-                # When we reach the final root server we can't do anything more, thus we end the connection.
-                if next_root + 1 >= len(self.root_servers):
-                    self.log('all', f'FL | localhost | Could not find a root server that was available.', 'error')
-                    return 5
-
+                # Retrieving a root server address.
                 relay_ip_address = split_address(self.root_servers[next_root])
-                response = self.relay(packet, relay_ip_address)
+                self.log('all', f'EV | localhost | Relay address set to one of the root servers.', 'info')
+
+            # Now let's relay the query to 'relay_ip_address'!
+            response: DNSPacket = self.relay(packet, relay_ip_address)
+
+            # If the destination is a root server, and the root server is not responding, we will try another one!
+            string_address: str = f'{relay_ip_address[0]}:{relay_ip_address[1]}'
+            if string_address in self.root_servers:
+
+                while response is None:
+
+                    self.log('all', f'FL | localhost | Failed to contact root server {self.root_servers[next_root]}, '
+                                    f'trying next!', 'warning')
+
+                    next_root += 1
+
+                    # When we reach the final root server we can't do anything more, thus we end the connection.
+                    if next_root + 1 >= len(self.root_servers):
+                        self.log('all', f'FL | localhost | Could not find a root server that was available.', 'error')
+                        return 5
+
+                    relay_ip_address = split_address(self.root_servers[next_root])
+                    response = self.relay(packet, relay_ip_address)
 
         # Now that we have our response, let's reply to the client!
         self.udp_socket.sendto(response.as_byte_string(), address)
