@@ -25,10 +25,13 @@ class RootServer(BaseDatagramServer, Logger, Recursive):
     the root server only tries to match the NS entries and not the ones.
     """
 
-    def __init__(self, config_file: str, port: int = 53, timeout: int = 120, debug: bool = False):
+    def __init__(self, config_file: str, port: int = 53, timeout: int = 120, debug: bool = False, recursive: bool = False):
 
         # First, let's get our IP address.
         self.ip_address = get_ip_from_interface(localhost=True)
+
+        # Let's declare if the server is recursive or not.
+        self.is_recursive = recursive
 
         # Initializing the UDP server, dns.server.base_datagram_server::BaseDatagramServer()
         super().__init__(self.ip_address, port, timeout)
@@ -38,16 +41,23 @@ class RootServer(BaseDatagramServer, Logger, Recursive):
 
         # Setting up the logger.
         super(BaseDatagramServer, self).__init__(self.configuration.logs_path, debug)
-        self.log('all', f'EV | {self.socket_address} | Loaded configuration file.', 'info')
+
+        self.log('all', f'ST | localhost |\nRoot Server information:\n'
+                        f' +recursive:{self.is_recursive}\n'
+                        f' +address:{self.socket_address[0]}\n'
+                        f' +port:{self.socket_address[1]}\n'
+                        f' +timeout:{timeout}\n', 'info')
+
+        self.log('all', 'EV | localhost | Loaded configuration file.', 'info')
 
         # Reading and parsing the database file.
         self.database: Database = Database(database=FileParserFactory(self.configuration.database_path, Mode.DB).get_parser().parse())
-        self.log('all', f'EV | {self.socket_address} | Loaded database file.', 'info')
+        self.log('all', 'EV | localhost | Loaded database file.', 'info')
 
         # Storing the timeout value for later use while relaying the message.
         self.timeout = timeout
 
-        self.log('all', f'EV | {self.socket_address} | Finished setting up the root server!', 'info')
+        self.log('all', 'EV | localhost | Finished setting up the root server!', 'info')
 
     def match_address_to_nameserver(self, nameserver: DNSResource) -> Optional[DNSResource]:
         """
@@ -132,7 +142,7 @@ class RootServer(BaseDatagramServer, Logger, Recursive):
 
         # Decoding the received binary encoded data.
         data: str = data.strip().decode("utf-8")
-        self.log('all', f'QR | {address} | Received and decoded a query: {data}', 'info')
+        self.log('all', f'QR | {address[0]}:{address[1]} | Received and decoded the query: {data}', 'info')
 
         try:
 
@@ -142,15 +152,16 @@ class RootServer(BaseDatagramServer, Logger, Recursive):
         except InvalidDNSPacket as error:
 
             # Creating and sending a packet with the information for a parsing error (response code = 3).
+            self.log('all', f'ER | {address[0]}:{address[1]} | Failed to parse the data into a DNSPacket:\n{error}\n', 'error')
             bad_format_response: DNSPacket = DNSPacket.generate_bad_format_response()
-            self.udp_socket.sendto(bad_format_response.as_byte_string(), address)
 
-            self.log('all', f'ER | {address} | Received bad query packet.', 'error')
+            self.log('all', f'RP | {address[0]}:{address[1]} | Sent to address:\n{str(bad_format_response)}\n', 'info')
+            self.udp_socket.sendto(bad_format_response.as_byte_string(), address)
 
             return 3  # Returning the response code.
 
         self.log('all',
-                 f'EV | {address} | Searching for {packet.query_info.name}, {packet.query_info.type_of_value}',
+                 f'EV | localhost | Searching for {packet.query_info.name}, {packet.query_info.type_of_value}',
                  'info')
 
         database_results: DNSPacketQueryData = self.match(packet)  # Check the database for entries.
@@ -159,14 +170,14 @@ class RootServer(BaseDatagramServer, Logger, Recursive):
         response_packet: DNSPacket = DNSPacket.build_packet(packet, database_results)
 
         # Let's check whether the packet is recursive or not.
-        if DNSPacketHeaderFlag.R in packet.header.flags and response_packet.header.response_code == 1:
+        if self.is_recursive and DNSPacketHeaderFlag.R in packet.header.flags and response_packet.header.response_code == 1:
 
-            self.log('all', f'EV | {address} | Packet is recursive, getting next address.', 'info')
+            self.log('all', 'EV | localhost | Packet is recursive, getting next address.', 'info')
 
             # Retrieving the address we should contact next from the response packet.
             relay_address: str = self.get_next_address(response_packet, packet.query_info.name)
 
-            self.log('all', f'EV | {address} | Relaying packet to address {relay_address}', 'info')
+            self.log('all', f'EV | localhost | Relaying packet to address {relay_address}', 'info')
 
             # Obtaining (or not) the packet resulted from the relay.
             relayed_packet: Optional[DNSPacket] = self.single_relay(relay_address,
@@ -174,26 +185,27 @@ class RootServer(BaseDatagramServer, Logger, Recursive):
                                                                     self.timeout,
                                                                     self.read_size)
 
-            self.log('all', f'EV | {relay_address} | Success, obtained an answer from the relaying.', 'info')
-
             # If we got a packet, then we send it to the original client and return the response code.
             if relayed_packet:
 
-                self.log('all', f'RR | {relay_address} | Sent the final query response to the client.', 'info')
+                self.log('all', f'RR | {relay_address} | Success, obtained an answer from '
+                                f'relaying:\n{str(relay_address)}', 'info')
+
+                self.log('all', f'RP | {relay_address} | Sent the final query response to the client.', 'info')
 
                 self.udp_socket.sendto(relayed_packet.as_byte_string(), address)  # Sending to client.
                 return relayed_packet.header.response_code  # Returning response code.
 
             else:
 
-                self.log('all', f'ER | {address} | There was an error with the connection.', 'error')
+                self.log('all', f'ER | localhost | There was an error with the connection.', 'error')
 
                 # Else, we just return a random integer.
                 return 5
 
         else:
 
-            self.log('all', f'RP | {address} | Found and sent an answer to the query:\n\n{response_packet}\n', 'info')
+            self.log('all', f'RP | {address[0]}:{address[1]} | Found and sent an answer to the query:\n\n{response_packet}\n', 'info')
 
             self.udp_socket.sendto(response_packet.as_byte_string(), address)
             return response_packet.header.response_code # Response code from the 'response_packet', never used.
@@ -204,4 +216,4 @@ class RootServer(BaseDatagramServer, Logger, Recursive):
             self.udp_start()
 
         except KeyboardInterrupt:
-            self.log('all', f'EV | {self.socket_address} | Shutting down!', 'info')
+            self.log('all', f'SP | localhost | Shutting down!', 'info')

@@ -7,7 +7,6 @@ from dns.common.logger import Logger
 from dns.common.recursive import Recursive
 
 from dns.models.dns_packet import DNSPacket, DNSPacketHeaderFlag
-from dns.models.dns_resource import DNSValueType, DNSResource
 from dns.server.base_datagram_server import BaseDatagramServer
 from dns.server.server_config import ServerConfiguration
 from dns.utils import split_address, get_ip_from_interface
@@ -48,12 +47,18 @@ class ResolutionServer(BaseDatagramServer, Logger, Recursive):
 
         # Setting up the logger.
         super(BaseDatagramServer, self).__init__(self.configuration.logs_path, debug)
-        self.log('all', f'EV | {self.socket_address} | Loaded configuration file.', 'info')
+
+        self.log('all', f'ST | localhost |\nResolution Server information:\n'
+                        f' +address:{self.socket_address[0]}\n'
+                        f' +port:{self.socket_address[1]}\n'
+                        f' +timeout:{timeout}\n', 'info')
+
+        self.log('all', 'EV | localhost | Loaded configuration file.', 'info')
 
         # Getting the list with the root servers.
         self.root_servers: list[str] = FileParserFactory(self.configuration.root_servers_path,
                                                          Mode.RT).get_parser().parse()
-        self.log('all', f'EV | {self.socket_address} | Loaded root list file.', 'info')
+        self.log('all', 'EV | localhost | Loaded root list file.', 'info')
 
         # Storing the timeout value for later use while relaying the message.
         self.timeout = timeout
@@ -63,7 +68,7 @@ class ResolutionServer(BaseDatagramServer, Logger, Recursive):
         # self.cache = Cache()
         # self.cache.from_configuration(self.configuration, "R") R: resolution
 
-        self.log('all', f'EV | {self.ip_address} | Finished setting up the resolution server!', 'info')
+        self.log('all', 'EV | localhost | Finished setting up the resolution server!', 'info')
 
     def relay(self, packet: DNSPacket, address: tuple[str, int]) -> Optional[DNSPacket]:
         """
@@ -78,7 +83,7 @@ class ResolutionServer(BaseDatagramServer, Logger, Recursive):
         # While the answer we receive is not final, we will keep trying.
         while True:
 
-            self.log('all', f'EV | {address[0]} | Asking {address[0]} for {str(packet.query_info)}', 'info')
+            self.log('all', f'EV | localhost | Asking {address[0]}:{address[1]} for {str(packet.query_info)}', 'info')
 
             # We need to relay the message to another socket, else there will
             # be conflict with the main listening thread.
@@ -98,14 +103,14 @@ class ResolutionServer(BaseDatagramServer, Logger, Recursive):
                 # Waiting, receiving, decoding and parsing the response.
                 data: str = relay_socket.recv(self.read_size).decode('utf-8')
 
-                self.log('all', f'EV | Established connection with {address}.', 'info')
+                self.log('all', f'EV | localhost | Established connection with {address[0]}:{address[1]}.', 'info')
 
             except (socket.error, socket.timeout, TimeoutError):
 
                 # If there's an error when sending to the server, we abort and try another address.
                 relay_socket.close()
 
-                self.log('all', f'TO | Connection with {address} timed out.', 'warning')
+                self.log('all', f'TO | localhost | Connection with {address[0]}:{address[1]} timed out.', 'warning')
 
                 return None  # This will trigger the 'udp_handle' to choose another root server address.
 
@@ -114,12 +119,12 @@ class ResolutionServer(BaseDatagramServer, Logger, Recursive):
 
             except InvalidDNSPacket as error:
 
-                self.log('all', f'ER | {address[0]} | Received bad query packet.', 'error')
+                self.log('all',
+                         f'ER | {address[0]}:{address[1]} | Failed to parse the data into a DNSPacket:\n{error}\n',
+                         'error')
 
                 # Ups, the query received is wrongfully formatted, let's warn the user.
                 return DNSPacket.generate_bad_format_response()
-
-            print(received_packet.header.flags)
 
             # Let's check if the answer is already final.
             if received_packet.header.response_code == 0:
@@ -151,7 +156,7 @@ class ResolutionServer(BaseDatagramServer, Logger, Recursive):
 
         # Decoding the received binary data.
         data: str = data.strip().decode("utf-8")
-        self.log('all', f'QR | {address} | Received and decoded a query: {data}', 'info')
+        self.log('all', f'QR | {address[0]}:{address[1]} | Received and decoded a query: {data}', 'info')
 
         try:
 
@@ -161,16 +166,18 @@ class ResolutionServer(BaseDatagramServer, Logger, Recursive):
         except InvalidDNSPacket as error:
 
             # Creating and sending a packet with the information for a parsing error (response code = 3).
+            self.log('all', f'ER | {address[0]}:{address[1]} | Failed to parse the data into a DNSPacket:\n{error}\n',
+                     'error')
             bad_format_response: DNSPacket = DNSPacket.generate_bad_format_response()
-            self.udp_socket.sendto(bad_format_response.as_byte_string(), address)
 
-            self.log('all', f'ER | {address[0]} | Received bad query packet.', 'error')
+            self.log('all', f'RP | {address[0]}:{address[1]} | Sent to address:\n{str(bad_format_response)}\n', 'info')
+            self.udp_socket.sendto(bad_format_response.as_byte_string(), address)
 
             return 3  # Returning the response code.
 
         if DNSPacketHeaderFlag.Q not in packet.header.flags:
             # If the query isn't of type Q then we shall ignore it.
-            self.log('all', f'EV | {self.ip_address} | Received a query but it does not contain flag Q.', 'warning')
+            self.log('all', f'EV | localhost | Received a query but it does not contain flag Q.', 'warning')
 
             return 4  # Let's just return 4, as the time of being.
 
@@ -184,20 +191,20 @@ class ResolutionServer(BaseDatagramServer, Logger, Recursive):
 
         # Let's check our DD records to see if we can match any suffix.
         # We are keeping a 'next_root' variable in case the root server fails to answer.
-        next_root = 0
+        next_root: int = 0
 
         if match := self.configuration.match_dd(packet):
 
             # Now we can contact this address instead of the root.
             relay_ip_address: tuple[str, int] = split_address(match.value)
-            self.log('all', f'EV | {self.ip_address} | Found a match in DD entries for the next hop!', 'info')
+            self.log('all', f'EV | localhost | Found a match in DD entries for the next hop!', 'info')
 
         # We didn't find anything, so we will be asking the root server.
         else:
 
             # Retrieving a root server address.
             relay_ip_address = split_address(self.root_servers[next_root])
-            self.log('all', f'EV | {self.ip_address} | Relay address set to one of the root servers.', 'info')
+            self.log('all', f'EV | localhost | Relay address set to one of the root servers.', 'info')
 
         # Now let's relay the query to 'relay_ip_address'!
         response: DNSPacket = self.relay(packet, relay_ip_address)
@@ -208,14 +215,14 @@ class ResolutionServer(BaseDatagramServer, Logger, Recursive):
 
             while response is None:
 
-                self.log('all', f'EV | {self.ip_address} | Failed to contact root server {self.root_servers[next_root]}, '
+                self.log('all', f'FL | localhost | Failed to contact root server {self.root_servers[next_root]}, '
                                 f'trying next!', 'warning')
 
                 next_root += 1
 
                 # When we reach the final root server we can't do anything more, thus we end the connection.
                 if next_root + 1 >= len(self.root_servers):
-                    self.log('all', f'SP | {self.ip_address} | Could not find a root server that was available.', 'error')
+                    self.log('all', f'FL | localhost | Could not find a root server that was available.', 'error')
                     return 5
 
                 relay_ip_address = split_address(self.root_servers[next_root])
@@ -223,7 +230,7 @@ class ResolutionServer(BaseDatagramServer, Logger, Recursive):
 
         # Now that we have our response, let's reply to the client!
         self.udp_socket.sendto(response.as_byte_string(), address)
-        self.log('all', f'RR | {address[0]} | Sent the final query response to the client.', 'info')
+        self.log('all', f'RR | {address[0]}:{address[1]} | Sent the final query response to the client:\n{str(response)}\n', 'info')
 
     def run(self):
 
@@ -233,7 +240,7 @@ class ResolutionServer(BaseDatagramServer, Logger, Recursive):
         except KeyboardInterrupt:
 
             self.udp_socket.close()
-            self.log('all', f'SP | {self.ip_address} | Goodbye!', 'info')
+            self.log('all', f'SP | localhost | Shutting down!', 'info')
 
 
 # Setting up the launch part of the server.

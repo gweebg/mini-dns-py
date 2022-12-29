@@ -15,7 +15,7 @@ from dns.server.base_segment_server import BaseSegmentServer
 from dns.server.root_server import RootServer
 from dns.server.server_config import ServerConfiguration
 from dns.models.dns_database import Database
-from dns.utils import send_msg, recv_msg, get_ip_from_interface, split_address
+from dns.utils import send_msg, recv_msg, get_ip_from_interface
 
 from exceptions.exceptions import InvalidDNSPacket, InvalidZoneTransferPacket
 
@@ -32,7 +32,7 @@ class Server(BaseDatagramServer, BaseSegmentServer, Logger, Recursive):
     configuration file and database.
     """
 
-    def __init__(self, config_path: str, port: int = 53, timeout: int = 1600, debug: bool = False, root: bool = False):
+    def __init__(self, config_path: str, port: int = 53, timeout: int = 1600, debug: bool = False, recursive: bool = False):
         """
         DNS Server constructor.
 
@@ -46,11 +46,11 @@ class Server(BaseDatagramServer, BaseSegmentServer, Logger, Recursive):
         super().__init__(get_ip_from_interface(localhost=True), port, timeout, 1024)  # UDP
         super(BaseDatagramServer, self).__init__(get_ip_from_interface(localhost=True), port, timeout, 1024)  # TCP
 
-        # Storing the flag that indicates whether the server is a root server or not.
-        self.is_root = root
+        # Let's declare if the server is recursive or not.
+        self.is_recursive = recursive
 
         # Timeout value.
-        self.timeout  = timeout
+        self.timeout = timeout
 
         # Loading and storing the server configuration.
         self.configuration: ServerConfiguration = FileParserFactory(config_path,
@@ -58,20 +58,27 @@ class Server(BaseDatagramServer, BaseSegmentServer, Logger, Recursive):
 
         # Setting up the logging 'module'.
         super(BaseSegmentServer, self).__init__(self.configuration.logs_path, debug)
-        self.log('all', f'EV | {self.socket_address} | Loaded configuration file.', 'info')
+
+        self.log('all', f'ST | localhost |\nServer information:\n'
+                        f' +recursive:{self.is_recursive}\n'
+                        f' +address:{self.socket_address[0]}\n'
+                        f' +port:{self.socket_address[1]}\n'
+                        f' +timeout:{self.timeout}\n', 'info')
+
+        self.log('all', f'EV | localhost | Loaded configuration file.', 'info')
 
         # If the server is a primary server.
         if self.configuration.primary_server is None:
-            self.log('all', f'EV | {self.socket_address} | Setting up as a Primary Server.', 'info')
+            self.log('all', 'EV | localhost | Setting up server as a primary server.', 'info')
 
             self.database: Database = Database(database=FileParserFactory(self.configuration.database_path,
                                                                           Mode.DB).get_parser().parse())
 
-            self.log('all', f'EV | {self.socket_address} | Loaded database file.', 'info')
+            self.log('all', 'EV | localhost | Loaded database file.', 'info')
 
         # If the server is a secondary server.
         else:
-            self.log('all', f'EV | {self.socket_address} | Setting up as a Secondary Server.', 'info')
+            self.log('all', 'EV | localhost | Setting up server as a secondary server.', 'info')
 
             # This stores the database version for the secondary server and the last time it was updated.
             self.database_version = 0
@@ -89,9 +96,9 @@ class Server(BaseDatagramServer, BaseSegmentServer, Logger, Recursive):
         self.root_servers: list[str] = FileParserFactory(self.configuration.root_servers_path,
                                                          Mode.RT).get_parser().parse()
 
-        self.log('all', f'EV | {self.socket_address}| Loaded root list file.', 'info')
+        self.log('all', 'EV | localhost | Loaded root list file.', 'info')
 
-        self.log('all', f'EV | {self.socket_address} | Finished setting up the server.', 'info')
+        self.log('all', 'EV | localhost | Finished setting up the server.', 'info')
 
     def is_authority(self, name: str):
         """
@@ -189,20 +196,20 @@ class Server(BaseDatagramServer, BaseSegmentServer, Logger, Recursive):
 
         # Receiving and decoding the binary encoded data from the UDP socket.
         data: str = data.strip().decode("utf-8")
-        self.log('all', f'QR | {address} | Received and decoded a query: {data}', 'info')
+        self.log('all', f'QR | {address[0]}:{address[1]} | Received and decoded the query: {data}', 'info')
 
         try:
             # Check if the received data is a DNSPacket.
             packet: DNSPacket = DNSPacket.from_string(data)
 
-        except InvalidDNSPacket:
+        except InvalidDNSPacket as error:
 
             # Generating the error packet.
-            self.log('all', f'ER | {address} | Failed to parse the data into a DNSPacket: {data}', 'error')
+            self.log('all', f'ER | {address[0]}:{address[1]} | Failed to parse the data into a DNSPacket:\n{error}\n', 'error')
             bad_format_packet = DNSPacket.generate_bad_format_response()
 
             # Sending the error packet to the client.
-            self.log('all', f'RP | {address} | Sent to address "invalid dns packet" packet.', 'info')
+            self.log('all', f'RP | {address[0]}:{address[1]} | Sent to address:\n{str(bad_format_packet)}\n', 'info')
             self.udp_socket.sendto(bad_format_packet.as_byte_string(), address)
 
             return 3
@@ -216,7 +223,7 @@ class Server(BaseDatagramServer, BaseSegmentServer, Logger, Recursive):
         if self.is_authority(packet.query_info.name) and is_whitelisted:
 
             self.log(packet.query_info.name,
-                     f'EV | {address} | Searching on database for '
+                     f'EV | localhost | Searching on database for '
                      f'{packet.query_info.name}, {packet.query_info.type_of_value}',
                      'info')
 
@@ -241,23 +248,25 @@ class Server(BaseDatagramServer, BaseSegmentServer, Logger, Recursive):
             # Logging the results.
             if response_code == 2:
 
-                self.log('all', f'RP | {address} | Domain {packet.query_info.name} does not exist.', 'info')
+                self.log('all', f'EV | localhost | Domain {packet.query_info.name} does not exist.', 'info')
 
             elif response_code == 1:
 
-                self.log('all', f'RP | {address} | Domain {packet.query_info.name} exists but its my subdomain.', 'info')
+                self.log('all', f'EV | localhost | Domain {packet.query_info.name} exists but its my subdomain.', 'info')
 
             else:
 
-                self.log('all', f'RP | {address} | Perfect match on {packet.query_info.name}, {packet.query_info.type_of_value}', 'info')
+                self.log('all', f'EV | localhost | Perfect match on {packet.query_info.name}, {packet.query_info.type_of_value}', 'info')
 
             # Let's check whether the flag is recursive or not.
-            if DNSPacketHeaderFlag.R in packet.header.flags and response_packet.header.response_code == 1:
+            if self.is_recursive and DNSPacketHeaderFlag.R in packet.header.flags and response_packet.header.response_code == 1:
 
-                print("IS RECURSIVE!!!")
+                self.log('all', 'EV | localhost | Packet is recursive, getting next address', 'info')
 
                 # Retrieving the address we should contact next from the response packet.
                 relay_address: str = self.get_next_address(response_packet, packet.query_info.name)
+
+                self.log('all', f'EV | localhost | Relaying packet to address {relay_address}', 'info')
 
                 # Obtaining (or not) the packet resulted from the relay.
                 relayed_packet: Optional[DNSPacket] = self.single_relay(relay_address,
@@ -268,10 +277,17 @@ class Server(BaseDatagramServer, BaseSegmentServer, Logger, Recursive):
                 # If we got a packet, then we send it to the original client and return the response code.
                 if relayed_packet:
 
+                    self.log('all', f'RR | {relay_address} | Success, obtained an answer from '
+                                    f'relaying:\n{str(relay_address)}', 'info')
+
+                    self.log('all', f'RP | {relay_address} | Sent the final query response to the client.', 'info')
+
                     self.udp_socket.sendto(relayed_packet.as_byte_string(), address)  # Sending to client.
                     return relayed_packet.header.response_code  # Returning response code.
 
                 else:
+
+                    self.log('all', f'ER | localhost | There was an error with the connection.', 'error')
 
                     # Else, we just return a random integer.
                     return 5
@@ -523,6 +539,10 @@ def main():
                         action='store_true',
                         help='Flag that indicates whether the server is root or not.')
 
+    parser.add_argument('--recursive',
+                        action='store_true',
+                        help='Allow recursive name resolution.')
+
     parser.add_argument('-d', '--debug',
                         action='store_true',
                         help='Run in debug mode.')
@@ -531,11 +551,11 @@ def main():
 
     if args.root:
 
-        server = RootServer(args.configuration, int(args.port), int(args.timeout), args.debug)
+        server = RootServer(args.configuration, int(args.port), int(args.timeout), args.debug, args.recursive)
 
     else:
 
-        server = Server(args.configuration, int(args.port), int(args.timeout), args.debug)
+        server = Server(args.configuration, int(args.port), int(args.timeout), args.debug, args.recursive)
 
     server.run()
 

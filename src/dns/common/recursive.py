@@ -8,6 +8,10 @@ from exceptions.exceptions import InvalidDNSPacket
 
 
 class Recursive:
+    """
+    This class gives possibility for a server to handle and process recursive queries by
+    providing them with the followed methods.
+    """
 
     @staticmethod
     def get_next_address(received_packet: DNSPacket, domain_name: str) -> Optional[str]:
