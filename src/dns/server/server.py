@@ -5,6 +5,7 @@ import time
 from multiprocessing import Process
 from typing import Optional
 
+from dns.common.cache import Cache
 from dns.common.recursive import Recursive
 from dns.common.timer import RepeatedTimer
 from dns.common.logger import Logger
@@ -26,7 +27,7 @@ from parser.parser_factory import FileParserFactory
 from parser.abstract_parser import Mode
 
 
-class Server(BaseDatagramServer, BaseSegmentServer, Logger, Recursive):
+class Server(BaseDatagramServer, BaseSegmentServer, Logger, Recursive, Cache):
     """
     This class represents a DNS server. It answers queries based on its
     configuration file and database.
@@ -67,8 +68,15 @@ class Server(BaseDatagramServer, BaseSegmentServer, Logger, Recursive):
 
         self.log('all', f'EV | localhost | Loaded configuration file.', 'info')
 
+        if self.is_recursive:
+
+            # Initializing cache.
+            super(Recursive, self).__init__()
+            self.log('all', 'EV | localhost | Cache initialized.', 'info')
+
         # If the server is a primary server.
         if self.configuration.primary_server is None:
+
             self.log('all', 'EV | localhost | Setting up server as a primary server.', 'info')
 
             self.database: Database = Database(database=FileParserFactory(self.configuration.database_path,
@@ -222,24 +230,38 @@ class Server(BaseDatagramServer, BaseSegmentServer, Logger, Recursive):
         # a subdomain and if the domain is whitelisted on the configuration file.
         if self.is_authority(packet.query_info.name) and is_whitelisted:
 
-            self.log(packet.query_info.name,
-                     f'EV | localhost | Searching on database for '
-                     f'{packet.query_info.name}, {packet.query_info.type_of_value}',
-                     'info')
+            response_data = None  # Starting state of response_data.
+            if self.is_recursive and DNSPacketHeaderFlag.R in packet.header.flags:
 
-            # Check the database for entries.
-            database_results = self.match(packet)
+                self.log(packet.query_info.name,
+                         f'EV | localhost | Searching on cache for '
+                         f'{packet.query_info.name}, {packet.query_info.type_of_value}',
+                         'info')
 
-            # Check if there were any actual matches on the database, if not reply to client with.
-            # The Server::match() method returns a tuple with the 3 kinds of values, we still need to
-            # construct the packet.
+                # Trying to get data from the cache, if found it returns in form of DNSPacketQueryData, else None.
+                response_data = self.cache_match(packet.query_info)
 
-            # Building the query data part, it is used on the DNSPacket::build_packet() method.
-            response_data = DNSPacketQueryData(
-                response_values=database_results[0],
-                authorities_values=database_results[1],
-                extra_values=database_results[2]
-            )
+            # If response_data is still None, then we search on the database.
+            if not response_data:
+
+                self.log(packet.query_info.name,
+                         f'EV | localhost | Searching on database for '
+                         f'{packet.query_info.name}, {packet.query_info.type_of_value}',
+                         'info')
+
+                # Check the database for entries.
+                database_results = self.match(packet)
+
+                # Check if there were any actual matches on the database, if not reply to client with.
+                # The Server::match() method returns a tuple with the 3 kinds of values, we still need to
+                # construct the packet.
+
+                # Building the query data part, it is used on the DNSPacket::build_packet() method.
+                response_data = DNSPacketQueryData(
+                    response_values=database_results[0],
+                    authorities_values=database_results[1],
+                    extra_values=database_results[2]
+                )
 
             # Building the response packet.
             response_packet = DNSPacket.build_packet(packet, response_data)
@@ -256,7 +278,9 @@ class Server(BaseDatagramServer, BaseSegmentServer, Logger, Recursive):
 
             else:
 
+                self.add_from_query_data(response_packet.query_data)
                 self.log('all', f'EV | localhost | Perfect match on {packet.query_info.name}, {packet.query_info.type_of_value}', 'info')
+                self.log('all', f'EV | localhost | Added response to {packet.query_info.name}, {packet.query_info.type_of_value} to cache.', 'info')
 
             # Let's check whether the flag is recursive or not.
             if self.is_recursive and DNSPacketHeaderFlag.R in packet.header.flags and response_packet.header.response_code == 1:
@@ -281,6 +305,14 @@ class Server(BaseDatagramServer, BaseSegmentServer, Logger, Recursive):
                                     f'relaying:\n{str(relay_address)}', 'info')
 
                     self.log('all', f'RP | {relay_address} | Sent the final query response to the client.', 'info')
+
+                    # If the gotten packet is a perfect match we also add it to the cache.
+                    if relayed_packet.header.response_code == 0:
+
+                        self.add_from_query_data(response_packet.query_data)  # Add to cache.
+
+                        self.log('all', f'EV | localhost | Stored in cache answer to '
+                                        f'query {relayed_packet.query_info.name}, {relayed_packet.query_info.type_of_value}', 'info')
 
                     self.udp_socket.sendto(relayed_packet.as_byte_string(), address)  # Sending to client.
                     return relayed_packet.header.response_code  # Returning response code.
@@ -471,26 +503,30 @@ class Server(BaseDatagramServer, BaseSegmentServer, Logger, Recursive):
         self.log(domain, f'QE | {address[0]} | {ack_packet}', 'info')
 
         # Now everything is prepared for us to receive the lines of the database.
+        with self.lock:
 
-        self.database_version = database_version  # Updating the database version.
-        database: dict[DNSValueType, list[DNSResource]] = {}  # Empty database.
+            self.database_version = database_version  # Updating the database version.
+            database: dict[DNSValueType, list[DNSResource]] = {}  # Empty database.
 
-        # Reading the exact number of lines of the database.
-        for i in range(number_of_entries):
+            # Reading the exact number of lines of the database.
+            for i in range(number_of_entries):
 
-            data = recv_msg(client).decode('ascii')
-            data_as_packet = DNSResource.from_string(data)
-            self.log(domain, f'RR | {address[0]} | {data}', 'info')
+                data = recv_msg(client).decode('ascii')
+                data_as_packet = DNSResource.from_string(data)
+                self.log(domain, f'RR | {address[0]} | {data}', 'info')
 
-            if data_as_packet.type not in database:
-                database[data_as_packet.type] = []
+                if data_as_packet.type not in database:
+                    database[data_as_packet.type] = []
 
-            # Adding the resource to the database.
-            database[data_as_packet.type].append(data_as_packet)
+                # Adding the resource to the database.
+                database[data_as_packet.type].append(data_as_packet)
 
-        # Setting the database acquired and the update time.
-        self.database = Database(database=database)
-        self.database_updated_at = time.time()
+            # Setting the database acquired and the update time.
+            self.database = Database(database=database)
+            self.database_updated_at = time.time()
+
+            # Adding the database lines to the cache.
+            self.cache_from_database(self.database)
 
     def run(self):
         """

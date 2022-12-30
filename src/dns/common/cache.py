@@ -214,8 +214,38 @@ class Cache:
             return None
 
     def cache_from_database(self, database: Database) -> None:
-        ...
+
+        with self.lock:
+
+            flattened_database = [x for v in database.database.values() for x in v]
+
+            entry: DNSResource
+            for entry in flattened_database:
+
+                cache_entry = CacheEntry(entry, EntryOrigin.FILE)
+                self.add_entry(cache_entry)
 
     @staticmethod
     def map_to_str(data: list[CacheEntry]) -> list[str]:
         return list(map(lambda a: a.data.as_log_string(), data))
+
+
+"""
+
+# Since, it is a recursive query, we shall check the cache first!
+                cached_data = self.cache_match(packet.query_info)
+                if cached_data:
+
+                    # Building the response from the obtained data.
+                    response = DNSPacket.build_packet(packet, cached_data, True)
+
+                    self.udp_socket.sendto(response.as_byte_string(), address)  # Sending to client.
+
+                    self.log('all', f'EV | localhost | Found a response in cache for:\n{str(packet)}', 'info')
+                    self.log('all', f'RP | {address} | Sent the final query response to the client.', 'info')
+
+                    return response.header.response_code
+
+                else:  # Nothing was found on cache, so we forward the query.
+
+"""
