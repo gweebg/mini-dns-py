@@ -17,15 +17,13 @@ class DNSPacketHeaderFlag(Enum):
     """
     Enumeration that represents a DNS Packet Header Flag.
     Q: Query.
-    R: Response.
+    R: Recursive.
     A: Response is authoritative.
-    F: Final - the response if final.
     """
 
     Q = 1
     R = 2
     A = 3
-    F = 4
 
 
 class DNSPacketHeader(BaseModel):
@@ -47,7 +45,7 @@ class DNSPacketHeader(BaseModel):
     """
 
     message_id: int = Field(gt=0, lt=65536)
-    flags: conlist(DNSPacketHeaderFlag, min_items=1, max_items=3)
+    flags: conlist(DNSPacketHeaderFlag, max_items=3)
     response_code: int = Field(ge=0, le=3)
     number_values: int = Field(ge=0, le=255)
     number_authorities: int = Field(ge=0, le=255)
@@ -65,7 +63,7 @@ class DNSPacketHeader(BaseModel):
         :param flag_string: String to be parsed.
         :return: [DNSPacketHeaderFlag] - List containing query flags.
         """
-        return [DNSPacketHeaderFlag[flag] for flag in flag_string.split('+')]
+        return [DNSPacketHeaderFlag[flag] for flag in flag_string.split('+')] if flag_string else []
 
     @classmethod
     def from_string(cls, header_string: str) -> 'DNSPacketHeader':
@@ -84,7 +82,9 @@ class DNSPacketHeader(BaseModel):
 
             # Unpacking the split up string.
             message_id = int(separated_values[0])
+
             flags = cls.__unpack_flags__(separated_values[1])
+
             response_code = int(separated_values[2])
             number_values = int(separated_values[3])
             number_authorities = int(separated_values[4])

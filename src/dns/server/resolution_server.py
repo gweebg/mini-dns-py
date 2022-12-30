@@ -186,13 +186,14 @@ class ResolutionServer(BaseDatagramServer, Logger, Recursive, Cache):
             return 4  # Let's just return 4, as the time of being.
 
         # Before executing the query, let's see if its cached.
-        if cached_data := self.cache_match(packet.query_info):
+        cached_data = self.cache_match(packet.query_info)
+        if cached_data:
 
             # The variable 'cached_data' is an object of type DNSPacketQueryData.
             # Building the packet with the obtained data.
             response = DNSPacket.build_packet(packet, cached_data, True)
 
-            self.log('all', f'EV | localhost | Found a response in cache for:\n{str(packet)}\n', 'info')
+            self.log('all', f'EV | localhost | Found a response in cache for:\n{str(packet)}', 'info')
 
         else:
 

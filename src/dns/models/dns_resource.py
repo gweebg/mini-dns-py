@@ -81,3 +81,15 @@ class DNSResource:
         :return: String representation of a DNSResource.
         """
         return f"<{self.type}> : {self.parameter}, {self.value}, {self.ttl}, {self.priority}"
+
+    def __eq__(self, other: 'DNSResource'):
+
+        if self.priority == other.priority and \
+                self.ttl == other.ttl and \
+                self.value == other.value and \
+                self.type == other.type and \
+                self.parameter == other.parameter:
+
+            return True
+
+        return False
