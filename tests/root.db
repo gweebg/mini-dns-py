@@ -1,5 +1,0 @@
-# Root server list file for locally testing the resolution server.
-
-# Since, we're locally testing, the IP Address will be the localhost with a port.
-127.0.0.1:20023
-
