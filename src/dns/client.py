@@ -3,7 +3,7 @@ import argparse
 
 from dns.models.dns_packet import DNSPacket
 from exceptions.exceptions import InvalidQueryValue, InvalidDNSPacket
-from dns.utils import __ipv4_type_validator__, __load_latest_id__
+from dns.common.utils import __ipv4_type_validator__, __load_latest_id__
 
 
 class Client:

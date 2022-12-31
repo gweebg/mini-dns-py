@@ -103,20 +103,9 @@ class Database(BaseModel):
 
                 if entry not in prev_values and entry not in authorities_values:
 
-                    if entry.parameter in domain_name:
+                    if entry.parameter in domain_name or domain_name in entry.parameter:
 
                         authorities_values.append(entry)
-
-        # if nameservers:
-        #     for entry in nameservers:
-        #         if entry not in prev_values and entry not in authorities_values:
-        #
-        #             if type_of_value in [DNSValueType.A, DNSValueType.CNAME]:
-        #                 if entry.parameter in domain_name:
-        #                     authorities_values.append(entry)
-        #
-        #             if domain_name in entry.parameter:
-        #                 authorities_values.append(entry)
 
         return authorities_values
 

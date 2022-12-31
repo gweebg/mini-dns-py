@@ -5,7 +5,7 @@ from pydantic import BaseModel, Field, conlist
 
 from dns.models.dns_resource import DNSValueType, DNSResource
 from exceptions.exceptions import InvalidDNSPacket
-from dns.utils import __get_latest_id__
+from dns.common.utils import __get_latest_id__
 
 """
 This module is responsible for the DNS Packet Data Unit implementation.
@@ -404,12 +404,12 @@ class DNSPacket(BaseModel):
         return cls(header=query_header, query_info=query_info, query_data=query_data)
 
     @classmethod
-    def build_packet(cls, original_packet: 'DNSPacket', response: DNSPacketQueryData, from_cache: bool = False) -> 'DNSPacket':
+    def build_packet(cls, original_packet: 'DNSPacket', response: DNSPacketQueryData, not_authority: bool = False) -> 'DNSPacket':
         """
         Given a packet and a new, updated, query data, this method builds a properlly formatted
         packet with the new values using the message id from the original packet.
 
-        :param from_cache: If active, the packet won't have the A flag.
+        :param not_authority: If active, the packet won't have the A flag.
         :param original_packet: Packet to build from.
         :param response: Query data to use.
         :return: DNSPacket object with the correct header, info and data.
@@ -425,7 +425,7 @@ class DNSPacket(BaseModel):
 
                 response_code = 2
 
-        flags = [DNSPacketHeaderFlag.A] if not from_cache else []
+        flags = [DNSPacketHeaderFlag.A] if not not_authority else []
         if DNSPacketHeaderFlag.R in original_packet.header.flags:
             flags.append(DNSPacketHeaderFlag.R)
 

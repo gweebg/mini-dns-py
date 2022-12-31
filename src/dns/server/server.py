@@ -5,26 +5,49 @@ import time
 from multiprocessing import Process
 from typing import Optional
 
-from dns.common.cache import Cache
+from dns.common.utils import send_msg, recv_msg, get_ip_from_interface
 from dns.common.recursive import Recursive
 from dns.common.timer import RepeatedTimer
 from dns.common.logger import Logger
+from dns.common.cache import Cache
+from dns.models.config_entry import ConfigEntry
 
 from dns.models.dns_packet import DNSPacket, DNSPacketQueryData, DNSPacketHeaderFlag
+from dns.models.zone_transfer_packet import ZoneTransferPacket, ZoneTransferMode
+from dns.models.dns_resource import DNSResource, DNSValueType
+from dns.models.dns_database import Database
+
 from dns.server.base_datagram_server import BaseDatagramServer
 from dns.server.base_segment_server import BaseSegmentServer
 from dns.server.root_server import RootServer
 from dns.server.server_config import ServerConfiguration
-from dns.models.dns_database import Database
-from dns.utils import send_msg, recv_msg, get_ip_from_interface
 
 from exceptions.exceptions import InvalidDNSPacket, InvalidZoneTransferPacket
 
-from dns.models.zone_transfer_packet import ZoneTransferPacket, ZoneTransferMode
-from dns.models.dns_resource import DNSResource, DNSValueType
-
 from parser.parser_factory import FileParserFactory
 from parser.abstract_parser import Mode
+
+
+def can_forward(packet: DNSPacket, configuration_entry: ConfigEntry) -> bool:
+    """
+    This function checks whether a packet should be forwarded or not.
+
+    :param packet: Packet to check.
+    :param configuration_entry: Where my domain name is.
+    :return: True if it can be, False otherwise.
+    """
+
+    if packet.header.response_code == 1:
+
+        # Getting the subdomain name from the query.
+        subdomain_name: str = packet.query_info.name.split(".", 1)[1][:-1]
+
+        # My domain name.
+        my_domain_name: str = configuration_entry.parameter
+
+        return not (subdomain_name == my_domain_name)
+
+    return False
 
 
 class Server(BaseDatagramServer, BaseSegmentServer, Logger, Recursive, Cache):
@@ -49,6 +72,8 @@ class Server(BaseDatagramServer, BaseSegmentServer, Logger, Recursive, Cache):
 
         # Let's declare if the server is recursive or not.
         self.is_recursive = recursive
+
+        self.is_secondary = False
 
         # Timeout value.
         self.timeout = timeout
@@ -87,6 +112,8 @@ class Server(BaseDatagramServer, BaseSegmentServer, Logger, Recursive, Cache):
         # If the server is a secondary server.
         else:
             self.log('all', 'EV | localhost | Setting up server as a secondary server.', 'info')
+
+            self.is_secondary = True
 
             # This stores the database version for the secondary server and the last time it was updated.
             self.database_version = 0
@@ -231,7 +258,7 @@ class Server(BaseDatagramServer, BaseSegmentServer, Logger, Recursive, Cache):
         if self.is_authority(packet.query_info.name) and is_whitelisted:
 
             response_data = None  # Starting state of response_data.
-            if self.is_recursive and DNSPacketHeaderFlag.R in packet.header.flags:
+            if self.is_recursive:  # and DNSPacketHeaderFlag.R in packet.header.flags:
 
                 self.log(packet.query_info.name,
                          f'EV | localhost | Searching on cache for '
@@ -264,7 +291,7 @@ class Server(BaseDatagramServer, BaseSegmentServer, Logger, Recursive, Cache):
                 )
 
             # Building the response packet.
-            response_packet = DNSPacket.build_packet(packet, response_data)
+            response_packet = DNSPacket.build_packet(packet, response_data, self.is_secondary)
             response_code = response_packet.header.response_code
 
             # Logging the results.
@@ -283,7 +310,7 @@ class Server(BaseDatagramServer, BaseSegmentServer, Logger, Recursive, Cache):
                 self.log('all', f'EV | localhost | Added response to {packet.query_info.name}, {packet.query_info.type_of_value} to cache.', 'info')
 
             # Let's check whether the flag is recursive or not.
-            if self.is_recursive and DNSPacketHeaderFlag.R in packet.header.flags and response_packet.header.response_code == 1:
+            if self.is_recursive and DNSPacketHeaderFlag.R in packet.header.flags and can_forward(packet, self.configuration.allowed_domains[0]):
 
                 self.log('all', 'EV | localhost | Packet is recursive, getting next address', 'info')
 
@@ -598,4 +625,3 @@ def main():
 
 if __name__ == "__main__":
     SystemExit(main())
-

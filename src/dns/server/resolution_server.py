@@ -10,7 +10,7 @@ from dns.common.recursive import Recursive
 from dns.models.dns_packet import DNSPacket, DNSPacketHeaderFlag
 from dns.server.base_datagram_server import BaseDatagramServer
 from dns.server.server_config import ServerConfiguration
-from dns.utils import split_address, get_ip_from_interface
+from dns.common.utils import split_address, get_ip_from_interface
 
 from exceptions.exceptions import InvalidDNSPacket
 
@@ -70,6 +70,10 @@ class ResolutionServer(BaseDatagramServer, Logger, Recursive, Cache):
 
         self.log('all', 'EV | localhost | Finished setting up the resolution server!', 'info')
 
+    @staticmethod
+    def get_max_hops_from_name(name: str):
+        return name.count(".")
+
     def relay(self, packet: DNSPacket, address: tuple[str, int]) -> Optional[DNSPacket]:
         """
         This method is responsible for obtaining the query result by
@@ -79,6 +83,9 @@ class ResolutionServer(BaseDatagramServer, Logger, Recursive, Cache):
         :param address: The address we're going to relay to.
         :return: None
         """
+
+        max_hops: int = self.get_max_hops_from_name(packet.query_info.name)
+        current_hop: int = 0
 
         # While the answer we receive is not final, we will keep trying.
         while True:
@@ -125,6 +132,11 @@ class ResolutionServer(BaseDatagramServer, Logger, Recursive, Cache):
 
                 # Ups, the query received is wrongfully formatted, let's warn the user.
                 return DNSPacket.generate_bad_format_response()
+
+            current_hop += 1
+
+            if current_hop >= max_hops:
+                return received_packet
 
             # Let's check if the answer is already final.
             if received_packet.header.response_code == 0:

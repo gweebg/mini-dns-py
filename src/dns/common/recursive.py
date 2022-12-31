@@ -3,7 +3,7 @@ from typing import Optional
 
 from dns.models.dns_packet import DNSPacket
 from dns.models.dns_resource import DNSResource, DNSValueType
-from dns.utils import split_address
+from dns.common.utils import split_address
 from exceptions.exceptions import InvalidDNSPacket
 
 
@@ -113,3 +113,5 @@ class Recursive:
 
         relay_socket.close()
         return next_response
+
+
