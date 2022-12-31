@@ -1,5 +1,6 @@
 from typing import Optional
 
+from dns.common.cache import Cache
 from dns.common.logger import Logger
 from dns.common.recursive import Recursive
 
@@ -10,7 +11,7 @@ from dns.models.dns_resource import DNSResource, DNSValueType
 from dns.server.base_datagram_server import BaseDatagramServer
 from dns.server.server_config import ServerConfiguration
 
-from dns.utils import get_ip_from_interface
+from dns.common.utils import get_ip_from_interface
 
 from exceptions.exceptions import InvalidDNSPacket
 
@@ -18,14 +19,15 @@ from parser.abstract_parser import Mode
 from parser.parser_factory import FileParserFactory
 
 
-class RootServer(BaseDatagramServer, Logger, Recursive):
+class RootServer(BaseDatagramServer, Logger, Recursive, Cache):
     """
     Due to the not so modular implementation of the class Server, it is needed
     an individual class for the Root Server. The only major difference is that
     the root server only tries to match the NS entries and not the ones.
     """
 
-    def __init__(self, config_file: str, port: int = 53, timeout: int = 120, debug: bool = False, recursive: bool = False):
+    def __init__(self, config_file: str, port: int = 53, timeout: int = 120, debug: bool = False,
+                 recursive: bool = False):
 
         # First, let's get our IP address.
         self.ip_address = get_ip_from_interface(localhost=True)
@@ -33,7 +35,7 @@ class RootServer(BaseDatagramServer, Logger, Recursive):
         # Let's declare if the server is recursive or not.
         self.is_recursive = recursive
 
-        # Initializing the UDP server, dns.server.base_datagram_server::BaseDatagramServer()
+        # Initializing the UDP server, dns.server.base_datagram_server::BaseDatagramServer().
         super().__init__(self.ip_address, port, timeout)
 
         # Reading and parsing the configuration file.
@@ -47,6 +49,12 @@ class RootServer(BaseDatagramServer, Logger, Recursive):
                         f' +address:{self.socket_address[0]}\n'
                         f' +port:{self.socket_address[1]}\n'
                         f' +timeout:{timeout}\n', 'info')
+
+        if self.is_recursive:
+
+            # Initializing cache.
+            super(Recursive, self).__init__()
+            self.log('all', 'EV | localhost | Cache initialized.', 'info')
 
         self.log('all', 'EV | localhost | Loaded configuration file.', 'info')
 
@@ -63,6 +71,8 @@ class RootServer(BaseDatagramServer, Logger, Recursive):
         """
         Given a nameserver entry of the database, this method tries to match
         the nameserver to an 'A' entry of the database.
+
+        Status: OK
 
         :param nameserver: Nameserver to match.
         :return: If found the address, else None.
@@ -83,6 +93,8 @@ class RootServer(BaseDatagramServer, Logger, Recursive):
         """
         This method matches a packet to its coorresponding authorities and extra values, since
         this is a root server, we won't have any response values.
+
+        Status: OK
 
         :param packet: Packet to match.
         :return: Query data used to build a response.
@@ -164,10 +176,21 @@ class RootServer(BaseDatagramServer, Logger, Recursive):
                  f'EV | localhost | Searching for {packet.query_info.name}, {packet.query_info.type_of_value}',
                  'info')
 
-        database_results: DNSPacketQueryData = self.match(packet)  # Check the database for entries.
+        # If the server supports recursive mode, we check cache.
+        results: Optional[DNSPacketQueryData] = None
+        if self.is_recursive:
+            results = self.cache_match(packet.query_info)
+
+        if not results:  # Else we check the database.
+
+            results = self.match(packet)  # Check the database for entries.
+
+            # If the found results are an exact match, we save them to the cache.
+            if len(results.response_values) > 0:
+                self.add_from_query_data(results)
 
         # Build a DNS packet based on the database results found.
-        response_packet: DNSPacket = DNSPacket.build_packet(packet, database_results)
+        response_packet: DNSPacket = DNSPacket.build_packet(packet, results)
 
         # Let's check whether the packet is recursive or not.
         if self.is_recursive and DNSPacketHeaderFlag.R in packet.header.flags and response_packet.header.response_code == 1:
@@ -187,6 +210,10 @@ class RootServer(BaseDatagramServer, Logger, Recursive):
 
             # If we got a packet, then we send it to the original client and return the response code.
             if relayed_packet:
+
+                # If the packet is an exact match we cache it.
+                if relayed_packet.header.response_code == 0:
+                    self.add_from_query_data(relayed_packet.query_data)
 
                 self.log('all', f'RR | {relay_address} | Success, obtained an answer from '
                                 f'relaying:\n{str(relay_address)}', 'info')
