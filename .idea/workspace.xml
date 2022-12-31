@@ -4,53 +4,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8fb73730-5d4d-4194-858b-416c8aec73ad" name="Changes" comment="Cache on server implemented.&#10;&#10;Missing cache on root.">
-      <change afterPath="$PROJECT_DIR$/core-zaibatsu/configurations/0.10-inaddr.reverse.zaibatsu./configuration_0.10-inaddr_sp.conf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-zaibatsu/configurations/kaguya.shinomiya.zaibatsu./configuration_kaguya_sp.conf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-zaibatsu/configurations/kaguya.shinomiya.zaibatsu./configuration_kaguya_ss1.conf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-zaibatsu/configurations/kaguya.shinomiya.zaibatsu./configuration_kaguya_ss2.conf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-zaibatsu/configurations/maki.shijo.zaibatsu./configuration_maki_sp.conf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-zaibatsu/configurations/maki.shijo.zaibatsu./configuration_maki_ss1.conf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-zaibatsu/configurations/maki.shijo.zaibatsu./configuration_maki_ss2.conf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-zaibatsu/configurations/resolution/configuration_resolution_sp.conf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-zaibatsu/configurations/resolution/configuration_resolution_sp_maki.conf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-zaibatsu/configurations/reverse.zaibatsu./configuration_reverse_sp.conf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-zaibatsu/configurations/shijo.zaibatsu./configuration_shijo_sp.conf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-zaibatsu/configurations/shijo.zaibatsu./configuration_shijo_ss1.conf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-zaibatsu/configurations/shijo.zaibatsu./configuration_shijo_ss2.conf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-zaibatsu/configurations/shinomiya.zaibatsu./configuration_shinomiya_sp.conf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-zaibatsu/configurations/shinomiya.zaibatsu./configuration_shinomiya_ss1.conf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-zaibatsu/configurations/shinomiya.zaibatsu./configuration_shinomiya_ss2.conf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-zaibatsu/configurations/zaibatsu./configuration_zaibatsu.conf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-zaibatsu/configurations/zaibatsu./configuration_zaibatsu_babi.conf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-zaibatsu/root_list.conf" afterDir="false" />
+    <list default="true" id="8fb73730-5d4d-4194-858b-416c8aec73ad" name="Changes" comment="Finished configuration files.&#10;&#10;Still missing cache on root.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core-zaibatsu/database_0.10-inaddr.conf" beforeDir="false" afterPath="$PROJECT_DIR$/core-zaibatsu/databases/database_0.10-inaddr.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core-zaibatsu/database_kaguya.conf" beforeDir="false" afterPath="$PROJECT_DIR$/core-zaibatsu/databases/database_kaguya.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core-zaibatsu/database_maki.conf" beforeDir="false" afterPath="$PROJECT_DIR$/core-zaibatsu/databases/database_maki.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core-zaibatsu/database_reverse.conf" beforeDir="false" afterPath="$PROJECT_DIR$/core-zaibatsu/databases/database_reverse.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core-zaibatsu/database_shijo.conf" beforeDir="false" afterPath="$PROJECT_DIR$/core-zaibatsu/databases/database_shijo.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core-zaibatsu/database_shinomiya.conf" beforeDir="false" afterPath="$PROJECT_DIR$/core-zaibatsu/databases/database_shinomiya.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core-zaibatsu/database_zaibatsu.conf" beforeDir="false" afterPath="$PROJECT_DIR$/core-zaibatsu/databases/database_zaibatsu.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/config_rt.conf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/config_sp.conf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/config_sr.conf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/config_ss.conf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/database.conf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/root.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/root_database.conf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/zaibatsu/config_iino_shijo.conf" beforeDir="false" afterPath="$PROJECT_DIR$/tests/testing-zaibatsu/config_iino_shijo.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/zaibatsu/config_inaddr.conf" beforeDir="false" afterPath="$PROJECT_DIR$/tests/testing-zaibatsu/config_inaddr.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/zaibatsu/config_reverse.conf" beforeDir="false" afterPath="$PROJECT_DIR$/tests/testing-zaibatsu/config_reverse.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/zaibatsu/config_rt.conf" beforeDir="false" afterPath="$PROJECT_DIR$/tests/testing-zaibatsu/config_rt.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/zaibatsu/config_sp_shijo.conf" beforeDir="false" afterPath="$PROJECT_DIR$/tests/testing-zaibatsu/config_sp_shijo.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/zaibatsu/config_sr.conf" beforeDir="false" afterPath="$PROJECT_DIR$/tests/testing-zaibatsu/config_sr.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/zaibatsu/database_inaddr.conf" beforeDir="false" afterPath="$PROJECT_DIR$/tests/testing-zaibatsu/database_inaddr.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/zaibatsu/database_reverse.conf" beforeDir="false" afterPath="$PROJECT_DIR$/tests/testing-zaibatsu/database_reverse.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/zaibatsu/database_root.conf" beforeDir="false" afterPath="$PROJECT_DIR$/tests/testing-zaibatsu/database_root.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/zaibatsu/database_sp_iino.conf" beforeDir="false" afterPath="$PROJECT_DIR$/tests/testing-zaibatsu/database_sp_iino.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/zaibatsu/database_sp_shijo.conf" beforeDir="false" afterPath="$PROJECT_DIR$/tests/testing-zaibatsu/database_sp_shijo.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/zaibatsu/root.db" beforeDir="false" afterPath="$PROJECT_DIR$/tests/testing-zaibatsu/root.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core-zaibatsu/databases/database_zaibatsu.conf" beforeDir="false" afterPath="$PROJECT_DIR$/core-zaibatsu/databases/database_zaibatsu.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dns/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dns/common/recursive.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/common/recursive.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dns/models/dns_database.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/models/dns_database.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dns/models/dns_packet.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/models/dns_packet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dns/server/resolution_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/server/resolution_server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dns/server/root_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/server/root_server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dns/server/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/server/server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dns/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/common/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/testing-zaibatsu/config_iino_shijo.conf" beforeDir="false" afterPath="$PROJECT_DIR$/tests/zaibatsu/config_iino_shijo.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/testing-zaibatsu/config_inaddr.conf" beforeDir="false" afterPath="$PROJECT_DIR$/tests/zaibatsu/config_inaddr.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/testing-zaibatsu/config_reverse.conf" beforeDir="false" afterPath="$PROJECT_DIR$/tests/zaibatsu/config_reverse.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/testing-zaibatsu/config_rt.conf" beforeDir="false" afterPath="$PROJECT_DIR$/tests/zaibatsu/config_rt.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/testing-zaibatsu/config_sp_shijo.conf" beforeDir="false" afterPath="$PROJECT_DIR$/tests/zaibatsu/config_sp_shijo.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/testing-zaibatsu/config_sr.conf" beforeDir="false" afterPath="$PROJECT_DIR$/tests/zaibatsu/config_sr.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/testing-zaibatsu/database_inaddr.conf" beforeDir="false" afterPath="$PROJECT_DIR$/tests/zaibatsu/database_inaddr.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/testing-zaibatsu/database_reverse.conf" beforeDir="false" afterPath="$PROJECT_DIR$/tests/zaibatsu/database_reverse.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/testing-zaibatsu/database_root.conf" beforeDir="false" afterPath="$PROJECT_DIR$/tests/zaibatsu/database_root.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/testing-zaibatsu/database_sp_iino.conf" beforeDir="false" afterPath="$PROJECT_DIR$/tests/zaibatsu/database_sp_iino.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/testing-zaibatsu/database_sp_shijo.conf" beforeDir="false" afterPath="$PROJECT_DIR$/tests/zaibatsu/database_sp_shijo.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/testing-zaibatsu/root.db" beforeDir="false" afterPath="$PROJECT_DIR$/tests/zaibatsu/root.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,11 +91,11 @@
       <recent name="$PROJECT_DIR$/core" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/dns/common" />
       <recent name="$PROJECT_DIR$/core-zaibatsu/configurations/zaibatsu." />
       <recent name="$PROJECT_DIR$/core-zaibatsu/databases" />
       <recent name="$PROJECT_DIR$/tests" />
       <recent name="$PROJECT_DIR$/src/dns/models" />
-      <recent name="$PROJECT_DIR$/src/dns" />
     </key>
   </component>
   <component name="RunManager" selected="Python.client (w/ args)">
@@ -137,7 +113,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/dns/client.py" />
-      <option name="PARAMETERS" value="127.0.0.1:20022 -n www.iino.shijo.maki. -t A -r" />
+      <option name="PARAMETERS" value="127.0.0.1:20022 -n www1.iino.shijo.maki. -t A -r" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -434,14 +410,11 @@
       <workItem from="1672340327969" duration="9632000" />
       <workItem from="1672354791231" duration="3418000" />
       <workItem from="1672397859318" duration="4511000" />
-      <workItem from="1672432194127" duration="4519000" />
-    </task>
-    <task id="LOCAL-00031" summary="Fixed enconding from 'utf-8' -&gt; 'ascii'.">
-      <created>1668959892865</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1668959892865</updated>
+      <workItem from="1672432194127" duration="4984000" />
+      <workItem from="1672439834242" duration="2998000" />
+      <workItem from="1672494922812" duration="2605000" />
+      <workItem from="1672511782062" duration="391000" />
+      <workItem from="1672521512317" duration="6070000" />
     </task>
     <task id="LOCAL-00032" summary="Fixed encoding from 'utf-8' -&gt; 'ascii'.">
       <created>1668959906932</created>
@@ -779,7 +752,14 @@
       <option name="project" value="LOCAL" />
       <updated>1672433950374</updated>
     </task>
-    <option name="localTasksCounter" value="80" />
+    <task id="LOCAL-00080" summary="Finished configuration files.&#10;&#10;Still missing cache on root.">
+      <created>1672436801539</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1672436801540</updated>
+    </task>
+    <option name="localTasksCounter" value="81" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -802,7 +782,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added common package.&#10;&#10;Common package includes the module cache and logger." />
     <MESSAGE value="Iterative resolution almost done.&#10;&#10;Only missing the Todo's!" />
     <MESSAGE value="Added periodic zone transfer requests to SS." />
     <MESSAGE value="Fixed logic bug in relay().&#10;&#10;Removed tld_server.py, useless." />
@@ -827,25 +806,26 @@
     <MESSAGE value="Cache almost fully implemented.&#10;&#10;Added database files for the new testing environment." />
     <MESSAGE value="Cache fully implemented on resolution server.&#10;&#10;Missing server and root server." />
     <MESSAGE value="Cache on server implemented.&#10;&#10;Missing cache on root." />
-    <option name="LAST_COMMIT_MESSAGE" value="Cache on server implemented.&#10;&#10;Missing cache on root." />
+    <MESSAGE value="Finished configuration files.&#10;&#10;Still missing cache on root." />
+    <option name="LAST_COMMIT_MESSAGE" value="Finished configuration files.&#10;&#10;Still missing cache on root." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/mini_dns_py$server__secondary_.coverage" NAME="server (secondary) Coverage Results" MODIFIED="1671400012740" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/mini_dns_py$zone_transfer_packet.coverage" NAME="zone_transfer_packet Coverage Results" MODIFIED="1669032299984" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/models" />
     <SUITE FILE_PATH="coverage/mini_dns_py$server.coverage" NAME="server Coverage Results" MODIFIED="1668880885650" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns" />
     <SUITE FILE_PATH="coverage/mini_dns_py$Client__w__args_.coverage" NAME="Client (w/ args) Coverage Results" MODIFIED="1668880890614" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns" />
-    <SUITE FILE_PATH="coverage/mini_dns_py$server__sub_primary_.coverage" NAME="server (sub primary) Coverage Results" MODIFIED="1672433777527" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/mini_dns_py$server__sub_primary_.coverage" NAME="server (sub primary) Coverage Results" MODIFIED="1672529378444" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/mini_dns_py$main.coverage" NAME="main Coverage Results" MODIFIED="1669322308642" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/mini_dns_py$server__inaddr_.coverage" NAME="server (inaddr) Coverage Results" MODIFIED="1672327873251" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/mini_dns_py$server__inaddr_.coverage" NAME="server (inaddr) Coverage Results" MODIFIED="1672529376644" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/mini_dns_py$Main.coverage" NAME="Main Coverage Results" MODIFIED="1667927009726" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/mini_dns_py$server__primary_.coverage" NAME="server (primary) Coverage Results" MODIFIED="1672433779600" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns/server" />
+    <SUITE FILE_PATH="coverage/mini_dns_py$server__primary_.coverage" NAME="server (primary) Coverage Results" MODIFIED="1672529374553" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns/server" />
     <SUITE FILE_PATH="coverage/mini_dns_py$sserver.coverage" NAME="sserver Coverage Results" MODIFIED="1669294557269" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns/server" />
     <SUITE FILE_PATH="coverage/mini_dns_py$utils.coverage" NAME="utils Coverage Results" MODIFIED="1669496407794" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns" />
     <SUITE FILE_PATH="coverage/mini_dns_py$client.coverage" NAME="Client (w/ args) Coverage Results" MODIFIED="1668422446726" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns" />
     <SUITE FILE_PATH="coverage/mini_dns_py$cache.coverage" NAME="cache Coverage Results" MODIFIED="1671704170852" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns/common" />
-    <SUITE FILE_PATH="coverage/mini_dns_py$server__resolution_.coverage" NAME="server (resolution) Coverage Results" MODIFIED="1672433783700" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/mini_dns_py$server__resolution_.coverage" NAME="server (resolution) Coverage Results" MODIFIED="1672529375644" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/mini_dns_py$dns_database.coverage" NAME="dns_database Coverage Results" MODIFIED="1672257446567" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns/models" />
-    <SUITE FILE_PATH="coverage/mini_dns_py$server__reverse_.coverage" NAME="server (reverse) Coverage Results" MODIFIED="1672327869945" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/mini_dns_py$server__reverse_.coverage" NAME="server (reverse) Coverage Results" MODIFIED="1672529377472" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/mini_dns_py$secondary_server.coverage" NAME="secondary_server Coverage Results" MODIFIED="1669293097029" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns/server" />
     <SUITE FILE_PATH="coverage/mini_dns_py$tcp_client.coverage" NAME="tcp_client Coverage Results" MODIFIED="1669046337937" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns" />
     <SUITE FILE_PATH="coverage/mini_dns_py$server__debug_.coverage" NAME="server (debug) Coverage Results" MODIFIED="1669986427858" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns/server" />
@@ -856,13 +836,13 @@
     <SUITE FILE_PATH="coverage/mini_dns_py$example_protocol.coverage" NAME="example_protocol Coverage Results" MODIFIED="1668084367885" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/example" />
     <SUITE FILE_PATH="coverage/mini_dns_py$example_client.coverage" NAME="example-client Coverage Results" MODIFIED="1668295250528" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/example" />
     <SUITE FILE_PATH="coverage/mini_dns_py$base_segment_server.coverage" NAME="base_segment_server Coverage Results" MODIFIED="1668959258812" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns/server" />
-    <SUITE FILE_PATH="coverage/mini_dns_py$client__w__args_.coverage" NAME="client (w/ args) Coverage Results" MODIFIED="1672433902828" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns" />
+    <SUITE FILE_PATH="coverage/mini_dns_py$client__w__args_.coverage" NAME="client (w/ args) Coverage Results" MODIFIED="1672529392913" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns" />
     <SUITE FILE_PATH="coverage/mini_dns_py$timer.coverage" NAME="timer Coverage Results" MODIFIED="1671309162863" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/common" />
     <SUITE FILE_PATH="coverage/mini_dns_py$dns_packet.coverage" NAME="dns_packet Coverage Results" MODIFIED="1668792669147" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns" />
     <SUITE FILE_PATH="coverage/mini_dns_py$gserver.coverage" NAME="gserver Coverage Results" MODIFIED="1669294593506" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns/server" />
     <SUITE FILE_PATH="coverage/mini_dns_py$dns_server.coverage" NAME="dns_server Coverage Results" MODIFIED="1669305573711" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns/server" />
     <SUITE FILE_PATH="coverage/mini_dns_py$dns_resource.coverage" NAME="dns_resource Coverage Results" MODIFIED="1669211795095" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/models" />
-    <SUITE FILE_PATH="coverage/mini_dns_py$server__root_.coverage" NAME="server (root) Coverage Results" MODIFIED="1672433776457" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/mini_dns_py$server__root_.coverage" NAME="server (root) Coverage Results" MODIFIED="1672529379282" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/mini_dns_py$ss.coverage" NAME="ss Coverage Results" MODIFIED="1669323437157" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dns/server" />
     <SUITE FILE_PATH="coverage/mini_dns_py$example_server.coverage" NAME="example-server Coverage Results" MODIFIED="1668295214278" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/example" />
   </component>
