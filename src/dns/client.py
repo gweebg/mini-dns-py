@@ -29,7 +29,7 @@ class Client:
 
         try:
             self.udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-            self.udp_socket.bind((self.address[0], 0))
+            # self.udp_socket.bind((self.address[0], 0))
 
         except Exception as error:
             raise

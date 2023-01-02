@@ -87,7 +87,7 @@ class Recursive:
         try:
 
             # Binding the socket to the given address and to a random available port (value 0 does that).
-            relay_socket.bind((next_address[0], 0))
+            # relay_socket.bind((next_address[0], 0))
 
             # Relaying the packet to the intended server at 'next_address'.
             relay_socket.sendto(original_query.as_byte_string(), next_address)
