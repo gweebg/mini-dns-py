@@ -4,7 +4,7 @@ mkdir services
 cp -r /home/core/Desktop/mini-dns-py/ services/
 
 MODULE="dns.server.server"
-CONFIG="/home/core/Documents/dns-configuration/configuration-files/configuration_maki_sp.conf"
+CONFIG="/home/core/Documents/dns-configuration/configuration-files/maki.shijo.shinomiya./configuration_maki_sp.conf"
 PORT="20006"
 TIMEOUT="1220"
 

@@ -4,7 +4,7 @@ mkdir services
 cp -r /home/core/Desktop/mini-dns-py/ services/
 
 MODULE="dns.server.server"
-CONFIG="/home/core/Documents/dns-configuration/configuration-files/configuration_shinomiya_ss1.conf"
+CONFIG="/home/core/Documents/dns-configuration/configuration-files/shinomiya.zaibatsu./configuration_shinomiya_ss1.conf"
 PORT="20009"
 TIMEOUT="1220"
 

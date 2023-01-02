@@ -4,31 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8fb73730-5d4d-4194-858b-416c8aec73ad" name="Changes" comment="Fixed bugs on the servers.&#10;&#10;Distintion of domain exists but its my subdomain and domain exsits, im the domain, but machine does not exist.">
-      <change afterPath="$PROJECT_DIR$/core-zaibatsu/scripts/0.10-inaddr.reverse.zaibatsu./launch_inaddr.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-zaibatsu/scripts/kaguya.shinomiya.zaibatsu./launch_kaguya_sp.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-zaibatsu/scripts/kaguya.shinomiya.zaibatsu./launch_kaguya_ss1.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-zaibatsu/scripts/kaguya.shinomiya.zaibatsu./launch_kaguya_ss2.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-zaibatsu/scripts/maki.shijo.shinomiya./launch_maki_sp.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-zaibatsu/scripts/maki.shijo.shinomiya./launch_maki_ss1.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-zaibatsu/scripts/maki.shijo.shinomiya./launch_maki_ss2.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-zaibatsu/scripts/resolution/launch_resolution.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-zaibatsu/scripts/resolution/launch_resolution_maki.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-zaibatsu/scripts/reverse.shinomiya./launch_reverse.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-zaibatsu/scripts/shijo.shinomiya./launch_shijo_sp.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-zaibatsu/scripts/shijo.shinomiya./launch_shijo_ss1.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-zaibatsu/scripts/shijo.shinomiya./launch_shijo_ss2.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-zaibatsu/scripts/shinomiya.zaibatsu./launch_shinomiya_sp.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-zaibatsu/scripts/shinomiya.zaibatsu./launch_shinomiya_ss1.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-zaibatsu/scripts/shinomiya.zaibatsu./launch_shinomiya_ss2.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-zaibatsu/scripts/zaibatsu./launch_zaibatsu.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-zaibatsu/scripts/zaibatsu./launch_zaibatsu_babi.sh" afterDir="false" />
+    <list default="true" id="8fb73730-5d4d-4194-858b-416c8aec73ad" name="Changes" comment="Scripts for CORE testing.&#10;&#10;Removed redundant and bad code.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core-zaibatsu/configurations/0.10-inaddr.reverse.zaibatsu./configuration_0.10-inaddr_sp.conf" beforeDir="false" afterPath="$PROJECT_DIR$/core-zaibatsu/configurations/0.10-inaddr.reverse.zaibatsu./configuration_0.10-inaddr_sp.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core-zaibatsu/configurations/resolution/configuration_resolution_sp.conf" beforeDir="false" afterPath="$PROJECT_DIR$/core-zaibatsu/configurations/resolution/configuration_resolution_sp.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core-zaibatsu/configurations/resolution/configuration_resolution_sp_maki.conf" beforeDir="false" afterPath="$PROJECT_DIR$/core-zaibatsu/configurations/resolution/configuration_resolution_sp_maki.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dns/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dns/common/recursive.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dns/common/recursive.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core-zaibatsu/scripts/0.10-inaddr.reverse.zaibatsu./launch_inaddr.sh" beforeDir="false" afterPath="$PROJECT_DIR$/core-zaibatsu/scripts/0.10-inaddr.reverse.zaibatsu./launch_inaddr.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core-zaibatsu/scripts/kaguya.shinomiya.zaibatsu./launch_kaguya_sp.sh" beforeDir="false" afterPath="$PROJECT_DIR$/core-zaibatsu/scripts/kaguya.shinomiya.zaibatsu./launch_kaguya_sp.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core-zaibatsu/scripts/kaguya.shinomiya.zaibatsu./launch_kaguya_ss1.sh" beforeDir="false" afterPath="$PROJECT_DIR$/core-zaibatsu/scripts/kaguya.shinomiya.zaibatsu./launch_kaguya_ss1.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core-zaibatsu/scripts/kaguya.shinomiya.zaibatsu./launch_kaguya_ss2.sh" beforeDir="false" afterPath="$PROJECT_DIR$/core-zaibatsu/scripts/kaguya.shinomiya.zaibatsu./launch_kaguya_ss2.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core-zaibatsu/scripts/maki.shijo.shinomiya./launch_maki_sp.sh" beforeDir="false" afterPath="$PROJECT_DIR$/core-zaibatsu/scripts/maki.shijo.shinomiya./launch_maki_sp.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core-zaibatsu/scripts/maki.shijo.shinomiya./launch_maki_ss1.sh" beforeDir="false" afterPath="$PROJECT_DIR$/core-zaibatsu/scripts/maki.shijo.shinomiya./launch_maki_ss1.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core-zaibatsu/scripts/maki.shijo.shinomiya./launch_maki_ss2.sh" beforeDir="false" afterPath="$PROJECT_DIR$/core-zaibatsu/scripts/maki.shijo.shinomiya./launch_maki_ss2.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core-zaibatsu/scripts/resolution/launch_resolution.sh" beforeDir="false" afterPath="$PROJECT_DIR$/core-zaibatsu/scripts/resolution/launch_resolution.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core-zaibatsu/scripts/resolution/launch_resolution_maki.sh" beforeDir="false" afterPath="$PROJECT_DIR$/core-zaibatsu/scripts/resolution/launch_resolution_maki.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core-zaibatsu/scripts/reverse.shinomiya./launch_reverse.sh" beforeDir="false" afterPath="$PROJECT_DIR$/core-zaibatsu/scripts/reverse.shinomiya./launch_reverse.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core-zaibatsu/scripts/shijo.shinomiya./launch_shijo_sp.sh" beforeDir="false" afterPath="$PROJECT_DIR$/core-zaibatsu/scripts/shijo.shinomiya./launch_shijo_sp.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core-zaibatsu/scripts/shijo.shinomiya./launch_shijo_ss1.sh" beforeDir="false" afterPath="$PROJECT_DIR$/core-zaibatsu/scripts/shijo.shinomiya./launch_shijo_ss1.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core-zaibatsu/scripts/shijo.shinomiya./launch_shijo_ss2.sh" beforeDir="false" afterPath="$PROJECT_DIR$/core-zaibatsu/scripts/shijo.shinomiya./launch_shijo_ss2.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core-zaibatsu/scripts/shinomiya.zaibatsu./launch_shinomiya_sp.sh" beforeDir="false" afterPath="$PROJECT_DIR$/core-zaibatsu/scripts/shinomiya.zaibatsu./launch_shinomiya_sp.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core-zaibatsu/scripts/shinomiya.zaibatsu./launch_shinomiya_ss1.sh" beforeDir="false" afterPath="$PROJECT_DIR$/core-zaibatsu/scripts/shinomiya.zaibatsu./launch_shinomiya_ss1.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core-zaibatsu/scripts/shinomiya.zaibatsu./launch_shinomiya_ss2.sh" beforeDir="false" afterPath="$PROJECT_DIR$/core-zaibatsu/scripts/shinomiya.zaibatsu./launch_shinomiya_ss2.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core-zaibatsu/scripts/zaibatsu./launch_zaibatsu.sh" beforeDir="false" afterPath="$PROJECT_DIR$/core-zaibatsu/scripts/zaibatsu./launch_zaibatsu.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core-zaibatsu/scripts/zaibatsu./launch_zaibatsu_babi.sh" beforeDir="false" afterPath="$PROJECT_DIR$/core-zaibatsu/scripts/zaibatsu./launch_zaibatsu_babi.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,11 +88,11 @@
       <recent name="$PROJECT_DIR$/core" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/core-zaibatsu/databases" />
       <recent name="$PROJECT_DIR$/core-zaibatsu/scripts/maki.shijo.shinomiya." />
       <recent name="$PROJECT_DIR$/core-zaibatsu/scripts/zaibatsu." />
       <recent name="$PROJECT_DIR$/core-zaibatsu/scripts/shinomiya.zaibatsu." />
       <recent name="$PROJECT_DIR$/src/dns/common" />
-      <recent name="$PROJECT_DIR$/core-zaibatsu/configurations/zaibatsu." />
     </key>
   </component>
   <component name="RunManager" selected="Python.client (w/ args)">
@@ -420,14 +415,7 @@
       <workItem from="1672589701865" duration="1548000" />
       <workItem from="1672596167177" duration="834000" />
       <workItem from="1672681957060" duration="1948000" />
-      <workItem from="1672692745922" duration="2302000" />
-    </task>
-    <task id="LOCAL-00035" summary="Added PrimaryServer::run(.). &#10;&#10;To spawn tcp, udp listeners.">
-      <created>1668960200326</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1668960200326</updated>
+      <workItem from="1672692745922" duration="3275000" />
     </task>
     <task id="LOCAL-00036" summary="Added documentation to some files.">
       <created>1668969248751</created>
@@ -765,7 +753,14 @@
       <option name="project" value="LOCAL" />
       <updated>1672529630773</updated>
     </task>
-    <option name="localTasksCounter" value="84" />
+    <task id="LOCAL-00084" summary="Scripts for CORE testing.&#10;&#10;Removed redundant and bad code.">
+      <created>1672697261921</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1672697261922</updated>
+    </task>
+    <option name="localTasksCounter" value="85" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -788,7 +783,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added SOARETRY check on zone transfer." />
     <MESSAGE value="Zone transfer timer, done and tested." />
     <MESSAGE value="Documentation, part 1." />
     <MESSAGE value="Seperated the logging logic into another class." />
@@ -813,7 +807,8 @@
     <MESSAGE value="Undo of project refactor." />
     <MESSAGE value="Added cache to root server." />
     <MESSAGE value="Fixed bugs on the servers.&#10;&#10;Distintion of domain exists but its my subdomain and domain exsits, im the domain, but machine does not exist." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed bugs on the servers.&#10;&#10;Distintion of domain exists but its my subdomain and domain exsits, im the domain, but machine does not exist." />
+    <MESSAGE value="Scripts for CORE testing.&#10;&#10;Removed redundant and bad code." />
+    <option name="LAST_COMMIT_MESSAGE" value="Scripts for CORE testing.&#10;&#10;Removed redundant and bad code." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/mini_dns_py$server__secondary_.coverage" NAME="server (secondary) Coverage Results" MODIFIED="1671400012740" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />

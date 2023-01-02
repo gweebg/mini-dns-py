@@ -4,7 +4,7 @@ mkdir services
 cp -r /home/core/Desktop/mini-dns-py/ services/
 
 MODULE="dns.server.server"
-CONFIG="/home/core/Documents/dns-configuration/configuration-files/configuration_reverse_sp.conf"
+CONFIG="/home/core/Documents/dns-configuration/configuration-files/reverse.zaibatsu./configuration_reverse_sp.conf"
 PORT="20007"
 TIMEOUT="1220"
 

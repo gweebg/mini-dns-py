@@ -4,7 +4,7 @@ mkdir services
 cp -r /home/core/Desktop/mini-dns-py/ services/
 
 MODULE="dns.server.server"
-CONFIG="/home/core/Documents/dns-configuration/configuration-files/configuration_zaibatsu.conf"
+CONFIG="/home/core/Documents/dns-configuration/configuration-files/zaibatsu./configuration_zaibatsu.conf"
 PORT="20000"
 TIMEOUT="1220"
 
