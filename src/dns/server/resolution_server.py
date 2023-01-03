@@ -102,7 +102,7 @@ class ResolutionServer(BaseDatagramServer, Logger, Recursive, Cache):
             try:
 
                 # Binding the socket to the given address and to a random available port (value 0 does that).
-                relay_socket.bind((address[0], 0))
+                # relay_socket.bind((address[0], 0))
 
                 # Relaying the packet to the intended server at 'relay_ip_address'.
                 relay_socket.sendto(packet.as_byte_string(), address)

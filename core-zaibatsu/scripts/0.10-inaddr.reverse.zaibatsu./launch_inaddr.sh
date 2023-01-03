@@ -4,7 +4,7 @@ mkdir services
 cp -r /home/core/Desktop/mini-dns-py/ services/
 
 MODULE="dns.server.server"
-CONFIG="/home/core/Documents/dns-configuration/configuration-files/0.10-inaddr.reverse.zaibatsu/configuration_0.10-inaddr_sp.conf"
+CONFIG="/home/core/Documents/dns-configuration/configuration-files/0.10-inaddr.reverse.zaibatsu./configuration_0.10-inaddr_sp.conf"
 PORT="20008"
 TIMEOUT="1220"
 
