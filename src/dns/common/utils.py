@@ -153,4 +153,3 @@ def split_address(address: str) -> tuple[str, int]:
         port = int(addr[1])
 
     return addr[0], port
-

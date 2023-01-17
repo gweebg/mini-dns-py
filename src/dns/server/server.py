@@ -395,7 +395,7 @@ class Server(BaseDatagramServer, BaseSegmentServer, Logger, Recursive, Cache):
 
                 sender_ip: str = address[0]
                 match = [address for address in map(lambda x: x.value, self.configuration.secondary_servers) if
-                         address == sender_ip]
+                         address.split(":")[0] == sender_ip]
 
                 if len(match) == 0:
                     self.log(received_packet.domain,
