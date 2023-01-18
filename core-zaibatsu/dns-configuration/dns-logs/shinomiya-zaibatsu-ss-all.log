@@ -1,0 +1,34 @@
+[INFO] [2023-01-16 18:47:01,055] ST | localhost |
+Server information:
+ +recursive:True
+ +address:10.0.5.11
+ +port:20009
+ +timeout:1220
+
+[INFO] [2023-01-16 18:47:01,055] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-16 18:47:01,055] EV | localhost | Cache initialized.
+[INFO] [2023-01-16 18:47:01,055] EV | localhost | Setting up server as a secondary server.
+[INFO] [2023-01-16 18:47:01,055] ZT | 10.0.4.11 | A zone transfer process has been started.
+[INFO] [2023-01-16 18:47:01,056] QE | 10.0.4.11 | DOM;shinomiya.zaibatsu;0
+[INFO] [2023-01-18 10:15:10,084] ST | localhost |
+Server information:
+ +recursive:True
+ +address:127.0.0.1
+ +port:20009
+ +timeout:1220
+
+[INFO] [2023-01-18 10:15:10,085] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-18 10:15:10,085] EV | localhost | Cache initialized.
+[INFO] [2023-01-18 10:15:10,085] EV | localhost | Setting up server as a secondary server.
+[INFO] [2023-01-18 10:15:10,085] ZT | 10.0.4.11 | A zone transfer process has been started.
+[INFO] [2023-01-18 10:15:40,857] ST | localhost |
+Server information:
+ +recursive:True
+ +address:127.0.0.1
+ +port:20009
+ +timeout:1220
+
+[INFO] [2023-01-18 10:15:40,857] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-18 10:15:40,857] EV | localhost | Cache initialized.
+[INFO] [2023-01-18 10:15:40,858] EV | localhost | Setting up server as a secondary server.
+[INFO] [2023-01-18 10:15:40,858] ZT | 10.0.4.11 | A zone transfer process has been started.

@@ -1,0 +1,658 @@
+[INFO] [2023-01-02 20:05:58,900] ST | localhost |
+Resolution Server information:
+ +address:10.0.4.16
+ +port:20000
+ +timeout:20000
+[INFO] [2023-01-02 20:05:58,900] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 20:05:58,900] EV | localhost | Loaded root list file.
+[INFO] [2023-01-02 20:05:58,900] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 20:05:58,900] EV | localhost | Finished setting up the resolution server!
+[INFO] [2023-01-02 20:05:58,900] EV | 10.0.4.16 | UDP Server is listening on 10.0.4.16:20000
+[INFO] [2023-01-02 20:06:09,641] SP | localhost | Shutting down!
+[INFO] [2023-01-02 20:07:27,194] ST | localhost |
+Resolution Server information:
+ +address:10.0.4.16
+ +port:20004
+ +timeout:20000
+[INFO] [2023-01-02 20:07:27,194] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 20:07:27,194] EV | localhost | Loaded root list file.
+[INFO] [2023-01-02 20:07:27,195] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 20:07:27,195] EV | localhost | Finished setting up the resolution server!
+[INFO] [2023-01-02 20:07:27,195] EV | 10.0.4.16 | UDP Server is listening on 10.0.4.16:20004
+[INFO] [2023-01-02 20:10:43,544] QR | 10.0.16.20:53757 | Received and decoded a query: 2,Q,0,0,0,0;www.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:10:43,544] EV | localhost | Relay address set to one of the root servers.
+[INFO] [2023-01-02 20:10:43,544] EV | localhost | Asking 10.0.4.12:20000 for www.kaguya.shinomiya.zaibatsu.,A;
+[WARNING] [2023-01-02 20:10:43,544] TO | localhost | Connection with 10.0.4.12:20000 timed out.
+[WARNING] [2023-01-02 20:10:43,545] FL | localhost | Failed to contact root server 10.0.4.12:20000, trying next!
+[ERROR] [2023-01-02 20:10:43,545] FL | localhost | Could not find a root server that was available.
+[INFO] [2023-01-02 20:11:42,024] SP | localhost | Shutting down!
+[INFO] [2023-01-02 20:11:44,337] ST | localhost |
+Resolution Server information:
+ +address:10.0.4.16
+ +port:20004
+ +timeout:20000
+[INFO] [2023-01-02 20:11:44,338] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 20:11:44,338] EV | localhost | Loaded root list file.
+[INFO] [2023-01-02 20:11:44,338] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 20:11:44,338] EV | localhost | Finished setting up the resolution server!
+[INFO] [2023-01-02 20:11:44,338] EV | 10.0.4.16 | UDP Server is listening on 10.0.4.16:20004
+[INFO] [2023-01-02 20:11:47,030] QR | 10.0.16.20:34895 | Received and decoded a query: 3,Q,0,0,0,0;www.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:11:47,030] EV | localhost | Relay address set to one of the root servers.
+[INFO] [2023-01-02 20:11:47,031] EV | localhost | Asking 10.0.4.12:20000 for www.kaguya.shinomiya.zaibatsu.,A;
+[WARNING] [2023-01-02 20:11:47,031] TO | localhost | Connection with 10.0.4.12:20000 timed out.
+[WARNING] [2023-01-02 20:11:47,031] FL | localhost | Failed to contact root server 10.0.4.12:20000, trying next!
+[ERROR] [2023-01-02 20:11:47,031] FL | localhost | Could not find a root server that was available.
+[INFO] [2023-01-02 20:13:02,265] SP | localhost | Shutting down!
+[INFO] [2023-01-02 20:13:53,308] ST | localhost |
+Resolution Server information:
+ +address:10.0.4.16
+ +port:20004
+ +timeout:20000
+[INFO] [2023-01-02 20:13:53,308] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 20:13:53,308] EV | localhost | Loaded root list file.
+[INFO] [2023-01-02 20:13:53,308] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 20:13:53,308] EV | localhost | Finished setting up the resolution server!
+[INFO] [2023-01-02 20:13:53,308] EV | 10.0.4.16 | UDP Server is listening on 10.0.4.16:20004
+[INFO] [2023-01-02 20:15:50,419] QR | 10.0.16.20:43026 | Received and decoded a query: 4,Q,0,0,0,0;www.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:15:50,419] EV | localhost | Relay address set to one of the root servers.
+[INFO] [2023-01-02 20:15:50,420] EV | localhost | Asking 10.0.4.12:20000 for www.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:15:50,421] EV | localhost | Established connection with 10.0.4.12:20000.
+[INFO] [2023-01-02 20:15:50,421] EV | localhost | Asking 10.0.4.11:20001 for www.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:16:54,090] SP | localhost | Shutting down!
+[INFO] [2023-01-02 20:16:56,332] ST | localhost |
+Resolution Server information:
+ +address:10.0.4.16
+ +port:20004
+ +timeout:20000
+[INFO] [2023-01-02 20:16:56,332] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 20:16:56,332] EV | localhost | Loaded root list file.
+[INFO] [2023-01-02 20:16:56,332] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 20:16:56,332] EV | localhost | Finished setting up the resolution server!
+[INFO] [2023-01-02 20:16:56,332] EV | 10.0.4.16 | UDP Server is listening on 10.0.4.16:20004
+[INFO] [2023-01-02 20:17:50,282] QR | 10.0.16.20:54695 | Received and decoded a query: 5,Q,0,0,0,0;www.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:17:50,282] EV | localhost | Relay address set to one of the root servers.
+[INFO] [2023-01-02 20:17:50,282] EV | localhost | Asking 10.0.4.12:20000 for www.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:17:50,283] EV | localhost | Established connection with 10.0.4.12:20000.
+[INFO] [2023-01-02 20:17:50,284] EV | localhost | Asking 10.0.4.11:20001 for www.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:17:50,286] EV | localhost | Established connection with 10.0.4.11:20001.
+[INFO] [2023-01-02 20:17:50,286] EV | localhost | Asking 10.0.4.13:20003 for www.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:17:50,288] EV | localhost | Established connection with 10.0.4.13:20003.
+[INFO] [2023-01-02 20:17:50,289] EV | localhost | Added to cache:
+5,A,0,1,3,3;www.kaguya.shinomiya.zaibatsu.,A;
+www.kaguya.shinomiya.zaibatsu. A 10.0.5.15 60 ;
+kaguya.shinomiya.zaibatsu. NS sp.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. NS ss1.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. NS ss2.kaguya.shinomiya.zaibatsu. 60 ;
+sp.kaguya.shinomiya.zaibatsu. A 10.0.4.13:20003 60 ,
+ss1.kaguya.shinomiya.zaibatsu. A 10.0.5.13:20013 60 ,
+ss2.kaguya.shinomiya.zaibatsu. A 10.0.9.13:20014 60 ;
+
+[INFO] [2023-01-02 20:17:50,289] RR | 10.0.16.20:54695 | Sent the final query response to the client:
+5,A,0,1,3,3;www.kaguya.shinomiya.zaibatsu.,A;
+www.kaguya.shinomiya.zaibatsu. A 10.0.5.15 60 ;
+kaguya.shinomiya.zaibatsu. NS sp.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. NS ss1.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. NS ss2.kaguya.shinomiya.zaibatsu. 60 ;
+sp.kaguya.shinomiya.zaibatsu. A 10.0.4.13:20003 60 ,
+ss1.kaguya.shinomiya.zaibatsu. A 10.0.5.13:20013 60 ,
+ss2.kaguya.shinomiya.zaibatsu. A 10.0.9.13:20014 60 ;
+
+
+[INFO] [2023-01-02 20:17:57,748] QR | 10.0.16.20:57482 | Received and decoded a query: 6,Q,0,0,0,0;www.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:17:57,749] EV | localhost | Found a response in cache for:
+6,Q,0,0,0,0;www.kaguya.shinomiya.zaibatsu.,A;
+
+[INFO] [2023-01-02 20:17:57,749] RR | 10.0.16.20:57482 | Sent the final query response to the client:
+6,,0,1,3,3;www.kaguya.shinomiya.zaibatsu.,A;
+www.kaguya.shinomiya.zaibatsu. A 10.0.5.15 60 ;
+kaguya.shinomiya.zaibatsu. NS sp.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. NS ss1.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. NS ss2.kaguya.shinomiya.zaibatsu. 60 ;
+sp.kaguya.shinomiya.zaibatsu. A 10.0.4.13:20003 60 ,
+ss1.kaguya.shinomiya.zaibatsu. A 10.0.5.13:20013 60 ,
+ss2.kaguya.shinomiya.zaibatsu. A 10.0.9.13:20014 60 ;
+
+
+[INFO] [2023-01-02 20:22:00,096] QR | 10.0.16.20:51698 | Received and decoded a query: 7,Q,0,0,0,0;kaguya.shinomiya.zaibatsu.,MX;
+[INFO] [2023-01-02 20:22:00,097] EV | localhost | Relay address set to one of the root servers.
+[INFO] [2023-01-02 20:22:00,097] EV | localhost | Asking 10.0.4.12:20000 for kaguya.shinomiya.zaibatsu.,MX;
+[INFO] [2023-01-02 20:22:00,098] EV | localhost | Established connection with 10.0.4.12:20000.
+[INFO] [2023-01-02 20:22:00,098] EV | localhost | Asking 10.0.4.11:20001 for kaguya.shinomiya.zaibatsu.,MX;
+[INFO] [2023-01-02 20:22:00,099] EV | localhost | Established connection with 10.0.4.11:20001.
+[INFO] [2023-01-02 20:22:00,100] EV | localhost | Asking 10.0.4.13:20003 for kaguya.shinomiya.zaibatsu.,MX;
+[INFO] [2023-01-02 20:22:00,101] EV | localhost | Established connection with 10.0.4.13:20003.
+[INFO] [2023-01-02 20:22:00,101] RR | 10.0.16.20:51698 | Sent the final query response to the client:
+7,A,0,2,3,5;kaguya.shinomiya.zaibatsu.,MX;
+kaguya.shinomiya.zaibatsu. MX mx1.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. MX mx2.kaguya.shinomiya.zaibatsu. 60 ;
+kaguya.shinomiya.zaibatsu. NS sp.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. NS ss1.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. NS ss2.kaguya.shinomiya.zaibatsu. 60 ;
+mx1.kaguya.shinomiya.zaibatsu. A 10.0.13.16 60 ,
+mx2.kaguya.shinomiya.zaibatsu. A 10.0.9.15 60 ,
+sp.kaguya.shinomiya.zaibatsu. A 10.0.4.13:20003 60 ,
+ss1.kaguya.shinomiya.zaibatsu. A 10.0.5.13:20013 60 ,
+ss2.kaguya.shinomiya.zaibatsu. A 10.0.9.13:20014 60 ;
+
+
+[INFO] [2023-01-02 20:22:20,121] QR | 10.0.16.20:33628 | Received and decoded a query: 8,Q+R,0,0,0,0;kaguya.shinomiya.zaibatsu.,MX;
+[INFO] [2023-01-02 20:22:20,121] EV | localhost | Relay address set to one of the root servers.
+[INFO] [2023-01-02 20:22:20,121] EV | localhost | Asking 10.0.4.12:20000 for kaguya.shinomiya.zaibatsu.,MX;
+[INFO] [2023-01-02 20:22:20,124] EV | localhost | Established connection with 10.0.4.12:20000.
+[INFO] [2023-01-02 20:22:20,125] EV | localhost | Asking 10.0.4.13:20003 for kaguya.shinomiya.zaibatsu.,MX;
+[INFO] [2023-01-02 20:22:20,126] EV | localhost | Established connection with 10.0.4.13:20003.
+[INFO] [2023-01-02 20:22:20,126] EV | localhost | Added to cache:
+8,A+R,0,2,2,4;kaguya.shinomiya.zaibatsu.,MX;
+kaguya.shinomiya.zaibatsu. MX mx1.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. MX mx2.kaguya.shinomiya.zaibatsu. 60 ;
+kaguya.shinomiya.zaibatsu. NS ss1.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. NS ss2.kaguya.shinomiya.zaibatsu. 60 ;
+mx1.kaguya.shinomiya.zaibatsu. A 10.0.13.16 60 ,
+mx2.kaguya.shinomiya.zaibatsu. A 10.0.9.15 60 ,
+ss1.kaguya.shinomiya.zaibatsu. A 10.0.5.13:20013 60 ,
+ss2.kaguya.shinomiya.zaibatsu. A 10.0.9.13:20014 60 ;
+
+[INFO] [2023-01-02 20:22:20,126] RR | 10.0.16.20:33628 | Sent the final query response to the client:
+8,A+R,0,2,2,4;kaguya.shinomiya.zaibatsu.,MX;
+kaguya.shinomiya.zaibatsu. MX mx1.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. MX mx2.kaguya.shinomiya.zaibatsu. 60 ;
+kaguya.shinomiya.zaibatsu. NS ss1.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. NS ss2.kaguya.shinomiya.zaibatsu. 60 ;
+mx1.kaguya.shinomiya.zaibatsu. A 10.0.13.16 60 ,
+mx2.kaguya.shinomiya.zaibatsu. A 10.0.9.15 60 ,
+ss1.kaguya.shinomiya.zaibatsu. A 10.0.5.13:20013 60 ,
+ss2.kaguya.shinomiya.zaibatsu. A 10.0.9.13:20014 60 ;
+
+
+[INFO] [2023-01-02 20:22:36,539] SP | localhost | Shutting down!
+[INFO] [2023-01-02 20:34:40,167] ST | localhost |
+Resolution Server information:
+ +address:10.0.4.16
+ +port:20004
+ +timeout:20000
+[INFO] [2023-01-02 20:34:40,167] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 20:34:40,167] EV | localhost | Loaded root list file.
+[INFO] [2023-01-02 20:34:40,168] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 20:34:40,168] EV | localhost | Finished setting up the resolution server!
+[INFO] [2023-01-02 20:34:40,168] EV | 10.0.4.16 | UDP Server is listening on 10.0.4.16:20004
+[INFO] [2023-01-02 20:36:43,780] QR | 10.0.16.20:33648 | Received and decoded a query: 9,Q,0,0,0,0;shinomiya.zaibatsu.,NS;
+[INFO] [2023-01-02 20:36:43,780] EV | localhost | Relay address set to one of the root servers.
+[INFO] [2023-01-02 20:36:43,780] EV | localhost | Asking 10.0.4.12:20000 for shinomiya.zaibatsu.,NS;
+[INFO] [2023-01-02 20:36:43,781] EV | localhost | Established connection with 10.0.4.12:20000.
+[INFO] [2023-01-02 20:36:43,782] EV | localhost | Asking 10.0.4.11:20001 for shinomiya.zaibatsu.,NS;
+[INFO] [2023-01-02 20:36:43,784] EV | localhost | Established connection with 10.0.4.11:20001.
+[INFO] [2023-01-02 20:36:43,785] RR | 10.0.16.20:33648 | Sent the final query response to the client:
+9,A,0,3,1,4;shinomiya.zaibatsu.,NS;
+shinomiya.zaibatsu. NS sp.shinomiya.zaibatsu. 60 ,
+shinomiya.zaibatsu. NS ss1.shinomiya.zaibatsu. 60 ,
+shinomiya.zaibatsu. NS ss2.shinomiya.zaibatsu. 60 ;
+kaguya.shinomiya.zaibatsu. NS sp.kaguya.shinomiya.zaibatsu. 60 ;
+sp.shinomiya.zaibatsu. A 10.0.4.11:20001 60 ,
+ss1.shinomiya.zaibatsu. A 10.0.5.11:20009 60 ,
+ss2.shinomiya.zaibatsu. A 10.0.9.11:20010 60 ,
+sp.kaguya.shinomiya.zaibatsu. A 10.0.4.13:20003 60 ;
+
+
+[INFO] [2023-01-02 20:40:37,413] QR | 10.0.16.20:43343 | Received and decoded a query: 10,Q,0,0,0,0;kaguya.shinomiya.zaibatsu.,MX;
+[INFO] [2023-01-02 20:40:37,414] EV | localhost | Relay address set to one of the root servers.
+[INFO] [2023-01-02 20:40:37,414] EV | localhost | Asking 10.0.4.12:20000 for kaguya.shinomiya.zaibatsu.,MX;
+[INFO] [2023-01-02 20:40:37,415] EV | localhost | Established connection with 10.0.4.12:20000.
+[INFO] [2023-01-02 20:40:37,416] EV | localhost | Asking 10.0.4.11:20001 for kaguya.shinomiya.zaibatsu.,MX;
+[INFO] [2023-01-02 20:40:37,417] EV | localhost | Established connection with 10.0.4.11:20001.
+[INFO] [2023-01-02 20:40:37,418] EV | localhost | Asking 10.0.4.13:20003 for kaguya.shinomiya.zaibatsu.,MX;
+[INFO] [2023-01-02 20:40:37,421] EV | localhost | Established connection with 10.0.4.13:20003.
+[INFO] [2023-01-02 20:40:37,421] RR | 10.0.16.20:43343 | Sent the final query response to the client:
+10,A,0,2,3,5;kaguya.shinomiya.zaibatsu.,MX;
+kaguya.shinomiya.zaibatsu. MX mx1.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. MX mx2.kaguya.shinomiya.zaibatsu. 60 ;
+kaguya.shinomiya.zaibatsu. NS sp.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. NS ss1.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. NS ss2.kaguya.shinomiya.zaibatsu. 60 ;
+mx1.kaguya.shinomiya.zaibatsu. A 10.0.13.16 60 ,
+mx2.kaguya.shinomiya.zaibatsu. A 10.0.9.15 60 ,
+sp.kaguya.shinomiya.zaibatsu. A 10.0.4.13:20003 60 ,
+ss1.kaguya.shinomiya.zaibatsu. A 10.0.5.13:20013 60 ,
+ss2.kaguya.shinomiya.zaibatsu. A 10.0.9.13:20014 60 ;
+
+
+[INFO] [2023-01-02 20:41:53,747] QR | 10.0.16.20:54189 | Received and decoded a query: 11,Q,0,0,0,0;www.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:41:53,747] EV | localhost | Relay address set to one of the root servers.
+[INFO] [2023-01-02 20:41:53,747] EV | localhost | Asking 10.0.4.12:20000 for www.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:41:53,748] EV | localhost | Established connection with 10.0.4.12:20000.
+[INFO] [2023-01-02 20:41:53,749] EV | localhost | Asking 10.0.4.11:20001 for www.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:41:53,750] EV | localhost | Established connection with 10.0.4.11:20001.
+[INFO] [2023-01-02 20:41:53,750] EV | localhost | Asking 10.0.4.13:20003 for www.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:41:53,752] EV | localhost | Established connection with 10.0.4.13:20003.
+[INFO] [2023-01-02 20:41:53,752] EV | localhost | Added to cache:
+11,A,0,1,3,3;www.kaguya.shinomiya.zaibatsu.,A;
+www.kaguya.shinomiya.zaibatsu. A 10.0.5.15 60 ;
+kaguya.shinomiya.zaibatsu. NS sp.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. NS ss1.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. NS ss2.kaguya.shinomiya.zaibatsu. 60 ;
+sp.kaguya.shinomiya.zaibatsu. A 10.0.4.13:20003 60 ,
+ss1.kaguya.shinomiya.zaibatsu. A 10.0.5.13:20013 60 ,
+ss2.kaguya.shinomiya.zaibatsu. A 10.0.9.13:20014 60 ;
+
+[INFO] [2023-01-02 20:41:53,753] RR | 10.0.16.20:54189 | Sent the final query response to the client:
+11,A,0,1,3,3;www.kaguya.shinomiya.zaibatsu.,A;
+www.kaguya.shinomiya.zaibatsu. A 10.0.5.15 60 ;
+kaguya.shinomiya.zaibatsu. NS sp.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. NS ss1.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. NS ss2.kaguya.shinomiya.zaibatsu. 60 ;
+sp.kaguya.shinomiya.zaibatsu. A 10.0.4.13:20003 60 ,
+ss1.kaguya.shinomiya.zaibatsu. A 10.0.5.13:20013 60 ,
+ss2.kaguya.shinomiya.zaibatsu. A 10.0.9.13:20014 60 ;
+
+
+[INFO] [2023-01-02 20:42:40,694] QR | 10.0.16.20:40804 | Received and decoded a query: 12,Q+R,0,0,0,0;kaguya.shinomiya.zaibatsu.,MX;
+[INFO] [2023-01-02 20:42:40,694] EV | localhost | Relay address set to one of the root servers.
+[INFO] [2023-01-02 20:42:40,694] EV | localhost | Asking 10.0.4.12:20000 for kaguya.shinomiya.zaibatsu.,MX;
+[INFO] [2023-01-02 20:42:40,697] EV | localhost | Established connection with 10.0.4.12:20000.
+[INFO] [2023-01-02 20:42:40,697] EV | localhost | Asking 10.0.4.13:20003 for kaguya.shinomiya.zaibatsu.,MX;
+[INFO] [2023-01-02 20:42:40,698] EV | localhost | Established connection with 10.0.4.13:20003.
+[INFO] [2023-01-02 20:42:40,699] EV | localhost | Added to cache:
+12,A+R,0,2,3,5;kaguya.shinomiya.zaibatsu.,MX;
+kaguya.shinomiya.zaibatsu. MX mx1.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. MX mx2.kaguya.shinomiya.zaibatsu. 60 ;
+kaguya.shinomiya.zaibatsu. NS sp.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. NS ss1.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. NS ss2.kaguya.shinomiya.zaibatsu. 60 ;
+mx1.kaguya.shinomiya.zaibatsu. A 10.0.13.16 60 ,
+mx2.kaguya.shinomiya.zaibatsu. A 10.0.9.15 60 ,
+sp.kaguya.shinomiya.zaibatsu. A 10.0.4.13:20003 60 ,
+ss1.kaguya.shinomiya.zaibatsu. A 10.0.5.13:20013 60 ,
+ss2.kaguya.shinomiya.zaibatsu. A 10.0.9.13:20014 60 ;
+
+[INFO] [2023-01-02 20:42:40,699] RR | 10.0.16.20:40804 | Sent the final query response to the client:
+12,A+R,0,2,3,5;kaguya.shinomiya.zaibatsu.,MX;
+kaguya.shinomiya.zaibatsu. MX mx1.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. MX mx2.kaguya.shinomiya.zaibatsu. 60 ;
+kaguya.shinomiya.zaibatsu. NS sp.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. NS ss1.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. NS ss2.kaguya.shinomiya.zaibatsu. 60 ;
+mx1.kaguya.shinomiya.zaibatsu. A 10.0.13.16 60 ,
+mx2.kaguya.shinomiya.zaibatsu. A 10.0.9.15 60 ,
+sp.kaguya.shinomiya.zaibatsu. A 10.0.4.13:20003 60 ,
+ss1.kaguya.shinomiya.zaibatsu. A 10.0.5.13:20013 60 ,
+ss2.kaguya.shinomiya.zaibatsu. A 10.0.9.13:20014 60 ;
+
+
+[INFO] [2023-01-02 20:43:22,526] QR | 10.0.16.20:40824 | Received and decoded a query: 13,Q+R,0,0,0,0;kaguya.shinomiya.zaibatsu.,MX;
+[INFO] [2023-01-02 20:43:22,526] EV | localhost | Found a response in cache for:
+13,Q+R,0,0,0,0;kaguya.shinomiya.zaibatsu.,MX;
+
+[INFO] [2023-01-02 20:43:22,526] RR | 10.0.16.20:40824 | Sent the final query response to the client:
+13,R,0,2,2,4;kaguya.shinomiya.zaibatsu.,MX;
+kaguya.shinomiya.zaibatsu. MX mx1.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. MX mx2.kaguya.shinomiya.zaibatsu. 60 ;
+kaguya.shinomiya.zaibatsu. NS ss1.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. NS ss2.kaguya.shinomiya.zaibatsu. 60 ;
+mx1.kaguya.shinomiya.zaibatsu. A 10.0.13.16 60 ,
+mx2.kaguya.shinomiya.zaibatsu. A 10.0.9.15 60 ,
+ss1.kaguya.shinomiya.zaibatsu. A 10.0.5.13:20013 60 ,
+ss2.kaguya.shinomiya.zaibatsu. A 10.0.9.13:20014 60 ;
+
+
+[INFO] [2023-01-02 20:46:29,363] QR | 10.0.16.20:40421 | Received and decoded a query: 14,Q+R,0,0,0,0;kaguya.shinomiya.zaibatsu.,MX;
+[INFO] [2023-01-02 20:46:29,363] EV | localhost | Relay address set to one of the root servers.
+[INFO] [2023-01-02 20:46:29,363] EV | localhost | Asking 10.0.4.12:20000 for kaguya.shinomiya.zaibatsu.,MX;
+[INFO] [2023-01-02 20:46:29,366] EV | localhost | Established connection with 10.0.4.12:20000.
+[INFO] [2023-01-02 20:46:29,367] EV | localhost | Asking 10.0.4.13:20003 for kaguya.shinomiya.zaibatsu.,MX;
+[INFO] [2023-01-02 20:46:29,368] EV | localhost | Established connection with 10.0.4.13:20003.
+[INFO] [2023-01-02 20:46:29,369] EV | localhost | Added to cache:
+14,A+R,0,2,3,5;kaguya.shinomiya.zaibatsu.,MX;
+kaguya.shinomiya.zaibatsu. MX mx1.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. MX mx2.kaguya.shinomiya.zaibatsu. 60 ;
+kaguya.shinomiya.zaibatsu. NS sp.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. NS ss1.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. NS ss2.kaguya.shinomiya.zaibatsu. 60 ;
+mx1.kaguya.shinomiya.zaibatsu. A 10.0.13.16 60 ,
+mx2.kaguya.shinomiya.zaibatsu. A 10.0.9.15 60 ,
+sp.kaguya.shinomiya.zaibatsu. A 10.0.4.13:20003 60 ,
+ss1.kaguya.shinomiya.zaibatsu. A 10.0.5.13:20013 60 ,
+ss2.kaguya.shinomiya.zaibatsu. A 10.0.9.13:20014 60 ;
+
+[INFO] [2023-01-02 20:46:29,369] RR | 10.0.16.20:40421 | Sent the final query response to the client:
+14,A+R,0,2,3,5;kaguya.shinomiya.zaibatsu.,MX;
+kaguya.shinomiya.zaibatsu. MX mx1.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. MX mx2.kaguya.shinomiya.zaibatsu. 60 ;
+kaguya.shinomiya.zaibatsu. NS sp.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. NS ss1.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. NS ss2.kaguya.shinomiya.zaibatsu. 60 ;
+mx1.kaguya.shinomiya.zaibatsu. A 10.0.13.16 60 ,
+mx2.kaguya.shinomiya.zaibatsu. A 10.0.9.15 60 ,
+sp.kaguya.shinomiya.zaibatsu. A 10.0.4.13:20003 60 ,
+ss1.kaguya.shinomiya.zaibatsu. A 10.0.5.13:20013 60 ,
+ss2.kaguya.shinomiya.zaibatsu. A 10.0.9.13:20014 60 ;
+
+
+[INFO] [2023-01-02 20:47:14,542] QR | 10.0.16.20:38284 | Received and decoded a query: 15,Q+R,0,0,0,0;www.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:47:14,543] EV | localhost | Relay address set to one of the root servers.
+[INFO] [2023-01-02 20:47:14,543] EV | localhost | Asking 10.0.4.12:20000 for www.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:47:14,546] EV | localhost | Established connection with 10.0.4.12:20000.
+[INFO] [2023-01-02 20:47:14,546] EV | localhost | Asking 10.0.4.13:20003 for www.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:47:14,548] EV | localhost | Established connection with 10.0.4.13:20003.
+[INFO] [2023-01-02 20:47:14,548] EV | localhost | Added to cache:
+15,A+R,0,1,3,3;www.kaguya.shinomiya.zaibatsu.,A;
+www.kaguya.shinomiya.zaibatsu. A 10.0.5.15 60 ;
+kaguya.shinomiya.zaibatsu. NS sp.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. NS ss1.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. NS ss2.kaguya.shinomiya.zaibatsu. 60 ;
+sp.kaguya.shinomiya.zaibatsu. A 10.0.4.13:20003 60 ,
+ss1.kaguya.shinomiya.zaibatsu. A 10.0.5.13:20013 60 ,
+ss2.kaguya.shinomiya.zaibatsu. A 10.0.9.13:20014 60 ;
+
+[INFO] [2023-01-02 20:47:14,549] RR | 10.0.16.20:38284 | Sent the final query response to the client:
+15,A+R,0,1,3,3;www.kaguya.shinomiya.zaibatsu.,A;
+www.kaguya.shinomiya.zaibatsu. A 10.0.5.15 60 ;
+kaguya.shinomiya.zaibatsu. NS sp.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. NS ss1.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. NS ss2.kaguya.shinomiya.zaibatsu. 60 ;
+sp.kaguya.shinomiya.zaibatsu. A 10.0.4.13:20003 60 ,
+ss1.kaguya.shinomiya.zaibatsu. A 10.0.5.13:20013 60 ,
+ss2.kaguya.shinomiya.zaibatsu. A 10.0.9.13:20014 60 ;
+
+
+[INFO] [2023-01-02 20:50:22,353] QR | 10.0.16.20:35613 | Received and decoded a query: 16,Q+R,0,0,0,0;www.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:50:22,353] EV | localhost | Relay address set to one of the root servers.
+[INFO] [2023-01-02 20:50:22,353] EV | localhost | Asking 10.0.4.12:20000 for www.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:50:22,356] EV | localhost | Established connection with 10.0.4.12:20000.
+[INFO] [2023-01-02 20:50:22,357] EV | localhost | Asking 10.0.4.13:20003 for www.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:50:22,358] EV | localhost | Established connection with 10.0.4.13:20003.
+[INFO] [2023-01-02 20:50:22,359] EV | localhost | Added to cache:
+16,A+R,0,1,3,3;www.kaguya.shinomiya.zaibatsu.,A;
+www.kaguya.shinomiya.zaibatsu. A 10.0.5.15 60 ;
+kaguya.shinomiya.zaibatsu. NS sp.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. NS ss1.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. NS ss2.kaguya.shinomiya.zaibatsu. 60 ;
+sp.kaguya.shinomiya.zaibatsu. A 10.0.4.13:20003 60 ,
+ss1.kaguya.shinomiya.zaibatsu. A 10.0.5.13:20013 60 ,
+ss2.kaguya.shinomiya.zaibatsu. A 10.0.9.13:20014 60 ;
+
+[INFO] [2023-01-02 20:50:22,359] RR | 10.0.16.20:35613 | Sent the final query response to the client:
+16,A+R,0,1,3,3;www.kaguya.shinomiya.zaibatsu.,A;
+www.kaguya.shinomiya.zaibatsu. A 10.0.5.15 60 ;
+kaguya.shinomiya.zaibatsu. NS sp.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. NS ss1.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. NS ss2.kaguya.shinomiya.zaibatsu. 60 ;
+sp.kaguya.shinomiya.zaibatsu. A 10.0.4.13:20003 60 ,
+ss1.kaguya.shinomiya.zaibatsu. A 10.0.5.13:20013 60 ,
+ss2.kaguya.shinomiya.zaibatsu. A 10.0.9.13:20014 60 ;
+
+
+[INFO] [2023-01-02 20:50:29,558] QR | 10.0.16.20:46180 | Received and decoded a query: 17,Q+R,0,0,0,0;www.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:50:29,558] EV | localhost | Relay address set to one of the root servers.
+[INFO] [2023-01-02 20:50:29,558] EV | localhost | Asking 10.0.4.12:20000 for www.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:50:29,561] EV | localhost | Established connection with 10.0.4.12:20000.
+[INFO] [2023-01-02 20:50:29,561] EV | localhost | Asking 10.0.4.13:20003 for www.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:50:29,563] EV | localhost | Established connection with 10.0.4.13:20003.
+[INFO] [2023-01-02 20:50:29,563] EV | localhost | Added to cache:
+17,A+R,0,1,3,3;www.kaguya.shinomiya.zaibatsu.,A;
+www.kaguya.shinomiya.zaibatsu. A 10.0.5.15 60 ;
+kaguya.shinomiya.zaibatsu. NS sp.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. NS ss1.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. NS ss2.kaguya.shinomiya.zaibatsu. 60 ;
+sp.kaguya.shinomiya.zaibatsu. A 10.0.4.13:20003 60 ,
+ss1.kaguya.shinomiya.zaibatsu. A 10.0.5.13:20013 60 ,
+ss2.kaguya.shinomiya.zaibatsu. A 10.0.9.13:20014 60 ;
+
+[INFO] [2023-01-02 20:50:29,563] RR | 10.0.16.20:46180 | Sent the final query response to the client:
+17,A+R,0,1,3,3;www.kaguya.shinomiya.zaibatsu.,A;
+www.kaguya.shinomiya.zaibatsu. A 10.0.5.15 60 ;
+kaguya.shinomiya.zaibatsu. NS sp.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. NS ss1.kaguya.shinomiya.zaibatsu. 60 ,
+kaguya.shinomiya.zaibatsu. NS ss2.kaguya.shinomiya.zaibatsu. 60 ;
+sp.kaguya.shinomiya.zaibatsu. A 10.0.4.13:20003 60 ,
+ss1.kaguya.shinomiya.zaibatsu. A 10.0.5.13:20013 60 ,
+ss2.kaguya.shinomiya.zaibatsu. A 10.0.9.13:20014 60 ;
+
+
+[INFO] [2023-01-02 20:51:13,435] QR | 10.0.16.20:41469 | Received and decoded a query: 18,Q+R,0,0,0,0;ftp.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:51:13,435] EV | localhost | Relay address set to one of the root servers.
+[INFO] [2023-01-02 20:51:13,435] EV | localhost | Asking 10.0.4.12:20000 for ftp.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:51:13,438] EV | localhost | Established connection with 10.0.4.12:20000.
+[INFO] [2023-01-02 20:51:13,439] EV | localhost | Asking 10.0.4.13:20003 for ftp.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:51:13,440] EV | localhost | Established connection with 10.0.4.13:20003.
+[INFO] [2023-01-02 20:51:13,440] EV | localhost | Asking 10.0.9.13:20014 for ftp.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:51:27,902] QR | 10.0.16.20:36469 | Received and decoded a query: 19,Q,0,0,0,0;ftp.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:51:27,902] EV | localhost | Relay address set to one of the root servers.
+[INFO] [2023-01-02 20:51:27,903] EV | localhost | Asking 10.0.4.12:20000 for ftp.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:51:27,904] EV | localhost | Established connection with 10.0.4.12:20000.
+[INFO] [2023-01-02 20:51:27,904] EV | localhost | Asking 10.0.4.11:20001 for ftp.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:51:27,905] EV | localhost | Established connection with 10.0.4.11:20001.
+[INFO] [2023-01-02 20:51:27,907] EV | localhost | Asking 10.0.4.13:20003 for ftp.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:51:27,909] EV | localhost | Established connection with 10.0.4.13:20003.
+[INFO] [2023-01-02 20:51:27,909] EV | localhost | Asking 10.0.9.13:20014 for ftp.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:51:43,972] QR | 10.0.16.20:51138 | Received and decoded a query: 20,Q,0,0,0,0;maki.shinomiya.zaibatsu.,NS;
+[INFO] [2023-01-02 20:51:43,973] EV | localhost | Relay address set to one of the root servers.
+[INFO] [2023-01-02 20:51:43,973] EV | localhost | Asking 10.0.4.12:20000 for maki.shinomiya.zaibatsu.,NS;
+[INFO] [2023-01-02 20:51:43,974] EV | localhost | Established connection with 10.0.4.12:20000.
+[INFO] [2023-01-02 20:51:43,974] EV | localhost | Asking 10.0.4.11:20001 for maki.shinomiya.zaibatsu.,NS;
+[INFO] [2023-01-02 20:51:43,976] EV | localhost | Established connection with 10.0.4.11:20001.
+[INFO] [2023-01-02 20:51:43,976] EV | localhost | Asking 10.0.9.11:20010 for maki.shinomiya.zaibatsu.,NS;
+[INFO] [2023-01-02 20:52:05,826] SP | localhost | Shutting down!
+[INFO] [2023-01-02 20:55:10,239] ST | localhost |
+Resolution Server information:
+ +address:10.0.4.16
+ +port:20004
+ +timeout:20000
+[INFO] [2023-01-02 20:55:10,239] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 20:55:10,239] EV | localhost | Loaded root list file.
+[INFO] [2023-01-02 20:55:10,239] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 20:55:10,239] EV | localhost | Finished setting up the resolution server!
+[INFO] [2023-01-02 20:55:10,239] EV | 10.0.4.16 | UDP Server is listening on 10.0.4.16:20004
+[INFO] [2023-01-02 20:55:14,519] QR | 10.0.16.20:55244 | Received and decoded a query: 21,Q,0,0,0,0;maki.shinomiya.zaibatsu.,NS;
+[INFO] [2023-01-02 20:55:14,520] EV | localhost | Relay address set to one of the root servers.
+[INFO] [2023-01-02 20:55:14,520] EV | localhost | Asking 10.0.4.12:20000 for maki.shinomiya.zaibatsu.,NS;
+[INFO] [2023-01-02 20:55:14,521] EV | localhost | Established connection with 10.0.4.12:20000.
+[INFO] [2023-01-02 20:55:14,521] EV | localhost | Asking 10.0.4.11:20001 for maki.shinomiya.zaibatsu.,NS;
+[INFO] [2023-01-02 20:55:14,523] EV | localhost | Established connection with 10.0.4.11:20001.
+[INFO] [2023-01-02 20:55:14,524] EV | localhost | Asking 10.0.9.11:20010 for maki.shinomiya.zaibatsu.,NS;
+[INFO] [2023-01-02 20:59:44,353] QR | 10.0.16.20:44301 | Received and decoded a query: 22,Q,0,0,0,0;maki.shinomiya.zaibatsu.,NS;
+[INFO] [2023-01-02 20:59:44,353] EV | localhost | Relay address set to one of the root servers.
+[INFO] [2023-01-02 20:59:44,353] EV | localhost | Asking 10.0.4.12:20000 for maki.shinomiya.zaibatsu.,NS;
+[INFO] [2023-01-02 20:59:44,354] EV | localhost | Established connection with 10.0.4.12:20000.
+[INFO] [2023-01-02 20:59:44,355] EV | localhost | Asking 10.0.4.11:20001 for maki.shinomiya.zaibatsu.,NS;
+[INFO] [2023-01-02 20:59:44,358] EV | localhost | Established connection with 10.0.4.11:20001.
+[INFO] [2023-01-02 20:59:44,358] EV | localhost | Asking 10.0.9.11:20010 for maki.shinomiya.zaibatsu.,NS;
+[INFO] [2023-01-02 21:01:28,137] SP | localhost | Shutting down!
+[INFO] [2023-01-02 21:01:30,901] ST | localhost |
+Resolution Server information:
+ +address:10.0.4.16
+ +port:20004
+ +timeout:20000
+[INFO] [2023-01-02 21:01:30,901] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 21:01:30,901] EV | localhost | Loaded root list file.
+[INFO] [2023-01-02 21:01:30,901] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 21:01:30,901] EV | localhost | Finished setting up the resolution server!
+[INFO] [2023-01-02 21:01:30,901] EV | 10.0.4.16 | UDP Server is listening on 10.0.4.16:20004
+[INFO] [2023-01-02 21:01:34,523] QR | 10.0.16.20:47703 | Received and decoded a query: 23,Q,0,0,0,0;maki.shinomiya.zaibatsu.,NS;
+[INFO] [2023-01-02 21:01:34,523] EV | localhost | Relay address set to one of the root servers.
+[INFO] [2023-01-02 21:01:34,523] EV | localhost | Asking 10.0.4.12:20000 for maki.shinomiya.zaibatsu.,NS;
+[INFO] [2023-01-02 21:01:34,525] EV | localhost | Established connection with 10.0.4.12:20000.
+[INFO] [2023-01-02 21:01:34,525] EV | localhost | Asking 10.0.4.11:20001 for maki.shinomiya.zaibatsu.,NS;
+[INFO] [2023-01-02 21:01:34,527] EV | localhost | Established connection with 10.0.4.11:20001.
+[INFO] [2023-01-02 21:01:34,528] EV | localhost | Asking 10.0.4.11:20001 for maki.shinomiya.zaibatsu.,NS;
+[INFO] [2023-01-02 21:01:34,529] EV | localhost | Established connection with 10.0.4.11:20001.
+[INFO] [2023-01-02 21:01:34,529] RR | 10.0.16.20:47703 | Sent the final query response to the client:
+23,A,1,0,1,1;maki.shinomiya.zaibatsu.,NS;
+shinomiya.zaibatsu. NS sp.shinomiya.zaibatsu. 60 ;
+sp.shinomiya.zaibatsu. A 10.0.4.11:20001 60 ;
+
+
+[INFO] [2023-01-02 21:02:35,624] QR | 10.0.16.20:50678 | Received and decoded a query: 25,Q,0,0,0,0;maki.shinomiya.zaibatsu.wrong.,NS;
+[INFO] [2023-01-02 21:02:35,624] EV | localhost | Relay address set to one of the root servers.
+[INFO] [2023-01-02 21:02:35,624] EV | localhost | Asking 10.0.4.12:20000 for maki.shinomiya.zaibatsu.wrong.,NS;
+[INFO] [2023-01-02 21:02:35,626] EV | localhost | Established connection with 10.0.4.12:20000.
+[INFO] [2023-01-02 21:02:35,626] EV | localhost | Asking 10.0.4.11:20001 for maki.shinomiya.zaibatsu.wrong.,NS;
+[INFO] [2023-01-02 21:02:35,628] EV | localhost | Established connection with 10.0.4.11:20001.
+[INFO] [2023-01-02 21:02:35,628] EV | localhost | Asking 10.0.4.11:20001 for maki.shinomiya.zaibatsu.wrong.,NS;
+[INFO] [2023-01-02 21:02:35,629] EV | localhost | Established connection with 10.0.4.11:20001.
+[INFO] [2023-01-02 21:02:35,629] EV | localhost | Asking 10.0.4.11:20001 for maki.shinomiya.zaibatsu.wrong.,NS;
+[INFO] [2023-01-02 21:02:35,630] EV | localhost | Established connection with 10.0.4.11:20001.
+[INFO] [2023-01-02 21:02:35,631] RR | 10.0.16.20:50678 | Sent the final query response to the client:
+25,A,1,0,1,1;maki.shinomiya.zaibatsu.wrong.,NS;
+shinomiya.zaibatsu. NS sp.shinomiya.zaibatsu. 60 ;
+sp.shinomiya.zaibatsu. A 10.0.4.11:20001 60 ;
+
+
+[INFO] [2023-01-02 21:03:15,746] QR | 10.0.16.20:49374 | Received and decoded a query: 26,Q,0,0,0,0;super.wrong.domain.,NS;
+[INFO] [2023-01-02 21:03:15,746] EV | localhost | Relay address set to one of the root servers.
+[INFO] [2023-01-02 21:03:15,746] EV | localhost | Asking 10.0.4.12:20000 for super.wrong.domain.,NS;
+[INFO] [2023-01-02 21:03:15,747] EV | localhost | Established connection with 10.0.4.12:20000.
+[INFO] [2023-01-02 21:03:15,748] RR | 10.0.16.20:49374 | Sent the final query response to the client:
+26,A,2,0,0,0;super.wrong.domain.,NS;
+
+
+[INFO] [2023-01-02 22:42:20,689] ST | localhost |
+Resolution Server information:
+ +address:127.0.0.1
+ +port:20004
+ +timeout:1220
+[INFO] [2023-01-02 22:42:20,690] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 22:42:20,690] EV | localhost | Loaded root list file.
+[INFO] [2023-01-02 22:42:20,690] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 22:42:20,690] EV | localhost | Finished setting up the resolution server!
+[INFO] [2023-01-02 22:42:20,690] EV | 127.0.0.1 | UDP Server is listening on 127.0.0.1:20004
+[INFO] [2023-01-02 22:46:50,999] SP | localhost | Shutting down!
+[INFO] [2023-01-02 22:47:34,157] ST | localhost |
+Resolution Server information:
+ +address:127.0.0.1
+ +port:20004
+ +timeout:1220
+[INFO] [2023-01-02 22:47:34,158] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 22:47:34,158] EV | localhost | Loaded root list file.
+[INFO] [2023-01-02 22:47:34,158] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 22:47:34,158] EV | localhost | Finished setting up the resolution server!
+[INFO] [2023-01-02 22:47:34,158] EV | 127.0.0.1 | UDP Server is listening on 127.0.0.1:20004
+[INFO] [2023-01-02 22:47:36,180] SP | localhost | Shutting down!
+[INFO] [2023-01-02 22:47:38,270] ST | localhost |
+Resolution Server information:
+ +address:127.0.0.1
+ +port:20004
+ +timeout:1220
+[INFO] [2023-01-02 22:47:38,270] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 22:47:38,270] EV | localhost | Loaded root list file.
+[INFO] [2023-01-02 22:47:38,270] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 22:47:38,270] EV | localhost | Finished setting up the resolution server!
+[INFO] [2023-01-02 22:47:38,271] EV | 127.0.0.1 | UDP Server is listening on 127.0.0.1:20004
+[INFO] [2023-01-02 22:48:31,599] SP | localhost | Shutting down!
+[INFO] [2023-01-02 22:50:44,337] ST | localhost |
+Resolution Server information:
+ +address:10.0.4.16
+ +port:20004
+ +timeout:1220
+[INFO] [2023-01-02 22:50:44,337] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 22:50:44,337] EV | localhost | Loaded root list file.
+[INFO] [2023-01-02 22:50:44,337] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 22:50:44,337] EV | localhost | Finished setting up the resolution server!
+[INFO] [2023-01-02 22:50:44,337] EV | 10.0.4.16 | UDP Server is listening on 10.0.4.16:20004
+[INFO] [2023-01-02 22:51:23,809] QR | 10.0.16.20:59880 | Received and decoded a query: 13,Q,0,0,0,0;20007:12.5.0.10-inaddr.reverse.zaibatsu.,PTR;
+[INFO] [2023-01-02 22:51:23,810] EV | localhost | Relay address set to one of the root servers.
+[INFO] [2023-01-02 22:51:23,810] EV | localhost | Asking 10.0.4.12:20000 for 20007:12.5.0.10-inaddr.reverse.zaibatsu.,PTR;
+[WARNING] [2023-01-02 22:51:23,810] TO | localhost | Connection with 10.0.4.12:20000 timed out.
+[WARNING] [2023-01-02 22:51:23,810] FL | localhost | Failed to contact root server 10.0.4.12:20000, trying next!
+[ERROR] [2023-01-02 22:51:23,810] FL | localhost | Could not find a root server that was available.
+[INFO] [2023-01-02 22:52:43,202] SP | localhost | Shutting down!
+[INFO] [2023-01-02 22:52:43,925] ST | localhost |
+Resolution Server information:
+ +address:10.0.4.16
+ +port:20004
+ +timeout:1220
+[INFO] [2023-01-02 22:52:43,925] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 22:52:43,925] EV | localhost | Loaded root list file.
+[INFO] [2023-01-02 22:52:43,925] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 22:52:43,925] EV | localhost | Finished setting up the resolution server!
+[INFO] [2023-01-02 22:52:43,925] EV | 10.0.4.16 | UDP Server is listening on 10.0.4.16:20004
+[INFO] [2023-01-02 22:53:07,715] QR | 10.0.16.20:42589 | Received and decoded a query: 17,Q,0,0,0,0;reverse.zaibatsu.,NS;
+[INFO] [2023-01-02 22:53:07,715] EV | localhost | Relay address set to one of the root servers.
+[INFO] [2023-01-02 22:53:07,716] EV | localhost | Asking 10.0.4.12:20000 for reverse.zaibatsu.,NS;
+[WARNING] [2023-01-02 22:53:07,716] TO | localhost | Connection with 10.0.4.12:20000 timed out.
+[WARNING] [2023-01-02 22:53:07,716] FL | localhost | Failed to contact root server 10.0.4.12:20000, trying next!
+[ERROR] [2023-01-02 22:53:07,716] FL | localhost | Could not find a root server that was available.
+[INFO] [2023-01-02 22:53:34,852] QR | 10.0.16.20:38168 | Received and decoded a query: 18,Q,0,0,0,0;reverse.zaibatsu.,NS;
+[INFO] [2023-01-02 22:53:34,852] EV | localhost | Relay address set to one of the root servers.
+[INFO] [2023-01-02 22:53:34,852] EV | localhost | Asking 10.0.4.12:20000 for reverse.zaibatsu.,NS;
+[WARNING] [2023-01-02 22:53:34,852] TO | localhost | Connection with 10.0.4.12:20000 timed out.
+[WARNING] [2023-01-02 22:53:34,852] FL | localhost | Failed to contact root server 10.0.4.12:20000, trying next!
+[ERROR] [2023-01-02 22:53:34,852] FL | localhost | Could not find a root server that was available.
+[INFO] [2023-01-02 22:54:12,989] QR | 10.0.16.20:46815 | Received and decoded a query: 19,Q,0,0,0,0;reverse.zaibatsu.,NS;
+[INFO] [2023-01-02 22:54:12,989] EV | localhost | Relay address set to one of the root servers.
+[INFO] [2023-01-02 22:54:12,989] EV | localhost | Asking 10.0.4.12:20000 for reverse.zaibatsu.,NS;
+[WARNING] [2023-01-02 22:54:12,990] TO | localhost | Connection with 10.0.4.12:20000 timed out.
+[WARNING] [2023-01-02 22:54:12,990] FL | localhost | Failed to contact root server 10.0.4.12:20000, trying next!
+[ERROR] [2023-01-02 22:54:12,990] FL | localhost | Could not find a root server that was available.
+[INFO] [2023-01-02 22:54:37,969] QR | 10.0.16.20:36349 | Received and decoded a query: 20,Q+R,0,0,0,0;reverse.zaibatsu.,NS;
+[INFO] [2023-01-02 22:54:37,970] EV | localhost | Relay address set to one of the root servers.
+[INFO] [2023-01-02 22:54:37,970] EV | localhost | Asking 10.0.4.12:20000 for reverse.zaibatsu.,NS;
+[WARNING] [2023-01-02 22:54:37,970] TO | localhost | Connection with 10.0.4.12:20000 timed out.
+[WARNING] [2023-01-02 22:54:37,970] FL | localhost | Failed to contact root server 10.0.4.12:20000, trying next!
+[ERROR] [2023-01-02 22:54:37,970] FL | localhost | Could not find a root server that was available.
+[INFO] [2023-01-02 22:55:20,933] SP | localhost | Shutting down!
+[INFO] [2023-01-02 22:55:52,719] ST | localhost |
+Resolution Server information:
+ +address:10.0.4.16
+ +port:20004
+ +timeout:1220
+[INFO] [2023-01-02 22:55:52,720] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 22:55:52,720] EV | localhost | Loaded root list file.
+[INFO] [2023-01-02 22:55:52,720] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 22:55:52,720] EV | localhost | Finished setting up the resolution server!
+[INFO] [2023-01-02 22:55:52,720] EV | 10.0.4.16 | UDP Server is listening on 10.0.4.16:20004
+[INFO] [2023-01-02 22:55:56,887] QR | 10.0.16.20:47470 | Received and decoded a query: 21,Q+R,0,0,0,0;reverse.zaibatsu.,NS;
+[INFO] [2023-01-02 22:55:56,887] EV | localhost | Relay address set to one of the root servers.
+[INFO] [2023-01-02 22:55:56,887] EV | localhost | Asking 10.0.4.12:20000 for reverse.zaibatsu.,NS;
+[INFO] [2023-01-02 22:55:56,892] EV | localhost | Established connection with 10.0.4.12:20000.
+[INFO] [2023-01-02 22:55:56,892] EV | localhost | Added to cache:
+21,A+R,0,1,1,2;reverse.zaibatsu.,NS;
+reverse.zaibatsu. NS sp.reverse.zaibatsu. 60 ;
+0.10-inaddr.reverse.zaibatsu. NS sp.0.10-inaddr.reverse.zaibatsu. 60 ;
+sp.reverse.zaibatsu. A 10.0.5.12:20007 60 ,
+sp.0.10-inaddr.reverse.zaibatsu. A 10.0.9.12:20008 60 ;
+
+[INFO] [2023-01-02 22:55:56,892] RR | 10.0.16.20:47470 | Sent the final query response to the client:
+21,A+R,0,1,1,2;reverse.zaibatsu.,NS;
+reverse.zaibatsu. NS sp.reverse.zaibatsu. 60 ;
+0.10-inaddr.reverse.zaibatsu. NS sp.0.10-inaddr.reverse.zaibatsu. 60 ;
+sp.reverse.zaibatsu. A 10.0.5.12:20007 60 ,
+sp.0.10-inaddr.reverse.zaibatsu. A 10.0.9.12:20008 60 ;
+
+
+[INFO] [2023-01-02 22:56:45,660] QR | 10.0.16.20:40836 | Received and decoded a query: 22,Q,0,0,0,0;20007:12.5.0.10-inaddr.reverse.zaibatsu.,PTR;
+[INFO] [2023-01-02 22:56:45,660] EV | localhost | Relay address set to one of the root servers.
+[INFO] [2023-01-02 22:56:45,661] EV | localhost | Asking 10.0.4.12:20000 for 20007:12.5.0.10-inaddr.reverse.zaibatsu.,PTR;
+[INFO] [2023-01-02 22:56:45,662] EV | localhost | Established connection with 10.0.4.12:20000.
+[INFO] [2023-01-02 22:56:45,662] EV | localhost | Asking 10.0.5.12:20007 for 20007:12.5.0.10-inaddr.reverse.zaibatsu.,PTR;
+[INFO] [2023-01-02 22:56:45,665] EV | localhost | Established connection with 10.0.5.12:20007.
+[INFO] [2023-01-02 22:56:45,665] EV | localhost | Asking 10.0.9.12:20008 for 20007:12.5.0.10-inaddr.reverse.zaibatsu.,PTR;
+[INFO] [2023-01-02 22:56:45,668] EV | localhost | Established connection with 10.0.9.12:20008.
+[INFO] [2023-01-02 22:58:08,319] SP | localhost | Shutting down!
+[INFO] [2023-01-02 22:58:10,932] ST | localhost |
+Resolution Server information:
+ +address:10.0.4.16
+ +port:20004
+ +timeout:1220
+[INFO] [2023-01-02 22:58:10,932] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 22:58:10,932] EV | localhost | Loaded root list file.
+[INFO] [2023-01-02 22:58:10,932] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 22:58:10,932] EV | localhost | Finished setting up the resolution server!
+[INFO] [2023-01-02 22:58:10,932] EV | 10.0.4.16 | UDP Server is listening on 10.0.4.16:20004
+[INFO] [2023-01-02 22:58:45,796] QR | 10.0.16.20:36059 | Received and decoded a query: 23,Q,0,0,0,0;20000:12.4.0.10-inaddr.reverse.zaibatsu.,PTR;
+[INFO] [2023-01-02 22:58:45,796] EV | localhost | Relay address set to one of the root servers.
+[INFO] [2023-01-02 22:58:45,796] EV | localhost | Asking 10.0.4.12:20000 for 20000:12.4.0.10-inaddr.reverse.zaibatsu.,PTR;
+[INFO] [2023-01-02 22:58:45,797] EV | localhost | Established connection with 10.0.4.12:20000.
+[INFO] [2023-01-02 22:58:45,798] EV | localhost | Asking 10.0.5.12:20007 for 20000:12.4.0.10-inaddr.reverse.zaibatsu.,PTR;
+[INFO] [2023-01-02 22:58:45,800] EV | localhost | Established connection with 10.0.5.12:20007.
+[INFO] [2023-01-02 22:58:45,800] EV | localhost | Asking 10.0.9.12:20008 for 20000:12.4.0.10-inaddr.reverse.zaibatsu.,PTR;
+[INFO] [2023-01-02 22:58:45,803] EV | localhost | Established connection with 10.0.9.12:20008.
+[INFO] [2023-01-02 22:58:45,803] EV | localhost | Added to cache:
+23,A,0,1,1,0;20000:12.4.0.10-inaddr.reverse.zaibatsu.,PTR;
+10.0.4.12:20000 PTR sp.zaibatsu. 60 ;
+0.10-inaddr.reverse.zaibatsu. NS sp.0.10-inaddr.reverse.zaibatsu. 60 ;
+
+[INFO] [2023-01-02 22:58:45,803] RR | 10.0.16.20:36059 | Sent the final query response to the client:
+23,A,0,1,1,0;20000:12.4.0.10-inaddr.reverse.zaibatsu.,PTR;
+10.0.4.12:20000 PTR sp.zaibatsu. 60 ;
+0.10-inaddr.reverse.zaibatsu. NS sp.0.10-inaddr.reverse.zaibatsu. 60 ;
+
+

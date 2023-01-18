@@ -1,0 +1,177 @@
+[INFO] [2023-01-02 19:49:27,108] ST | localhost |
+Server information:
+ +recursive:True
+ +address:10.0.4.13
+ +port:20013
+ +timeout:20000
+
+[INFO] [2023-01-02 19:49:27,108] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 19:49:27,108] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 19:49:27,109] EV | localhost | Setting up server as a primary server.
+[INFO] [2023-01-02 19:49:27,109] EV | localhost | Loaded database file.
+[INFO] [2023-01-02 19:49:27,109] EV | localhost | Loaded root list file.
+[INFO] [2023-01-02 19:49:27,109] EV | localhost | Finished setting up the server.
+[INFO] [2023-01-02 19:49:27,112] EV | 10.0.4.13 | UDP Server is listening on 10.0.4.13:20013
+[INFO] [2023-01-02 19:49:27,113] EV | 10.0.4.13 | TCP Server is listening on 10.0.4.13:20013
+[INFO] [2023-01-02 20:00:36,989] ST | localhost |
+Server information:
+ +recursive:True
+ +address:10.0.4.13
+ +port:20013
+ +timeout:20000
+
+[INFO] [2023-01-02 20:00:36,989] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 20:00:36,989] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 20:00:36,990] EV | localhost | Setting up server as a primary server.
+[INFO] [2023-01-02 20:00:36,990] EV | localhost | Loaded database file.
+[INFO] [2023-01-02 20:00:36,990] EV | localhost | Loaded root list file.
+[INFO] [2023-01-02 20:00:36,990] EV | localhost | Finished setting up the server.
+[INFO] [2023-01-02 20:00:36,992] EV | 10.0.4.13 | UDP Server is listening on 10.0.4.13:20013
+[INFO] [2023-01-02 20:00:36,994] EV | 10.0.4.13 | TCP Server is listening on 10.0.4.13:20013
+[INFO] [2023-01-02 20:15:45,252] ST | localhost |
+Server information:
+ +recursive:True
+ +address:10.0.4.13
+ +port:20013
+ +timeout:20000
+
+[INFO] [2023-01-02 20:15:45,253] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 20:15:45,253] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 20:15:45,253] EV | localhost | Setting up server as a primary server.
+[INFO] [2023-01-02 20:15:45,253] EV | localhost | Loaded database file.
+[INFO] [2023-01-02 20:15:45,253] EV | localhost | Loaded root list file.
+[INFO] [2023-01-02 20:15:45,254] EV | localhost | Finished setting up the server.
+[INFO] [2023-01-02 20:15:45,256] EV | 10.0.4.13 | UDP Server is listening on 10.0.4.13:20013
+[INFO] [2023-01-02 20:15:45,257] EV | 10.0.4.13 | TCP Server is listening on 10.0.4.13:20013
+[INFO] [2023-01-02 20:17:45,992] ST | localhost |
+Server information:
+ +recursive:True
+ +address:10.0.4.13
+ +port:20003
+ +timeout:20000
+
+[INFO] [2023-01-02 20:17:45,993] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 20:17:45,993] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 20:17:45,993] EV | localhost | Setting up server as a primary server.
+[INFO] [2023-01-02 20:17:45,993] EV | localhost | Loaded database file.
+[INFO] [2023-01-02 20:17:45,993] EV | localhost | Loaded root list file.
+[INFO] [2023-01-02 20:17:45,994] EV | localhost | Finished setting up the server.
+[INFO] [2023-01-02 20:17:45,996] EV | 10.0.4.13 | UDP Server is listening on 10.0.4.13:20003
+[INFO] [2023-01-02 20:17:45,997] EV | 10.0.4.13 | TCP Server is listening on 10.0.4.13:20003
+[INFO] [2023-01-02 20:17:50,287] QR | 10.0.4.16:60184 | Received and decoded the query: 5,Q,0,0,0,0;www.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:17:50,288] EV | localhost | Searching on cache for www.kaguya.shinomiya.zaibatsu., DNSValueType.A
+[INFO] [2023-01-02 20:17:50,288] EV | localhost | Searching on database for www.kaguya.shinomiya.zaibatsu., DNSValueType.A
+[INFO] [2023-01-02 20:17:50,288] EV | localhost | Perfect match on www.kaguya.shinomiya.zaibatsu., DNSValueType.A
+[INFO] [2023-01-02 20:17:50,288] EV | localhost | Added response to www.kaguya.shinomiya.zaibatsu., DNSValueType.A to cache.
+[INFO] [2023-01-02 20:22:00,100] QR | 10.0.4.16:52389 | Received and decoded the query: 7,Q,0,0,0,0;kaguya.shinomiya.zaibatsu.,MX;
+[INFO] [2023-01-02 20:22:00,100] EV | localhost | Searching on cache for kaguya.shinomiya.zaibatsu., DNSValueType.MX
+[INFO] [2023-01-02 20:22:00,100] EV | localhost | Searching on database for kaguya.shinomiya.zaibatsu., DNSValueType.MX
+[INFO] [2023-01-02 20:22:00,101] EV | localhost | Perfect match on kaguya.shinomiya.zaibatsu., DNSValueType.MX
+[INFO] [2023-01-02 20:22:00,101] EV | localhost | Added response to kaguya.shinomiya.zaibatsu., DNSValueType.MX to cache.
+[INFO] [2023-01-02 20:22:20,125] QR | 10.0.4.16:55985 | Received and decoded the query: 8,Q+R,0,0,0,0;kaguya.shinomiya.zaibatsu.,MX;
+[INFO] [2023-01-02 20:22:20,125] EV | localhost | Searching on cache for kaguya.shinomiya.zaibatsu., DNSValueType.MX
+[INFO] [2023-01-02 20:22:20,126] EV | localhost | Perfect match on kaguya.shinomiya.zaibatsu., DNSValueType.MX
+[INFO] [2023-01-02 20:22:20,126] EV | localhost | Added response to kaguya.shinomiya.zaibatsu., DNSValueType.MX to cache.
+[INFO] [2023-01-02 20:34:34,383] ST | localhost |
+Server information:
+ +recursive:True
+ +address:10.0.4.13
+ +port:20003
+ +timeout:20000
+
+[INFO] [2023-01-02 20:34:34,383] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 20:34:34,383] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 20:34:34,383] EV | localhost | Setting up server as a primary server.
+[INFO] [2023-01-02 20:34:34,384] EV | localhost | Loaded database file.
+[INFO] [2023-01-02 20:34:34,384] EV | localhost | Loaded root list file.
+[INFO] [2023-01-02 20:34:34,384] EV | localhost | Finished setting up the server.
+[INFO] [2023-01-02 20:34:34,387] EV | 10.0.4.13 | UDP Server is listening on 10.0.4.13:20003
+[INFO] [2023-01-02 20:34:34,389] EV | 10.0.4.13 | TCP Server is listening on 10.0.4.13:20003
+[INFO] [2023-01-02 20:40:37,419] QR | 10.0.4.16:33239 | Received and decoded the query: 10,Q,0,0,0,0;kaguya.shinomiya.zaibatsu.,MX;
+[INFO] [2023-01-02 20:40:37,420] EV | localhost | Searching on cache for kaguya.shinomiya.zaibatsu., DNSValueType.MX
+[INFO] [2023-01-02 20:40:37,420] EV | localhost | Searching on database for kaguya.shinomiya.zaibatsu., DNSValueType.MX
+[INFO] [2023-01-02 20:40:37,420] EV | localhost | Perfect match on kaguya.shinomiya.zaibatsu., DNSValueType.MX
+[INFO] [2023-01-02 20:40:37,420] EV | localhost | Added response to kaguya.shinomiya.zaibatsu., DNSValueType.MX to cache.
+[INFO] [2023-01-02 20:41:53,751] QR | 10.0.4.16:48291 | Received and decoded the query: 11,Q,0,0,0,0;www.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:41:53,751] EV | localhost | Searching on cache for www.kaguya.shinomiya.zaibatsu., DNSValueType.A
+[INFO] [2023-01-02 20:41:53,751] EV | localhost | Searching on database for www.kaguya.shinomiya.zaibatsu., DNSValueType.A
+[INFO] [2023-01-02 20:41:53,752] EV | localhost | Perfect match on www.kaguya.shinomiya.zaibatsu., DNSValueType.A
+[INFO] [2023-01-02 20:41:53,752] EV | localhost | Added response to www.kaguya.shinomiya.zaibatsu., DNSValueType.A to cache.
+[INFO] [2023-01-02 20:42:40,697] QR | 10.0.4.16:44891 | Received and decoded the query: 12,Q+R,0,0,0,0;kaguya.shinomiya.zaibatsu.,MX;
+[INFO] [2023-01-02 20:42:40,698] EV | localhost | Searching on cache for kaguya.shinomiya.zaibatsu., DNSValueType.MX
+[INFO] [2023-01-02 20:42:40,698] EV | localhost | Searching on database for kaguya.shinomiya.zaibatsu., DNSValueType.MX
+[INFO] [2023-01-02 20:42:40,698] EV | localhost | Perfect match on kaguya.shinomiya.zaibatsu., DNSValueType.MX
+[INFO] [2023-01-02 20:42:40,698] EV | localhost | Added response to kaguya.shinomiya.zaibatsu., DNSValueType.MX to cache.
+[INFO] [2023-01-02 20:46:29,367] QR | 10.0.4.16:59424 | Received and decoded the query: 14,Q+R,0,0,0,0;kaguya.shinomiya.zaibatsu.,MX;
+[INFO] [2023-01-02 20:46:29,367] EV | localhost | Searching on cache for kaguya.shinomiya.zaibatsu., DNSValueType.MX
+[INFO] [2023-01-02 20:46:29,368] EV | localhost | Searching on database for kaguya.shinomiya.zaibatsu., DNSValueType.MX
+[INFO] [2023-01-02 20:46:29,368] EV | localhost | Perfect match on kaguya.shinomiya.zaibatsu., DNSValueType.MX
+[INFO] [2023-01-02 20:46:29,368] EV | localhost | Added response to kaguya.shinomiya.zaibatsu., DNSValueType.MX to cache.
+[INFO] [2023-01-02 20:47:14,547] QR | 10.0.4.16:55646 | Received and decoded the query: 15,Q+R,0,0,0,0;www.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:47:14,547] EV | localhost | Searching on cache for www.kaguya.shinomiya.zaibatsu., DNSValueType.A
+[INFO] [2023-01-02 20:47:14,548] EV | localhost | Searching on database for www.kaguya.shinomiya.zaibatsu., DNSValueType.A
+[INFO] [2023-01-02 20:47:14,548] EV | localhost | Perfect match on www.kaguya.shinomiya.zaibatsu., DNSValueType.A
+[INFO] [2023-01-02 20:47:14,548] EV | localhost | Added response to www.kaguya.shinomiya.zaibatsu., DNSValueType.A to cache.
+[INFO] [2023-01-02 20:50:22,357] QR | 10.0.4.16:59824 | Received and decoded the query: 16,Q+R,0,0,0,0;www.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:50:22,358] EV | localhost | Searching on cache for www.kaguya.shinomiya.zaibatsu., DNSValueType.A
+[INFO] [2023-01-02 20:50:22,358] EV | localhost | Searching on database for www.kaguya.shinomiya.zaibatsu., DNSValueType.A
+[INFO] [2023-01-02 20:50:22,358] EV | localhost | Perfect match on www.kaguya.shinomiya.zaibatsu., DNSValueType.A
+[INFO] [2023-01-02 20:50:22,358] EV | localhost | Added response to www.kaguya.shinomiya.zaibatsu., DNSValueType.A to cache.
+[INFO] [2023-01-02 20:50:29,562] QR | 10.0.4.16:48061 | Received and decoded the query: 17,Q+R,0,0,0,0;www.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:50:29,562] EV | localhost | Searching on cache for www.kaguya.shinomiya.zaibatsu., DNSValueType.A
+[INFO] [2023-01-02 20:50:29,562] EV | localhost | Searching on database for www.kaguya.shinomiya.zaibatsu., DNSValueType.A
+[INFO] [2023-01-02 20:50:29,562] EV | localhost | Perfect match on www.kaguya.shinomiya.zaibatsu., DNSValueType.A
+[INFO] [2023-01-02 20:50:29,562] EV | localhost | Added response to www.kaguya.shinomiya.zaibatsu., DNSValueType.A to cache.
+[INFO] [2023-01-02 20:51:13,439] QR | 10.0.4.16:56205 | Received and decoded the query: 18,Q+R,0,0,0,0;ftp.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:51:13,440] EV | localhost | Searching on cache for ftp.kaguya.shinomiya.zaibatsu., DNSValueType.A
+[INFO] [2023-01-02 20:51:13,440] EV | localhost | Searching on database for ftp.kaguya.shinomiya.zaibatsu., DNSValueType.A
+[INFO] [2023-01-02 20:51:13,440] EV | localhost | Domain ftp.kaguya.shinomiya.zaibatsu. exists but its my subdomain.
+[INFO] [2023-01-02 20:51:27,908] QR | 10.0.4.16:59699 | Received and decoded the query: 19,Q,0,0,0,0;ftp.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:51:27,908] EV | localhost | Searching on cache for ftp.kaguya.shinomiya.zaibatsu., DNSValueType.A
+[INFO] [2023-01-02 20:51:27,908] EV | localhost | Searching on database for ftp.kaguya.shinomiya.zaibatsu., DNSValueType.A
+[INFO] [2023-01-02 20:51:27,908] EV | localhost | Domain ftp.kaguya.shinomiya.zaibatsu. exists but its my subdomain.
+[INFO] [2023-01-02 20:55:08,528] ST | localhost |
+Server information:
+ +recursive:True
+ +address:10.0.4.13
+ +port:20003
+ +timeout:20000
+
+[INFO] [2023-01-02 20:55:08,528] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 20:55:08,528] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 20:55:08,528] EV | localhost | Setting up server as a primary server.
+[INFO] [2023-01-02 20:55:08,529] EV | localhost | Loaded database file.
+[INFO] [2023-01-02 20:55:08,529] EV | localhost | Loaded root list file.
+[INFO] [2023-01-02 20:55:08,529] EV | localhost | Finished setting up the server.
+[INFO] [2023-01-02 20:55:08,532] EV | 10.0.4.13 | UDP Server is listening on 10.0.4.13:20003
+[INFO] [2023-01-02 20:55:08,533] EV | 10.0.4.13 | TCP Server is listening on 10.0.4.13:20003
+[INFO] [2023-01-02 20:59:28,590] ST | localhost |
+Server information:
+ +recursive:True
+ +address:10.0.4.13
+ +port:20003
+ +timeout:20000
+
+[INFO] [2023-01-02 20:59:28,590] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 20:59:28,590] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 20:59:28,590] EV | localhost | Setting up server as a primary server.
+[INFO] [2023-01-02 20:59:28,591] EV | localhost | Loaded database file.
+[INFO] [2023-01-02 20:59:28,591] EV | localhost | Loaded root list file.
+[INFO] [2023-01-02 20:59:28,591] EV | localhost | Finished setting up the server.
+[INFO] [2023-01-02 20:59:28,593] EV | 10.0.4.13 | UDP Server is listening on 10.0.4.13:20003
+[INFO] [2023-01-02 20:59:28,594] EV | 10.0.4.13 | TCP Server is listening on 10.0.4.13:20003
+[INFO] [2023-01-02 21:01:21,183] ST | localhost |
+Server information:
+ +recursive:True
+ +address:10.0.4.13
+ +port:20003
+ +timeout:20000
+
+[INFO] [2023-01-02 21:01:21,183] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 21:01:21,183] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 21:01:21,183] EV | localhost | Setting up server as a primary server.
+[INFO] [2023-01-02 21:01:21,184] EV | localhost | Loaded database file.
+[INFO] [2023-01-02 21:01:21,184] EV | localhost | Loaded root list file.
+[INFO] [2023-01-02 21:01:21,184] EV | localhost | Finished setting up the server.
+[INFO] [2023-01-02 21:01:21,186] EV | 10.0.4.13 | UDP Server is listening on 10.0.4.13:20003
+[INFO] [2023-01-02 21:01:21,187] EV | 10.0.4.13 | TCP Server is listening on 10.0.4.13:20003

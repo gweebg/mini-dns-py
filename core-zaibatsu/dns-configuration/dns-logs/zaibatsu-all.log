@@ -1,0 +1,599 @@
+[INFO] [2023-01-02 18:46:18,757] ST | localhost |
+Server information:
+ +recursive:False
+ +address:10.0.4.12
+ +port:20000
+ +timeout:20000
+
+[INFO] [2023-01-02 18:46:18,757] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 18:46:18,758] EV | localhost | Setting up server as a primary server.
+[INFO] [2023-01-02 18:47:19,301] ST | localhost |
+Server information:
+ +recursive:False
+ +address:10.0.4.12
+ +port:20000
+ +timeout:20000
+
+[INFO] [2023-01-02 18:47:19,302] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 18:47:19,302] EV | localhost | Setting up server as a primary server.
+[INFO] [2023-01-02 18:47:24,161] ST | localhost |
+Root Server information:
+ +recursive:False
+ +address:10.0.4.12
+ +port:20000
+ +timeout:20000
+
+[INFO] [2023-01-02 18:47:24,161] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 18:47:29,441] ST | localhost |
+Root Server information:
+ +recursive:False
+ +address:10.0.4.12
+ +port:20000
+ +timeout:20000
+
+[INFO] [2023-01-02 18:47:29,441] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 18:47:36,176] ST | localhost |
+Root Server information:
+ +recursive:True
+ +address:10.0.4.12
+ +port:20000
+ +timeout:20000
+
+[INFO] [2023-01-02 18:47:36,176] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 18:47:36,176] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 18:48:17,353] ST | localhost |
+Root Server information:
+ +recursive:True
+ +address:10.0.4.12
+ +port:20000
+ +timeout:20000
+
+[INFO] [2023-01-02 18:48:17,353] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 18:48:17,353] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 18:49:29,786] ST | localhost |
+Root Server information:
+ +recursive:True
+ +address:10.0.4.12
+ +port:20000
+ +timeout:20000
+
+[INFO] [2023-01-02 18:49:29,786] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 18:49:29,786] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 18:49:29,787] EV | localhost | Loaded database file.
+[INFO] [2023-01-02 18:49:29,787] EV | localhost | Finished setting up the root server!
+[INFO] [2023-01-02 18:49:29,787] EV | 10.0.4.12 | UDP Server is listening on 10.0.4.12:20000
+[INFO] [2023-01-02 18:49:31,118] SP | localhost | Shutting down!
+[INFO] [2023-01-02 19:09:49,989] ST | localhost |
+Root Server information:
+ +recursive:True
+ +address:10.0.4.12
+ +port:20000
+ +timeout:1220
+
+[INFO] [2023-01-02 19:09:49,989] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 19:09:49,989] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 19:09:49,990] EV | localhost | Loaded database file.
+[INFO] [2023-01-02 19:09:49,990] EV | localhost | Finished setting up the root server!
+[INFO] [2023-01-02 19:09:49,990] EV | 10.0.4.12 | UDP Server is listening on 10.0.4.12:20000
+[INFO] [2023-01-02 19:09:53,072] SP | localhost | Shutting down!
+[INFO] [2023-01-02 19:09:55,068] ST | localhost |
+Root Server information:
+ +recursive:True
+ +address:10.0.4.12
+ +port:20000
+ +timeout:1220
+
+[INFO] [2023-01-02 19:09:55,069] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 19:09:55,069] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 19:09:55,069] EV | localhost | Loaded database file.
+[INFO] [2023-01-02 19:09:55,069] EV | localhost | Finished setting up the root server!
+[INFO] [2023-01-02 19:09:55,069] EV | 10.0.4.12 | UDP Server is listening on 10.0.4.12:20000
+[INFO] [2023-01-02 19:15:13,681] ST | localhost |
+Root Server information:
+ +recursive:True
+ +address:10.0.4.12
+ +port:20000
+ +timeout:1220
+
+[INFO] [2023-01-02 19:15:13,681] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 19:15:13,681] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 19:15:13,682] EV | localhost | Loaded database file.
+[INFO] [2023-01-02 19:15:13,682] EV | localhost | Finished setting up the root server!
+[INFO] [2023-01-02 19:15:13,682] EV | 10.0.4.12 | UDP Server is listening on 10.0.4.12:20000
+[INFO] [2023-01-02 19:45:17,274] ST | localhost |
+Root Server information:
+ +recursive:True
+ +address:10.0.4.12
+ +port:20000
+ +timeout:20000
+
+[INFO] [2023-01-02 19:45:17,274] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 19:45:17,274] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 19:45:17,275] EV | localhost | Loaded database file.
+[INFO] [2023-01-02 19:45:17,275] EV | localhost | Finished setting up the root server!
+[INFO] [2023-01-02 19:45:17,275] EV | 10.0.4.12 | UDP Server is listening on 10.0.4.12:20000
+[INFO] [2023-01-02 19:47:49,047] ST | localhost |
+Root Server information:
+ +recursive:True
+ +address:10.0.4.12
+ +port:20000
+ +timeout:20000
+
+[INFO] [2023-01-02 19:47:49,047] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 19:47:49,047] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 19:47:49,047] EV | localhost | Loaded database file.
+[INFO] [2023-01-02 19:47:49,047] EV | localhost | Finished setting up the root server!
+[INFO] [2023-01-02 19:47:49,047] EV | 10.0.4.12 | UDP Server is listening on 10.0.4.12:20000
+[INFO] [2023-01-02 19:55:57,501] SP | localhost | Shutting down!
+[INFO] [2023-01-02 19:59:49,987] ST | localhost |
+Root Server information:
+ +recursive:True
+ +address:10.0.4.12
+ +port:20000
+ +timeout:20000
+
+[INFO] [2023-01-02 19:59:49,987] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 19:59:49,987] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 19:59:49,987] EV | localhost | Loaded database file.
+[INFO] [2023-01-02 19:59:49,987] EV | localhost | Finished setting up the root server!
+[INFO] [2023-01-02 19:59:49,987] EV | 10.0.4.12 | UDP Server is listening on 10.0.4.12:20000
+[INFO] [2023-01-02 20:06:09,169] SP | localhost | Shutting down!
+[INFO] [2023-01-02 20:06:21,563] ST | localhost |
+Root Server information:
+ +recursive:True
+ +address:10.0.4.12
+ +port:20000
+ +timeout:20000
+
+[INFO] [2023-01-02 20:06:21,563] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 20:06:21,563] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 20:06:21,563] EV | localhost | Loaded database file.
+[INFO] [2023-01-02 20:06:21,563] EV | localhost | Finished setting up the root server!
+[INFO] [2023-01-02 20:06:21,563] EV | 10.0.4.12 | UDP Server is listening on 10.0.4.12:20000
+[INFO] [2023-01-02 20:13:56,581] SP | localhost | Shutting down!
+[INFO] [2023-01-02 20:14:47,163] ST | localhost |
+Root Server information:
+ +recursive:True
+ +address:10.0.4.12
+ +port:20000
+ +timeout:20000
+
+[INFO] [2023-01-02 20:14:47,163] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 20:14:47,163] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 20:14:47,163] EV | localhost | Loaded database file.
+[INFO] [2023-01-02 20:14:47,163] EV | localhost | Finished setting up the root server!
+[INFO] [2023-01-02 20:14:47,164] EV | 10.0.4.12 | UDP Server is listening on 10.0.4.12:20000
+[INFO] [2023-01-02 20:15:50,420] QR | 10.0.4.16:42921 | Received and decoded the query: 4,Q,0,0,0,0;www.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:15:50,420] EV | localhost | Searching for www.kaguya.shinomiya.zaibatsu., DNSValueType.A
+[INFO] [2023-01-02 20:15:50,421] RP | 10.0.4.16:42921 | Found and sent an answer to the query:
+
+4,A,1,0,1,1;www.kaguya.shinomiya.zaibatsu.,A;
+shinomiya.zaibatsu. NS sp.shinomiya.zaibatsu. 60 ;
+sp.shinomiya.zaibatsu. A 10.0.4.11:20001 60 ;
+
+
+[INFO] [2023-01-02 20:16:52,132] SP | localhost | Shutting down!
+[INFO] [2023-01-02 20:16:58,632] ST | localhost |
+Root Server information:
+ +recursive:True
+ +address:10.0.4.12
+ +port:20000
+ +timeout:20000
+
+[INFO] [2023-01-02 20:16:58,632] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 20:16:58,632] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 20:16:58,632] EV | localhost | Loaded database file.
+[INFO] [2023-01-02 20:16:58,632] EV | localhost | Finished setting up the root server!
+[INFO] [2023-01-02 20:16:58,632] EV | 10.0.4.12 | UDP Server is listening on 10.0.4.12:20000
+[INFO] [2023-01-02 20:17:50,283] QR | 10.0.4.16:52482 | Received and decoded the query: 5,Q,0,0,0,0;www.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:17:50,283] EV | localhost | Searching for www.kaguya.shinomiya.zaibatsu., DNSValueType.A
+[INFO] [2023-01-02 20:17:50,283] RP | 10.0.4.16:52482 | Found and sent an answer to the query:
+
+5,A,1,0,1,1;www.kaguya.shinomiya.zaibatsu.,A;
+shinomiya.zaibatsu. NS sp.shinomiya.zaibatsu. 60 ;
+sp.shinomiya.zaibatsu. A 10.0.4.11:20001 60 ;
+
+
+[INFO] [2023-01-02 20:22:00,097] QR | 10.0.4.16:38924 | Received and decoded the query: 7,Q,0,0,0,0;kaguya.shinomiya.zaibatsu.,MX;
+[INFO] [2023-01-02 20:22:00,097] EV | localhost | Searching for kaguya.shinomiya.zaibatsu., DNSValueType.MX
+[INFO] [2023-01-02 20:22:00,098] RP | 10.0.4.16:38924 | Found and sent an answer to the query:
+
+7,A,1,0,1,1;kaguya.shinomiya.zaibatsu.,MX;
+shinomiya.zaibatsu. NS sp.shinomiya.zaibatsu. 60 ;
+sp.shinomiya.zaibatsu. A 10.0.4.11:20001 60 ;
+
+
+[INFO] [2023-01-02 20:22:20,122] QR | 10.0.4.16:36030 | Received and decoded the query: 8,Q+R,0,0,0,0;kaguya.shinomiya.zaibatsu.,MX;
+[INFO] [2023-01-02 20:22:20,122] EV | localhost | Searching for kaguya.shinomiya.zaibatsu., DNSValueType.MX
+[INFO] [2023-01-02 20:22:20,122] EV | localhost | Packet is recursive, getting next address.
+[INFO] [2023-01-02 20:22:20,122] EV | localhost | Relaying packet to address 10.0.4.11:20001
+[INFO] [2023-01-02 20:22:20,124] RR | 10.0.4.11:20001 | Success, obtained an answer from relaying:
+10.0.4.11:20001
+[INFO] [2023-01-02 20:22:20,124] RP | 10.0.4.11:20001 | Sent the final query response to the client.
+[INFO] [2023-01-02 20:22:33,231] SP | localhost | Shutting down!
+[INFO] [2023-01-02 20:34:11,304] ST | localhost |
+Root Server information:
+ +recursive:True
+ +address:10.0.4.12
+ +port:20000
+ +timeout:20000
+
+[INFO] [2023-01-02 20:34:11,304] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 20:34:11,304] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 20:34:11,305] EV | localhost | Loaded database file.
+[INFO] [2023-01-02 20:34:11,305] EV | localhost | Finished setting up the root server!
+[INFO] [2023-01-02 20:34:11,305] EV | 10.0.4.12 | UDP Server is listening on 10.0.4.12:20000
+[INFO] [2023-01-02 20:34:22,146] SP | localhost | Shutting down!
+[INFO] [2023-01-02 20:34:29,568] ST | localhost |
+Root Server information:
+ +recursive:True
+ +address:10.0.4.12
+ +port:20000
+ +timeout:20000
+
+[INFO] [2023-01-02 20:34:29,568] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 20:34:29,568] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 20:34:29,569] EV | localhost | Loaded database file.
+[INFO] [2023-01-02 20:34:29,569] EV | localhost | Finished setting up the root server!
+[INFO] [2023-01-02 20:34:29,569] EV | 10.0.4.12 | UDP Server is listening on 10.0.4.12:20000
+[INFO] [2023-01-02 20:36:43,781] QR | 10.0.4.16:50809 | Received and decoded the query: 9,Q,0,0,0,0;shinomiya.zaibatsu.,NS;
+[INFO] [2023-01-02 20:36:43,781] EV | localhost | Searching for shinomiya.zaibatsu., DNSValueType.NS
+[INFO] [2023-01-02 20:36:43,781] RP | 10.0.4.16:50809 | Found and sent an answer to the query:
+
+9,A,1,0,1,1;shinomiya.zaibatsu.,NS;
+shinomiya.zaibatsu. NS sp.shinomiya.zaibatsu. 60 ;
+sp.shinomiya.zaibatsu. A 10.0.4.11:20001 60 ;
+
+
+[INFO] [2023-01-02 20:40:37,414] QR | 10.0.4.16:44728 | Received and decoded the query: 10,Q,0,0,0,0;kaguya.shinomiya.zaibatsu.,MX;
+[INFO] [2023-01-02 20:40:37,415] EV | localhost | Searching for kaguya.shinomiya.zaibatsu., DNSValueType.MX
+[INFO] [2023-01-02 20:40:37,415] RP | 10.0.4.16:44728 | Found and sent an answer to the query:
+
+10,A,1,0,1,1;kaguya.shinomiya.zaibatsu.,MX;
+shinomiya.zaibatsu. NS sp.shinomiya.zaibatsu. 60 ;
+sp.shinomiya.zaibatsu. A 10.0.4.11:20001 60 ;
+
+
+[INFO] [2023-01-02 20:41:53,748] QR | 10.0.4.16:49346 | Received and decoded the query: 11,Q,0,0,0,0;www.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:41:53,748] EV | localhost | Searching for www.kaguya.shinomiya.zaibatsu., DNSValueType.A
+[INFO] [2023-01-02 20:41:53,748] RP | 10.0.4.16:49346 | Found and sent an answer to the query:
+
+11,A,1,0,1,1;www.kaguya.shinomiya.zaibatsu.,A;
+shinomiya.zaibatsu. NS sp.shinomiya.zaibatsu. 60 ;
+sp.shinomiya.zaibatsu. A 10.0.4.11:20001 60 ;
+
+
+[INFO] [2023-01-02 20:42:40,694] QR | 10.0.4.16:46684 | Received and decoded the query: 12,Q+R,0,0,0,0;kaguya.shinomiya.zaibatsu.,MX;
+[INFO] [2023-01-02 20:42:40,695] EV | localhost | Searching for kaguya.shinomiya.zaibatsu., DNSValueType.MX
+[INFO] [2023-01-02 20:42:40,695] EV | localhost | Packet is recursive, getting next address.
+[INFO] [2023-01-02 20:42:40,695] EV | localhost | Relaying packet to address 10.0.4.11:20001
+[INFO] [2023-01-02 20:42:40,696] RR | 10.0.4.11:20001 | Success, obtained an answer from relaying:
+10.0.4.11:20001
+[INFO] [2023-01-02 20:42:40,697] RP | 10.0.4.11:20001 | Sent the final query response to the client.
+[INFO] [2023-01-02 20:46:29,364] QR | 10.0.4.16:36546 | Received and decoded the query: 14,Q+R,0,0,0,0;kaguya.shinomiya.zaibatsu.,MX;
+[INFO] [2023-01-02 20:46:29,364] EV | localhost | Searching for kaguya.shinomiya.zaibatsu., DNSValueType.MX
+[INFO] [2023-01-02 20:46:29,364] EV | localhost | Packet is recursive, getting next address.
+[INFO] [2023-01-02 20:46:29,365] EV | localhost | Relaying packet to address 10.0.4.11:20001
+[INFO] [2023-01-02 20:46:29,366] RR | 10.0.4.11:20001 | Success, obtained an answer from relaying:
+10.0.4.11:20001
+[INFO] [2023-01-02 20:46:29,366] RP | 10.0.4.11:20001 | Sent the final query response to the client.
+[INFO] [2023-01-02 20:47:14,543] QR | 10.0.4.16:40662 | Received and decoded the query: 15,Q+R,0,0,0,0;www.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:47:14,544] EV | localhost | Searching for www.kaguya.shinomiya.zaibatsu., DNSValueType.A
+[INFO] [2023-01-02 20:47:14,544] EV | localhost | Packet is recursive, getting next address.
+[INFO] [2023-01-02 20:47:14,544] EV | localhost | Relaying packet to address 10.0.4.11:20001
+[INFO] [2023-01-02 20:47:14,546] RR | 10.0.4.11:20001 | Success, obtained an answer from relaying:
+10.0.4.11:20001
+[INFO] [2023-01-02 20:47:14,546] RP | 10.0.4.11:20001 | Sent the final query response to the client.
+[INFO] [2023-01-02 20:50:22,354] QR | 10.0.4.16:33478 | Received and decoded the query: 16,Q+R,0,0,0,0;www.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:50:22,354] EV | localhost | Searching for www.kaguya.shinomiya.zaibatsu., DNSValueType.A
+[INFO] [2023-01-02 20:50:22,354] EV | localhost | Packet is recursive, getting next address.
+[INFO] [2023-01-02 20:50:22,354] EV | localhost | Relaying packet to address 10.0.4.11:20001
+[INFO] [2023-01-02 20:50:22,356] RR | 10.0.4.11:20001 | Success, obtained an answer from relaying:
+10.0.4.11:20001
+[INFO] [2023-01-02 20:50:22,356] RP | 10.0.4.11:20001 | Sent the final query response to the client.
+[INFO] [2023-01-02 20:50:29,559] QR | 10.0.4.16:42483 | Received and decoded the query: 17,Q+R,0,0,0,0;www.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:50:29,559] EV | localhost | Searching for www.kaguya.shinomiya.zaibatsu., DNSValueType.A
+[INFO] [2023-01-02 20:50:29,559] EV | localhost | Packet is recursive, getting next address.
+[INFO] [2023-01-02 20:50:29,559] EV | localhost | Relaying packet to address 10.0.4.11:20001
+[INFO] [2023-01-02 20:50:29,561] RR | 10.0.4.11:20001 | Success, obtained an answer from relaying:
+10.0.4.11:20001
+[INFO] [2023-01-02 20:50:29,561] RP | 10.0.4.11:20001 | Sent the final query response to the client.
+[INFO] [2023-01-02 20:51:13,436] QR | 10.0.4.16:51755 | Received and decoded the query: 18,Q+R,0,0,0,0;ftp.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:51:13,436] EV | localhost | Searching for ftp.kaguya.shinomiya.zaibatsu., DNSValueType.A
+[INFO] [2023-01-02 20:51:13,436] EV | localhost | Packet is recursive, getting next address.
+[INFO] [2023-01-02 20:51:13,437] EV | localhost | Relaying packet to address 10.0.4.11:20001
+[INFO] [2023-01-02 20:51:13,438] RR | 10.0.4.11:20001 | Success, obtained an answer from relaying:
+10.0.4.11:20001
+[INFO] [2023-01-02 20:51:13,438] RP | 10.0.4.11:20001 | Sent the final query response to the client.
+[INFO] [2023-01-02 20:51:27,903] QR | 10.0.4.16:47400 | Received and decoded the query: 19,Q,0,0,0,0;ftp.kaguya.shinomiya.zaibatsu.,A;
+[INFO] [2023-01-02 20:51:27,903] EV | localhost | Searching for ftp.kaguya.shinomiya.zaibatsu., DNSValueType.A
+[INFO] [2023-01-02 20:51:27,903] RP | 10.0.4.16:47400 | Found and sent an answer to the query:
+
+19,A,1,0,1,1;ftp.kaguya.shinomiya.zaibatsu.,A;
+shinomiya.zaibatsu. NS sp.shinomiya.zaibatsu. 60 ;
+sp.shinomiya.zaibatsu. A 10.0.4.11:20001 60 ;
+
+
+[INFO] [2023-01-02 20:51:43,973] QR | 10.0.4.16:35723 | Received and decoded the query: 20,Q,0,0,0,0;maki.shinomiya.zaibatsu.,NS;
+[INFO] [2023-01-02 20:51:43,973] EV | localhost | Searching for maki.shinomiya.zaibatsu., DNSValueType.NS
+[INFO] [2023-01-02 20:51:43,974] RP | 10.0.4.16:35723 | Found and sent an answer to the query:
+
+20,A,1,0,1,1;maki.shinomiya.zaibatsu.,NS;
+shinomiya.zaibatsu. NS sp.shinomiya.zaibatsu. 60 ;
+sp.shinomiya.zaibatsu. A 10.0.4.11:20001 60 ;
+
+
+[INFO] [2023-01-02 20:51:58,221] SP | localhost | Shutting down!
+[INFO] [2023-01-02 20:55:04,405] ST | localhost |
+Root Server information:
+ +recursive:True
+ +address:10.0.4.12
+ +port:20000
+ +timeout:20000
+
+[INFO] [2023-01-02 20:55:04,405] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 20:55:04,405] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 20:55:04,405] EV | localhost | Loaded database file.
+[INFO] [2023-01-02 20:55:04,406] EV | localhost | Finished setting up the root server!
+[INFO] [2023-01-02 20:55:04,406] EV | 10.0.4.12 | UDP Server is listening on 10.0.4.12:20000
+[INFO] [2023-01-02 20:55:14,520] QR | 10.0.4.16:48896 | Received and decoded the query: 21,Q,0,0,0,0;maki.shinomiya.zaibatsu.,NS;
+[INFO] [2023-01-02 20:55:14,520] EV | localhost | Searching for maki.shinomiya.zaibatsu., DNSValueType.NS
+[INFO] [2023-01-02 20:55:14,521] RP | 10.0.4.16:48896 | Found and sent an answer to the query:
+
+21,A,1,0,1,1;maki.shinomiya.zaibatsu.,NS;
+shinomiya.zaibatsu. NS sp.shinomiya.zaibatsu. 60 ;
+sp.shinomiya.zaibatsu. A 10.0.4.11:20001 60 ;
+
+
+[INFO] [2023-01-02 20:59:21,478] SP | localhost | Shutting down!
+[INFO] [2023-01-02 20:59:23,012] ST | localhost |
+Root Server information:
+ +recursive:True
+ +address:10.0.4.12
+ +port:20000
+ +timeout:20000
+
+[INFO] [2023-01-02 20:59:23,012] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 20:59:23,012] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 20:59:23,012] EV | localhost | Loaded database file.
+[INFO] [2023-01-02 20:59:23,012] EV | localhost | Finished setting up the root server!
+[INFO] [2023-01-02 20:59:23,013] EV | 10.0.4.12 | UDP Server is listening on 10.0.4.12:20000
+[INFO] [2023-01-02 20:59:34,033] SP | localhost | Shutting down!
+[INFO] [2023-01-02 20:59:36,689] ST | localhost |
+Root Server information:
+ +recursive:True
+ +address:10.0.4.12
+ +port:20000
+ +timeout:20000
+
+[INFO] [2023-01-02 20:59:36,690] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 20:59:36,690] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 20:59:36,690] EV | localhost | Loaded database file.
+[INFO] [2023-01-02 20:59:36,690] EV | localhost | Finished setting up the root server!
+[INFO] [2023-01-02 20:59:36,690] EV | 10.0.4.12 | UDP Server is listening on 10.0.4.12:20000
+[INFO] [2023-01-02 20:59:44,354] QR | 10.0.4.16:33752 | Received and decoded the query: 22,Q,0,0,0,0;maki.shinomiya.zaibatsu.,NS;
+[INFO] [2023-01-02 20:59:44,354] EV | localhost | Searching for maki.shinomiya.zaibatsu., DNSValueType.NS
+[INFO] [2023-01-02 20:59:44,354] RP | 10.0.4.16:33752 | Found and sent an answer to the query:
+
+22,A,1,0,1,1;maki.shinomiya.zaibatsu.,NS;
+shinomiya.zaibatsu. NS sp.shinomiya.zaibatsu. 60 ;
+sp.shinomiya.zaibatsu. A 10.0.4.11:20001 60 ;
+
+
+[INFO] [2023-01-02 21:01:11,779] SP | localhost | Shutting down!
+[INFO] [2023-01-02 21:01:14,774] ST | localhost |
+Root Server information:
+ +recursive:True
+ +address:10.0.4.12
+ +port:20000
+ +timeout:20000
+
+[INFO] [2023-01-02 21:01:14,775] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 21:01:14,775] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 21:01:14,775] EV | localhost | Loaded database file.
+[INFO] [2023-01-02 21:01:14,775] EV | localhost | Finished setting up the root server!
+[INFO] [2023-01-02 21:01:14,775] EV | 10.0.4.12 | UDP Server is listening on 10.0.4.12:20000
+[INFO] [2023-01-02 21:01:34,524] QR | 10.0.4.16:60810 | Received and decoded the query: 23,Q,0,0,0,0;maki.shinomiya.zaibatsu.,NS;
+[INFO] [2023-01-02 21:01:34,524] EV | localhost | Searching for maki.shinomiya.zaibatsu., DNSValueType.NS
+[INFO] [2023-01-02 21:01:34,525] RP | 10.0.4.16:60810 | Found and sent an answer to the query:
+
+23,A,1,0,1,1;maki.shinomiya.zaibatsu.,NS;
+shinomiya.zaibatsu. NS sp.shinomiya.zaibatsu. 60 ;
+sp.shinomiya.zaibatsu. A 10.0.4.11:20001 60 ;
+
+
+[INFO] [2023-01-02 21:02:35,625] QR | 10.0.4.16:55879 | Received and decoded the query: 25,Q,0,0,0,0;maki.shinomiya.zaibatsu.wrong.,NS;
+[INFO] [2023-01-02 21:02:35,625] EV | localhost | Searching for maki.shinomiya.zaibatsu.wrong., DNSValueType.NS
+[INFO] [2023-01-02 21:02:35,625] RP | 10.0.4.16:55879 | Found and sent an answer to the query:
+
+25,A,1,0,1,1;maki.shinomiya.zaibatsu.wrong.,NS;
+shinomiya.zaibatsu. NS sp.shinomiya.zaibatsu. 60 ;
+sp.shinomiya.zaibatsu. A 10.0.4.11:20001 60 ;
+
+
+[INFO] [2023-01-02 21:03:15,747] QR | 10.0.4.16:56569 | Received and decoded the query: 26,Q,0,0,0,0;super.wrong.domain.,NS;
+[INFO] [2023-01-02 21:03:15,747] EV | localhost | Searching for super.wrong.domain., DNSValueType.NS
+[INFO] [2023-01-02 21:03:15,747] RP | 10.0.4.16:56569 | Found and sent an answer to the query:
+
+26,A,2,0,0,0;super.wrong.domain.,NS;
+
+
+[INFO] [2023-01-02 22:37:21,347] ST | localhost |
+Root Server information:
+ +recursive:True
+ +address:127.0.0.1
+ +port:20000
+ +timeout:1220
+
+[INFO] [2023-01-02 22:37:21,348] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 22:37:21,348] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 22:37:21,348] EV | localhost | Loaded database file.
+[INFO] [2023-01-02 22:37:21,348] EV | localhost | Finished setting up the root server!
+[INFO] [2023-01-02 22:37:21,348] EV | 127.0.0.1 | UDP Server is listening on 127.0.0.1:20000
+[INFO] [2023-01-02 22:41:33,630] ST | localhost |
+Root Server information:
+ +recursive:True
+ +address:127.0.0.1
+ +port:20000
+ +timeout:1220
+
+[INFO] [2023-01-02 22:41:33,630] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 22:41:33,630] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 22:41:33,630] EV | localhost | Loaded database file.
+[INFO] [2023-01-02 22:41:33,630] EV | localhost | Finished setting up the root server!
+[INFO] [2023-01-02 22:41:33,630] EV | 127.0.0.1 | UDP Server is listening on 127.0.0.1:20000
+[INFO] [2023-01-02 22:46:51,674] SP | localhost | Shutting down!
+[INFO] [2023-01-02 22:47:40,973] ST | localhost |
+Root Server information:
+ +recursive:True
+ +address:127.0.0.1
+ +port:20000
+ +timeout:1220
+
+[INFO] [2023-01-02 22:47:40,973] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 22:47:40,973] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 22:47:40,973] EV | localhost | Loaded database file.
+[INFO] [2023-01-02 22:47:40,973] EV | localhost | Finished setting up the root server!
+[INFO] [2023-01-02 22:47:40,974] EV | 127.0.0.1 | UDP Server is listening on 127.0.0.1:20000
+[INFO] [2023-01-02 22:47:42,187] SP | localhost | Shutting down!
+[INFO] [2023-01-02 22:47:55,466] ST | localhost |
+Root Server information:
+ +recursive:True
+ +address:127.0.0.1
+ +port:20000
+ +timeout:1220
+
+[INFO] [2023-01-02 22:47:55,466] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 22:47:55,466] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 22:47:55,466] EV | localhost | Loaded database file.
+[INFO] [2023-01-02 22:47:55,467] EV | localhost | Finished setting up the root server!
+[INFO] [2023-01-02 22:47:55,467] EV | 127.0.0.1 | UDP Server is listening on 127.0.0.1:20000
+[INFO] [2023-01-02 22:48:26,199] SP | localhost | Shutting down!
+[INFO] [2023-01-02 22:49:31,564] ST | localhost |
+Root Server information:
+ +recursive:True
+ +address:10.0.4.12
+ +port:20000
+ +timeout:1220
+
+[INFO] [2023-01-02 22:49:31,564] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 22:49:31,564] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 22:49:31,564] EV | localhost | Loaded database file.
+[INFO] [2023-01-02 22:49:31,565] EV | localhost | Finished setting up the root server!
+[INFO] [2023-01-02 22:49:31,565] EV | 10.0.4.12 | UDP Server is listening on 10.0.4.12:20000
+[INFO] [2023-01-02 22:52:52,314] SP | localhost | Shutting down!
+[INFO] [2023-01-02 22:52:52,988] ST | localhost |
+Root Server information:
+ +recursive:True
+ +address:10.0.4.12
+ +port:20000
+ +timeout:1220
+
+[INFO] [2023-01-02 22:52:52,989] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 22:52:52,989] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 22:52:52,989] EV | localhost | Loaded database file.
+[INFO] [2023-01-02 22:52:52,989] EV | localhost | Finished setting up the root server!
+[INFO] [2023-01-02 22:52:52,989] EV | 10.0.4.12 | UDP Server is listening on 10.0.4.12:20000
+[INFO] [2023-01-02 22:53:27,483] SP | localhost | Shutting down!
+[INFO] [2023-01-02 22:53:56,350] ST | localhost |
+Root Server information:
+ +recursive:True
+ +address:10.0.4.12
+ +port:20000
+ +timeout:1220
+
+[INFO] [2023-01-02 22:53:56,351] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 22:53:56,351] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 22:53:56,351] EV | localhost | Loaded database file.
+[INFO] [2023-01-02 22:53:56,351] EV | localhost | Finished setting up the root server!
+[INFO] [2023-01-02 22:53:56,351] EV | 10.0.4.12 | UDP Server is listening on 10.0.4.12:20000
+[INFO] [2023-01-02 22:55:56,888] QR | 10.0.4.16:39607 | Received and decoded the query: 21,Q+R,0,0,0,0;reverse.zaibatsu.,NS;
+[INFO] [2023-01-02 22:55:56,888] EV | localhost | Searching for reverse.zaibatsu., DNSValueType.NS
+[INFO] [2023-01-02 22:55:56,889] EV | localhost | Packet is recursive, getting next address.
+[INFO] [2023-01-02 22:55:56,889] EV | localhost | Relaying packet to address 10.0.5.12:20007
+[INFO] [2023-01-02 22:55:56,891] RR | 10.0.5.12:20007 | Success, obtained an answer from relaying:
+10.0.5.12:20007
+[INFO] [2023-01-02 22:55:56,892] RP | 10.0.5.12:20007 | Sent the final query response to the client.
+[INFO] [2023-01-02 22:56:29,627] SP | localhost | Shutting down!
+[INFO] [2023-01-02 22:56:32,558] ST | localhost |
+Root Server information:
+ +recursive:True
+ +address:10.0.4.12
+ +port:20000
+ +timeout:1220
+
+[INFO] [2023-01-02 22:56:32,558] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 22:56:32,559] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 22:56:32,559] EV | localhost | Loaded database file.
+[INFO] [2023-01-02 22:56:32,559] EV | localhost | Finished setting up the root server!
+[INFO] [2023-01-02 22:56:32,559] EV | 10.0.4.12 | UDP Server is listening on 10.0.4.12:20000
+[INFO] [2023-01-02 22:56:45,661] QR | 10.0.4.16:34975 | Received and decoded the query: 22,Q,0,0,0,0;20007:12.5.0.10-inaddr.reverse.zaibatsu.,PTR;
+[INFO] [2023-01-02 22:56:45,661] EV | localhost | Searching for 20007:12.5.0.10-inaddr.reverse.zaibatsu., DNSValueType.PTR
+[INFO] [2023-01-02 22:56:45,662] RP | 10.0.4.16:34975 | Found and sent an answer to the query:
+
+22,A,1,0,1,1;20007:12.5.0.10-inaddr.reverse.zaibatsu.,PTR;
+reverse.zaibatsu. NS sp.reverse.zaibatsu. 60 ;
+sp.reverse.zaibatsu. A 10.0.5.12:20007 60 ;
+
+
+[INFO] [2023-01-02 22:58:17,656] SP | localhost | Shutting down!
+[INFO] [2023-01-02 22:58:19,141] ST | localhost |
+Root Server information:
+ +recursive:True
+ +address:10.0.4.12
+ +port:20000
+ +timeout:1220
+
+[INFO] [2023-01-02 22:58:19,141] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 22:58:19,141] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 22:58:19,142] EV | localhost | Loaded database file.
+[INFO] [2023-01-02 22:58:19,142] EV | localhost | Finished setting up the root server!
+[INFO] [2023-01-02 22:58:19,142] EV | 10.0.4.12 | UDP Server is listening on 10.0.4.12:20000
+[INFO] [2023-01-02 22:58:45,797] QR | 10.0.4.16:56858 | Received and decoded the query: 23,Q,0,0,0,0;20000:12.4.0.10-inaddr.reverse.zaibatsu.,PTR;
+[INFO] [2023-01-02 22:58:45,797] EV | localhost | Searching for 20000:12.4.0.10-inaddr.reverse.zaibatsu., DNSValueType.PTR
+[INFO] [2023-01-02 22:58:45,797] RP | 10.0.4.16:56858 | Found and sent an answer to the query:
+
+23,A,1,0,1,1;20000:12.4.0.10-inaddr.reverse.zaibatsu.,PTR;
+reverse.zaibatsu. NS sp.reverse.zaibatsu. 60 ;
+sp.reverse.zaibatsu. A 10.0.5.12:20007 60 ;
+
+
+[INFO] [2023-01-16 18:43:53,031] ST | localhost |
+Root Server information:
+ +recursive:True
+ +address:10.0.4.12
+ +port:20000
+ +timeout:1220
+
+[INFO] [2023-01-16 18:43:53,032] EV | localhost | Cache initialized.
+[INFO] [2023-01-16 18:43:53,032] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-16 18:43:53,033] EV | localhost | Loaded database file.
+[INFO] [2023-01-16 18:43:53,033] EV | localhost | Finished setting up the root server!
+[INFO] [2023-01-16 18:43:53,033] EV | 10.0.4.12 | UDP Server is listening on 10.0.4.12:20000
+[INFO] [2023-01-16 18:43:54,366] SP | localhost | Shutting down!
+[INFO] [2023-01-18 10:18:39,083] ST | localhost |
+Root Server information:
+ +recursive:True
+ +address:10.0.4.12
+ +port:20000
+ +timeout:1220
+
+[INFO] [2023-01-18 10:18:39,084] EV | localhost | Cache initialized.
+[INFO] [2023-01-18 10:18:39,084] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-18 10:18:39,085] EV | localhost | Loaded database file.
+[INFO] [2023-01-18 10:18:39,085] EV | localhost | Finished setting up the root server!
+[INFO] [2023-01-18 10:18:39,085] EV | 10.0.4.12 | UDP Server is listening on 10.0.4.12:20000
+[INFO] [2023-01-18 10:18:41,977] SP | localhost | Shutting down!
+[INFO] [2023-01-18 10:20:38,750] ST | localhost |
+Root Server information:
+ +recursive:True
+ +address:10.0.4.12
+ +port:20000
+ +timeout:1220
+
+[INFO] [2023-01-18 10:20:38,751] EV | localhost | Cache initialized.
+[INFO] [2023-01-18 10:20:38,751] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-18 10:20:38,751] EV | localhost | Loaded database file.
+[INFO] [2023-01-18 10:20:38,751] EV | localhost | Finished setting up the root server!
+[INFO] [2023-01-18 10:20:38,751] EV | 10.0.4.12 | UDP Server is listening on 10.0.4.12:20000
+[INFO] [2023-01-18 10:20:39,679] SP | localhost | Shutting down!

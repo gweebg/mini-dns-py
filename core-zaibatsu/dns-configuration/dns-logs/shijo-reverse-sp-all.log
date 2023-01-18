@@ -1,0 +1,118 @@
+[INFO] [2023-01-02 19:49:53,492] ST | localhost |
+Server information:
+ +recursive:True
+ +address:10.0.5.12
+ +port:20000
+ +timeout:20000
+
+[INFO] [2023-01-02 19:49:53,492] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 19:49:53,492] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 19:49:53,492] EV | localhost | Setting up server as a primary server.
+[INFO] [2023-01-02 19:49:53,492] EV | localhost | Loaded database file.
+[INFO] [2023-01-02 19:49:53,492] EV | localhost | Loaded root list file.
+[INFO] [2023-01-02 19:49:53,492] EV | localhost | Finished setting up the server.
+[INFO] [2023-01-02 19:49:53,495] EV | 10.0.5.12 | UDP Server is listening on 10.0.5.12:20000
+[INFO] [2023-01-02 19:49:53,496] EV | 10.0.5.12 | TCP Server is listening on 10.0.5.12:20000
+[INFO] [2023-01-02 20:00:43,892] ST | localhost |
+Server information:
+ +recursive:True
+ +address:10.0.5.12
+ +port:20000
+ +timeout:20000
+
+[INFO] [2023-01-02 20:00:43,892] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 20:00:43,892] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 20:00:43,892] EV | localhost | Setting up server as a primary server.
+[INFO] [2023-01-02 20:00:43,893] EV | localhost | Loaded database file.
+[INFO] [2023-01-02 20:00:43,893] EV | localhost | Loaded root list file.
+[INFO] [2023-01-02 20:00:43,893] EV | localhost | Finished setting up the server.
+[INFO] [2023-01-02 20:00:43,895] EV | 10.0.5.12 | UDP Server is listening on 10.0.5.12:20000
+[INFO] [2023-01-02 20:00:43,896] EV | 10.0.5.12 | TCP Server is listening on 10.0.5.12:20000
+[INFO] [2023-01-02 22:41:49,533] ST | localhost |
+Server information:
+ +recursive:True
+ +address:127.0.0.1
+ +port:20007
+ +timeout:1220
+
+[INFO] [2023-01-02 22:41:49,534] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 22:41:49,534] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 22:41:49,534] EV | localhost | Setting up server as a primary server.
+[INFO] [2023-01-02 22:41:49,540] EV | localhost | Loaded database file.
+[INFO] [2023-01-02 22:41:49,541] EV | localhost | Loaded root list file.
+[INFO] [2023-01-02 22:41:49,541] EV | localhost | Finished setting up the server.
+[INFO] [2023-01-02 22:41:49,544] EV | 127.0.0.1 | UDP Server is listening on 127.0.0.1:20007
+[INFO] [2023-01-02 22:41:49,546] EV | 127.0.0.1 | TCP Server is listening on 127.0.0.1:20007
+[INFO] [2023-01-02 22:48:03,292] ST | localhost |
+Server information:
+ +recursive:True
+ +address:127.0.0.1
+ +port:20007
+ +timeout:1220
+
+[INFO] [2023-01-02 22:48:03,292] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 22:48:03,292] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 22:48:03,292] EV | localhost | Setting up server as a primary server.
+[INFO] [2023-01-02 22:48:03,292] EV | localhost | Loaded database file.
+[INFO] [2023-01-02 22:48:03,292] EV | localhost | Loaded root list file.
+[INFO] [2023-01-02 22:48:03,292] EV | localhost | Finished setting up the server.
+[INFO] [2023-01-02 22:48:03,295] EV | 127.0.0.1 | UDP Server is listening on 127.0.0.1:20007
+[INFO] [2023-01-02 22:48:03,296] EV | 127.0.0.1 | TCP Server is listening on 127.0.0.1:20007
+[INFO] [2023-01-02 22:50:48,303] ST | localhost |
+Server information:
+ +recursive:True
+ +address:10.0.5.12
+ +port:20007
+ +timeout:1220
+
+[INFO] [2023-01-02 22:50:48,303] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 22:50:48,304] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 22:50:48,304] EV | localhost | Setting up server as a primary server.
+[INFO] [2023-01-02 22:50:48,304] EV | localhost | Loaded database file.
+[INFO] [2023-01-02 22:50:48,304] EV | localhost | Loaded root list file.
+[INFO] [2023-01-02 22:50:48,304] EV | localhost | Finished setting up the server.
+[INFO] [2023-01-02 22:50:48,307] EV | 10.0.5.12 | UDP Server is listening on 10.0.5.12:20007
+[INFO] [2023-01-02 22:50:48,308] EV | 10.0.5.12 | TCP Server is listening on 10.0.5.12:20007
+[INFO] [2023-01-02 22:55:56,890] QR | 10.0.4.12:51680 | Received and decoded the query: 21,Q+R,0,0,0,0;reverse.zaibatsu.,NS;
+[INFO] [2023-01-02 22:55:56,890] EV | localhost | Searching on cache for reverse.zaibatsu., DNSValueType.NS
+[INFO] [2023-01-02 22:55:56,891] EV | localhost | Searching on database for reverse.zaibatsu., DNSValueType.NS
+[INFO] [2023-01-02 22:55:56,891] EV | localhost | Perfect match on reverse.zaibatsu., DNSValueType.NS
+[INFO] [2023-01-02 22:55:56,891] EV | localhost | Added response to reverse.zaibatsu., DNSValueType.NS to cache.
+[INFO] [2023-01-02 22:56:28,554] ST | localhost |
+Server information:
+ +recursive:True
+ +address:10.0.5.12
+ +port:20007
+ +timeout:1220
+
+[INFO] [2023-01-02 22:56:28,554] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 22:56:28,554] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 22:56:28,555] EV | localhost | Setting up server as a primary server.
+[INFO] [2023-01-02 22:56:28,555] EV | localhost | Loaded database file.
+[INFO] [2023-01-02 22:56:28,555] EV | localhost | Loaded root list file.
+[INFO] [2023-01-02 22:56:28,555] EV | localhost | Finished setting up the server.
+[INFO] [2023-01-02 22:56:28,558] EV | 10.0.5.12 | UDP Server is listening on 10.0.5.12:20007
+[INFO] [2023-01-02 22:56:28,559] EV | 10.0.5.12 | TCP Server is listening on 10.0.5.12:20007
+[INFO] [2023-01-02 22:56:45,663] QR | 10.0.4.16:50429 | Received and decoded the query: 22,Q,0,0,0,0;20007:12.5.0.10-inaddr.reverse.zaibatsu.,PTR;
+[INFO] [2023-01-02 22:56:45,664] EV | localhost | Searching on cache for 20007:12.5.0.10-inaddr.reverse.zaibatsu., DNSValueType.PTR
+[INFO] [2023-01-02 22:56:45,664] EV | localhost | Searching on database for 20007:12.5.0.10-inaddr.reverse.zaibatsu., DNSValueType.PTR
+[INFO] [2023-01-02 22:56:45,665] EV | localhost | Domain 20007:12.5.0.10-inaddr.reverse.zaibatsu. exists but its my subdomain.
+[INFO] [2023-01-02 22:58:16,582] ST | localhost |
+Server information:
+ +recursive:True
+ +address:10.0.5.12
+ +port:20007
+ +timeout:1220
+
+[INFO] [2023-01-02 22:58:16,582] EV | localhost | Loaded configuration file.
+[INFO] [2023-01-02 22:58:16,582] EV | localhost | Cache initialized.
+[INFO] [2023-01-02 22:58:16,582] EV | localhost | Setting up server as a primary server.
+[INFO] [2023-01-02 22:58:16,583] EV | localhost | Loaded database file.
+[INFO] [2023-01-02 22:58:16,583] EV | localhost | Loaded root list file.
+[INFO] [2023-01-02 22:58:16,583] EV | localhost | Finished setting up the server.
+[INFO] [2023-01-02 22:58:16,585] EV | 10.0.5.12 | UDP Server is listening on 10.0.5.12:20007
+[INFO] [2023-01-02 22:58:16,586] EV | 10.0.5.12 | TCP Server is listening on 10.0.5.12:20007
+[INFO] [2023-01-02 22:58:45,798] QR | 10.0.4.16:54291 | Received and decoded the query: 23,Q,0,0,0,0;20000:12.4.0.10-inaddr.reverse.zaibatsu.,PTR;
+[INFO] [2023-01-02 22:58:45,799] EV | localhost | Searching on cache for 20000:12.4.0.10-inaddr.reverse.zaibatsu., DNSValueType.PTR
+[INFO] [2023-01-02 22:58:45,799] EV | localhost | Searching on database for 20000:12.4.0.10-inaddr.reverse.zaibatsu., DNSValueType.PTR
+[INFO] [2023-01-02 22:58:45,800] EV | localhost | Domain 20000:12.4.0.10-inaddr.reverse.zaibatsu. exists but its my subdomain.
