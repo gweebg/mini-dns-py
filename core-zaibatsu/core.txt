@@ -1,0 +1,96 @@
+# Compile java
+javac -d . *.java
+  -d . -> creates a directory tree based on package structure,  in the current dir "."
+  *.java -> all files .java
+  
+# run java
+java dummyzt.ss.SS 
+  dummyzt.ss.SS -> packege structure that lead to entry point  
+
+### OR ###
+
+# Compile java
+
+# make jar
+jar cfe SS.jar dummyzt.ss.SS dummyzt/ss/*
+  c -> create
+  f -> file
+  e -> entry point
+  SS.jar -> name of the jar
+  dummyzt.ss.SS -> entry point (where the main is)
+  dummyzt/ss/* -> path to the .class files
+
+# run jar
+java -jar SS.jar
+
+pip install -r wheelhouse/requirements.txt --no-index --find-links wheelhouse
+
+
+
+####
+
+#!/bin/sh
+
+export TERM=xterm
+
+mkdir proj
+cp -r /home/core/Desktop/cc/mini-dns-py/ proj/ &
+cd proj/mini-dns-py &
+export PYTHONPATH='.' &
+pip3.10 -m venv env &
+source env/bin/activate &
+pip3.10 install -r wheelhouse/requirements.txt --no-index --find-links wheelhouse &
+echo "all done"
+
+####
+
+
+
+etho0@if342
+/tmp/pycore.40117/lycoris-sp.conf/sp/mini-dns-py/core
+
+#######################################################################
+#######################################################################
+
+# load java into CORE
+with no emulation running
+ - double click on the host
+ - services > UserDefined (activate and configure)
+ - in UserDefined configuration: 
+ 	- On TAB "Files"
+ 	- File name: 
+ 		loadSS.sh 
+ 		- click the "new file" button on the right
+ 	- Select: Use text below for file contents
+ 	File content:
+		#!/bin/sh
+		mkdir SS
+		cp -r /<full path to>/dummyzt/ss/dummyzt SS/
+
+	- On TAB "Startup/shutdown"
+	- write in "Stratup Commands" 
+		sh loadSS.sh
+		press new file button
+	- Apply
+ - Apply
+- Apply
+
+
+
+lili-lycoris-sp : /tmp/pycore.40117/lili-lycoris-sp.conf
+lili-lycoris-ss : /tmp/pycore.40117/lili-lycoris-ss.conf
+
+lili.lycoris LG /tmp/pycore.40117/lili-lycoris-sp.conf/proj/mini-dns-py/core/logs/lili-lycoris.log
+
+
+
+
+
+####################################################################
+
+# run java in CORE
+while emulation is running
+ - double click on the host to open terminal
+ - in terminal
+ 	$ cd SS
+ 	java dummyzt.ss.SS <serverIP> <serverPort>
